@@ -1,0 +1,10 @@
+.ttt_board {
+	background-color: white;
+	width: 800px;
+	height: 800px;
+}
+
+.ttt_board_cell {
+	width: 267px;
+	height: 267px;
+}
