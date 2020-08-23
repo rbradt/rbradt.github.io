@@ -1,23 +1,22 @@
 
-function UI_Observer() {
+function Observer() {
 	this.listeners = [];
-	this.save = this;
 	
 	this.add = function(listener) {
-		save.listeners[listeners.length] = listener;
+		this.listeners[this.listeners.length] = listener;
 	}
 	
 	this.remove = function(listener) {
-		for(var i = 0; i < save.listeners.length; i++)
-			if(listener === save.listeners[i]) {
-				save.listeners.splice(i, 1);
+		for(var i = 0; i < this.listeners.length; i++)
+			if(listener === this.listeners[i]) {
+				this.listeners.splice(i, 1);
 				break;
 			}
 	}
 	
 	this.notify = function(message, data) {
-		for(var i = 0; i < save.listeners.length; i++)
-			save.listeners[i].update(message, data);
+		for(var i = 0; i < this.listeners.length; i++)
+			this.listeners[i].update(message, data);
 	}
 }
 

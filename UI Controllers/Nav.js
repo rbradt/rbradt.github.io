@@ -17,27 +17,25 @@ Nav_Menu_Controller.prototype.constructor = Nav_Menu_Controller;
 
 Nav_Menu_Controller.prototype.update = function(message, data) {
 	var button = document.getElementById(message);
+	var scene_id = message.substr(4);
 	
-	if(message.substring(0, 2) == 'nav') {
-		var scene_id = message.substr(4);
-		
-		switch(String(scene_id)) {
-			case "home":
-				var chance = 1;
-				
-				if(hbIconId != 0 || Math.random() <= chance) {
-					hbIconId = (hbIconId + 1)%6;
-					button.style.backgroundImage = "url(" + hbIcon[hbIconId] + ")";
-				}
-				break;
-			case "ttt":
-				break;
-			case "chess":
-			case "coming":
-			case "about":
-			case "support":
-			case "login":
-				break;
-		}
+	switch(String(scene_id)) {
+		case "home":
+			var chance = 1;
+			
+			if(hbIconId != 0 || Math.random() <= chance) {
+				hbIconId = (hbIconId + 1)%6;
+				button.style.backgroundImage = "url(" + hbIcon[hbIconId] + ")";
+			}
+			break;
+		case "ttt":
+		case "chess":
+			//document.getElementById("board"); show block
+			break;
+		case "coming":
+		case "about":
+		case "support":
+		case "login":
+			break;
 	}
 }
