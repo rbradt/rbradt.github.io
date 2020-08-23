@@ -46,5 +46,9 @@ BoardUI.prototype.update = function(message, data) {
 			boardResize();
 			cellResize();
 			break;
+		case "nav-ttt":
+			break;
+		case "nav-chess":
+			break;
 	}
 }
