@@ -1,5 +1,5 @@
 
-function BoardUI(numCells) {
+function BoardUI() {
 	// inheritance
 	Listener.apply(this, arguments);
 	
@@ -16,7 +16,7 @@ function BoardUI(numCells) {
 	this.rtw = 0.7; // ratio to window
 	
 	// cells
-	this.numCells = numCells;
+	this.numCells = 0;
 	
 	this.boardResize = function() {
 		var x = window.innerWidth;
@@ -38,8 +38,8 @@ function BoardUI(numCells) {
 		var cellDim = this.currentDim / numCells;
 	}
 	
-	this.generateCells = function() {
-		
+	this.generateCells = function(numCells) {
+		this.numCells = numCells;
 	}
 }
 
