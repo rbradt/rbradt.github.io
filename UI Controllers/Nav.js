@@ -1,5 +1,5 @@
 
-function Nav_Menu_Controller() {
+function NavMenuUI() {
 	// inheritance
 	Listener.apply(this, arguments);
 	
@@ -11,11 +11,11 @@ function Nav_Menu_Controller() {
 	this.hbIcon = ["angry.png", "yee.png", "annoyed.png", "angry.png", "mad.png", "sad.png"];
 }
 
-Nav_Menu_Controller.prototype = Object.create(Listener.prototype);
+NavMenuUI.prototype = Object.create(Listener.prototype);
 
-Nav_Menu_Controller.prototype.constructor = Nav_Menu_Controller;
+NavMenuUI.prototype.constructor = NavMenuUI;
 
-Nav_Menu_Controller.prototype.update = function(message, data) {
+NavMenuUI.prototype.update = function(message, data) {
 	var button = document.getElementById(message);
 	var scene_id = message.substr(4);
 	
