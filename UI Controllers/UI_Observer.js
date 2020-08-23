@@ -1,6 +1,6 @@
 
 function UI_Observer() {
-	this.listeners[];
+	this.listeners = [];
 	this.save = this;
 	
 	this.add = function(listener) {
@@ -15,8 +15,18 @@ function UI_Observer() {
 			}
 	}
 	
-	this.notify = function(message) {
+	this.notify = function(message, data) {
 		for(var i = 0; i < save.listeners.length; i++)
-			save.listeners[i].notify(message);
+			save.listeners[i].update(message, data);
 	}
 }
+
+function Listener() {
+	if(this.constructor === Listener)
+		throw new Error("Listener is an abstract base class!");
+}
+
+Listener.prototype.notify = function(message, data) {
+	throw new Error("Listener is an abstract base class!");
+}
+
