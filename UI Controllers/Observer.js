@@ -14,9 +14,9 @@ function Observer() {
 			}
 	}
 	
-	this.notify = function(message, data) {
+	this.notifyListeners = function(message, data) {
 		for(var i = 0; i < this.listeners.length; i++)
-			this.listeners[i].update(message, data);
+			this.listeners[i].updateListener(message, data);
 	}
 }
 
@@ -25,7 +25,7 @@ function Listener() {
 		throw new Error("Listener is an abstract base class!");
 }
 
-Listener.prototype.notify = function(message, data) {
+Listener.prototype.updateListener = function(message, data) {
 	throw new Error("Listener is an abstract base class!");
 }
 

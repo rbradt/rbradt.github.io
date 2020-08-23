@@ -47,7 +47,7 @@ BoardUI.prototype = Object.create(Listener.prototype);
 
 BoardUI.prototype.constructor = BoardUI;
 
-BoardUI.prototype.update = function(message, data) {
+BoardUI.prototype.updateListener = function(message, data) {
 	switch(String(message)) {
 		case "resize":
 			boardResize();

@@ -15,7 +15,7 @@ NavMenuUI.prototype = Object.create(Listener.prototype);
 
 NavMenuUI.prototype.constructor = NavMenuUI;
 
-NavMenuUI.prototype.update = function(message, data) {
+NavMenuUI.prototype.updateListener = function(message, data) {
 	var button = document.getElementById(message);
 	var scene_id = message.substr(4);
 	
