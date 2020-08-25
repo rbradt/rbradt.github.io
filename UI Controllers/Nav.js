@@ -4,11 +4,11 @@ function NavMenuUI() {
 	Listener.apply(this, arguments);
 	
 	// scene
-	this.previous_scene = document.getElementById('home');
+	this.current_scene = document.getElementById('home');
 	
 	// home button
 	this.hbIconId = 0;
-	this.hbIcon = ["angry.png", "yee.png", "annoyed.png", "angry.png", "mad.png", "sad.png"];
+	this.hbIcons = ["angry.png", "yee.png", "annoyed.png", "angry.png", "mad.png", "sad.png"];
 }
 
 NavMenuUI.prototype = Object.create(Listener.prototype);
@@ -19,25 +19,25 @@ NavMenuUI.prototype.updateListener = function(message, data) {
 	var button = document.getElementById(message);
 	var scene_id = message.substr(4);
 	
-	
 	switch(String(scene_id)) {
 		case "home":
 			var chance = 1;
 			
 			if(hbIconId != 0 || Math.random() <= chance) {
-				hbIconId = (hbIconId + 1)%6;
-				button.style.backgroundImage = "url(" + hbIcon[hbIconId] + ")";
+				hbIconId = (hbIconId + 1)%hbIcons.length;
+				button.style.backgroundImage = "url(" + hbIcons[hbIconId] + ")";
 			}
 			break;
+				
 		case "ttt":
 		case "chess":
-			//document.getElementById("board"); show block
-			break;
 		case "coming":
 		case "about":
 		case "support":
 		case "login":
+			current_scene.style.display = "none";
+			current_scene = document.getElementById(scene_id);
+			current_scene.style.display = "block"; 
 			break;
 	}
-	console.log('exit NAV');
 }

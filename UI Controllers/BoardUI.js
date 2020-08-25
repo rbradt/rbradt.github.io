@@ -1,4 +1,4 @@
-
+// Board Controller
 function BoardUI(board) {
 	// inheritance
 	Listener.apply(this, arguments);
@@ -56,6 +56,7 @@ BoardUI.prototype.updateListener = function(message, data) {
 }
 
 $(function() {
+	// Tic-Tac-Toe Game UI Controller
 	function TTTBoardUI() {
 		this.observer = new Observer();
 		this.ui = document.getElementById("board");
@@ -69,6 +70,7 @@ $(function() {
 		}
 	}
 
+	// Chess Board Game UI Controller
 	function ChessBoardUI() {
 		this.generateBoard = function() {
 			
