@@ -1,5 +1,5 @@
 
-function BoardUI() {
+function BoardUI(board) {
 	// inheritance
 	Listener.apply(this, arguments);
 	
@@ -7,7 +7,7 @@ function BoardUI() {
 	this.save = this;
 	
 	// ui object
-	this.board = document.getElementById("board");
+	this.board = board;
 	
 	// dimensions
 	this.maxDim = 800;
@@ -16,26 +16,25 @@ function BoardUI() {
 	this.rtw = 0.7; // ratio to window
 	
 	// cells
-	this.numCells = 0;
+	this.numCells = 1;
 	
 	this.boardResize = function() {
 		var x = window.innerWidth;
 		var y = window.innerHeight;
-		var max = this.maxDim/this.rts;
-		var min = this.minDim/this.rts;
+		var max = this.maxDim/this.rtw;
+		var min = this.minDim/this.rtw;
 		
 		if((x < max || y < max) && (x > min && y > min))
-			this.currentDim = (x < y? x: y) * this.rts;
+			this.currentDim = (x < y? x: y) * this.rtw;
 		else
 			this.currentDim = x < min || y < min? this.minDim: this.maxDim;
 			
 		this.board.style.width = this.currentDim + "px";
 		this.board.style.height = this.currentDim + "px";
-		document.getElementById("devOut").innerHTML = this.currentDim + "";
 	}
 	
 	this.cellResize = function() {
-		var cellDim = this.currentDim / numCells;
+		var cellDim = this.currentDim / this.numCells;
 	}
 	
 	this.generateCells = function(numCells) {
@@ -59,8 +58,9 @@ BoardUI.prototype.updateListener = function(message, data) {
 $(function() {
 	function TTTBoardUI() {
 		this.observer = new Observer();
-		this.board = new Board();
 		this.ui = document.getElementById("board");
+		this.board = new BoardUI(ui);
+		
 		
 		this.generateBoard = function() {
 			// add event handlers to cells

@@ -15,6 +15,7 @@ function Observer() {
 	}
 	
 	this.notifyListeners = function(message, data) {
+		console.log(this.listeners.length);
 		for(var i = 0; i < this.listeners.length; i++)
 			this.listeners[i].updateListener(message, data);
 	}

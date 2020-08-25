@@ -19,6 +19,7 @@ NavMenuUI.prototype.updateListener = function(message, data) {
 	var button = document.getElementById(message);
 	var scene_id = message.substr(4);
 	
+	
 	switch(String(scene_id)) {
 		case "home":
 			var chance = 1;
@@ -38,4 +39,5 @@ NavMenuUI.prototype.updateListener = function(message, data) {
 		case "login":
 			break;
 	}
+	console.log('exit NAV');
 }
