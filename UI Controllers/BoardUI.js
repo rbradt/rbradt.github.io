@@ -29,8 +29,8 @@ function BoardUI() {
 		else
 			this.currentDim = x < min || y < min? this.minDim: this.maxDim;
 			
-		board.style.width = this.currentDim + "px";
-		board.style.height = this.currentDim + "px";
+		this.board.style.width = this.currentDim + "px";
+		this.board.style.height = this.currentDim + "px";
 		document.getElementById("devOut").innerHTML = this.currentDim + "";
 	}
 	
@@ -50,8 +50,8 @@ BoardUI.prototype.constructor = BoardUI;
 BoardUI.prototype.updateListener = function(message, data) {
 	switch(String(message)) {
 		case "resize":
-			boardResize();
-			cellResize();
+			this.boardResize();
+			this.cellResize();
 			break;
 	}
 }
