@@ -34,12 +34,20 @@ function BoardUI(board) {
 	}
 	
 	this.cellResize = function() {
-		var cellDim = this.currentDim / this.numCells;
+		var cellDim = this.currentDim/this.numCells;
+		
+		board.childNodes
 	}
 	
 	this.generateCells = function(numCells) {
 		this.numCells = numCells;
 		
+		for(int i = 0; i < numCells*numCells; i++) {
+			if(i%numCells === 0)
+				var row = board.insertRow(-1);
+			var cell = row.insertCell(-1);
+			cell.innerHTML = document.createElement("button");
+		}
 	}
 }
 
