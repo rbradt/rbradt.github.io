@@ -15,10 +15,10 @@
 	</head>
 	<body class="body" onresize="UI_Observer.notifyListeners('resize', null);">
 		<div id="nav" class="nav">
-			<button id="nav_home" class="nav-button nav-icon" style="background-image: url(mad.png); height: 45px; width: 76px;" onclick="UI_Observer.notify('nav_home')"></button>
+			<button id="nav_home" class="nav-button nav-icon" style="background-image: url(mad.png); height: 45px; width: 76px;" onclick="UI_Observer.notifyListeners('nav_home', null)"></button>
 			<button id="nav_ttt" class="nav-button">Tic-Tac-Toe</button>
 			<button id="nav_chess" class="nav-button">Chess</button>
-			<button id="nav_coming" class="nav-button">Coming Soon</button>
+			<button id="nav_coming" class="nav-button">Projects</button>
 			<button id="nav_login" class="nav-button" style="float: right;">Login</button>
 			<button id="nav_support" class="nav-button" style="float: right;">Support</button>
 			<button id="nav_about" class="nav-button" style="float: right;">About</button>
@@ -29,23 +29,7 @@
 			<h2 id="devOut">output</h2>
 		</div>
 		<div>
-			<table id="ttt_board" class="ttt_board center_block">
-				<tr>
-					<td>X</td>
-					<td>X</td>
-					<td>O</td>
-				</tr>
-				<tr>
-					<td>O</td>
-					<td>O</td>
-					<td>X</td>
-				</tr>
-				<tr>
-					<td>X</td>
-					<td>X</td>
-					<td>O</td>
-				</tr>
-			</table>
+			<table id="ttt_board" class="ttt_board center_block"></table>
 		</div>
 	</body>
 </html>

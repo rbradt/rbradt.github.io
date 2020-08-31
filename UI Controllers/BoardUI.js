@@ -39,6 +39,7 @@ function BoardUI(board) {
 	
 	this.generateCells = function(numCells) {
 		this.numCells = numCells;
+		
 	}
 }
 
@@ -56,7 +57,7 @@ BoardUI.prototype.updateListener = function(message, data) {
 }
 
 $(function() {
-	// Tic-Tac-Toe Game UI Controller
+	// Tic-Tac-Toe Controller
 	function TTTBoardUI() {
 		this.observer = new Observer();
 		this.ui = document.getElementById("board");
@@ -70,7 +71,7 @@ $(function() {
 		}
 	}
 
-	// Chess Board Game UI Controller
+	// Chess Controller
 	function ChessBoardUI() {
 		this.generateBoard = function() {
 			

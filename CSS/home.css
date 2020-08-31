@@ -51,10 +51,10 @@
 }
 
 .nav-button:active {
-	color: #ccccff;
+	color: white;
 	transform: translateY(0px) translateX(0px);
 	box-shadow: 0 0;
-	text-shadow: 0 0;
+	text-shadow: 0 0 4px #ccccff;
 }
 
 .center_block {
