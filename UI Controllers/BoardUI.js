@@ -41,8 +41,9 @@ function BoardUI(board) {
 	
 	this.generateCells = function(numCells) {
 		this.numCells = numCells;
+		this.board.innerHTML = "";
 		
-		for(int i = 0; i < numCells*numCells; i++) {
+		for(var i = 0; i < numCells*numCells; i++) {
 			if(i%numCells === 0)
 				var row = board.insertRow(-1);
 			var cell = row.insertCell(-1);
