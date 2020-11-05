@@ -23,9 +23,9 @@ NavMenuUI.prototype.updateListener = function(message, data) {
 		case "home":
 			var chance = 1;
 			
-			if(hbIconId != 0 || Math.random() <= chance) {
-				hbIconId = (hbIconId + 1)%hbIcons.length;
-				button.style.backgroundImage = "url(" + hbIcons[hbIconId] + ")";
+			if(this.hbIconId != 0 || Math.random() <= chance) {
+				this.hbIconId = (this.hbIconId + 1)%this.hbIcons.length;
+				button.style.backgroundImage = "url(" + this.hbIcons[this.hbIconId] + ")";
 			}
 			break;
 				
