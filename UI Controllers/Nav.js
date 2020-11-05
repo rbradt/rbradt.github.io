@@ -35,9 +35,9 @@ NavMenuUI.prototype.updateListener = function(message, data) {
 		case "about":
 		case "support":
 		case "login":
-			current_scene.style.display = "none";
-			current_scene = document.getElementById(scene_id);
-			current_scene.style.display = "block"; 
+			this.current_scene.style.display = "none";
+			this.current_scene = document.getElementById(scene_id);
+			this.current_scene.style.display = "block"; 
 			break;
 	}
 }

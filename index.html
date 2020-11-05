@@ -16,20 +16,26 @@
 	<body class="body" onresize="UI_Observer.notifyListeners('resize', null);">
 		<div id="nav" class="nav">
 			<button id="nav_home" class="fas fa-home nav-button nav-icon" style="height: 19px; width: 35px; padding: 13px 20px" onclick="UI_Observer.notifyListeners('nav_home', null)"></button>
-			<button id="nav_ttt" class="nav-button">Tic-Tac-Toe</button>
-			<button id="nav_chess" class="nav-button">Chess</button>
-			<button id="nav_coming" class="nav-button">Projects</button>
-			<button id="nav_login" class="nav-button" style="float: right;">Login</button>
-			<button id="nav_support" class="nav-button" style="float: right;">Support</button>
-			<button id="nav_about" class="nav-button" style="float: right;">About</button>
+			<button id="nav_ttt" class="nav-button" onclick="UI_Observer.notifyListeners('nav_ttt', null)">Tic-Tac-Toe</button>
+			<button id="nav_chess" class="nav-button" onclick="UI_Observer.notifyListeners('nav_chess', null)">Chess</button>
+			<button id="nav_coming" class="nav-button" onclick="UI_Observer.notifyListeners('nav_coming', null)">Projects</button>
+			<button id="nav_login" class="nav-button" style="float: right;" onclick="UI_Observer.notifyListeners('nav_login', null)">Login</button>
+			<button id="nav_support" class="nav-button" style="float: right;" onclick="UI_Observer.notifyListeners('nav_support', null)">Support</button>
+			<button id="nav_about" class="nav-button" style="float: right;" onclick="UI_Observer.notifyListeners('nav_about', null)">About</button>
 		</div>
 		<!-- <div class="nav" style="max-height: 1px; background-color: white; box-shadow: 0 0 5px; top: 51px; padding: 1px 0;"></div> -->
 		<div class="title">
 			<h1>Riley Bradt</h1>
 			<h2 id="devOut">output</h2>
 		</div>
-		<div>
+		<div id="home"></div>
+		<div id="ttt">
 			<table id="ttt_board" class="ttt_board center_block"></table>
 		</div>
+		<div id="chess"></div>
+		<div id="coming"></div>
+		<div id="about"></div>
+		<div id="support"></div>
+		<div id="login"></div>
 	</body>
 </html>
