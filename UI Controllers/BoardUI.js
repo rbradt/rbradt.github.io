@@ -4,7 +4,7 @@ function BoardUI(board) {
 	Listener.apply(this, arguments);
 	
 	// save this
-	this.save = this;
+	var save = this;
 	
 	// ui object
 	this.board = board;
