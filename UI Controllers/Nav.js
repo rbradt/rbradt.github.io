@@ -5,16 +5,16 @@ function NavModel () {
 	this.observers = [];
 	
 	this.setCurrentScene = function(scene) {
-		if(currentScene !== scene) {
+		if(_this.currentScene !== scene) {
 			_this.previousScene = _this.currentScene;
 			_this.currentScene = scene;
 			_this.notifyObservers();
 		}
 	}
 	
-	this.getCurrentScene = function() {return _current;}
+	this.getCurrentScene = function() {return _this.currentScene;}
 	
-	this.getPreviousScene = function() {return _previous;}
+	this.getPreviousScene = function() {return _this.previousScene;}
 	
 	this.addObserver = function(observer) {_this.observers.push(observer);}		
 	
@@ -50,6 +50,7 @@ function NavView(controller) {
 	document.getElementById("nav_support").addEventListener("click", controller);
 	document.getElementById("nav_login").addEventListener("click", controller);
 	this.update = function(model) {
+		console.log(model.getPreviousScene());
 		document.getElementById(model.getPreviousScene()).style.display = "none";
 		document.getElementById(model.getCurrentScene()).style.display = "block";
 	};
