@@ -56,7 +56,7 @@ class tttGameUI extends React.Component {
 		});
 	}
 	
-	onMouseIn(i) {
+	onMouseIn(i) { // prevents onclick from occuring
 		const active = this.state.moves.slice(0, this.state.turn + 1)[this.state.turn];
 		const boardOut = active.boardOut.slice();
 		if(boardOut[i] || evaluateBoard(boardOut))
@@ -66,7 +66,8 @@ class tttGameUI extends React.Component {
 		this.setState({moves: moves.concat([{boardOut: boardOut}])}); // add hovered move at the end
 	}
 	
-	onMouseOut(i) {
+	onMouseOut(i) { // turn doesnt have to == length of moves (this.state.turn !== this.state.moves.length - 1)
+					// does not work
 		const active = this.state.moves.slice(0, this.state.turn + 1)[this.state.turn];
 		const boardOut = active.boardOut.slice();
 		if(!boardOut[i] && !evaluateBoard(boardOut) && this.state.turn !== this.state.moves.length - 1) {
