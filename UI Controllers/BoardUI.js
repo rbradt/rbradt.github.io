@@ -38,19 +38,41 @@ class tttGameUI extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-		}
+			moves: [{boardOut: Array(9).fill(null)}],
+			turn: 0;
+		};
 	}
 	
 	onClick(i) {
-		
+		const moves = this.state.moves.slice(0, this.state.turn + 1);
+		const active = moves[this.state.turn];
+		const boardOut = active.boardOut.slice();
+		if(boardOut[i] || evaluateBoard(boardOut))
+			return;
+		boardOut[i] = turn%2 === 0? 'X': 'O';
+		this.setState({
+		  moves: moves.concat([{boardOut: boardOut}]),
+		  turn: this.state.turn + 1
+		});
 	}
 	
 	onMouseIn(i) {
-		
+		const active = this.state.moves.slice(0, this.state.turn + 1)[this.state.turn];
+		const boardOut = active.boardOut.slice();
+		if(boardOut[i] || evaluateBoard(boardOut))
+			return;
+		let moves = this.state.moves.slice();
+		boardOut[i] = turn%2 === 0? 'X': 'O';
+		this.setState({moves: moves.concat([{boardOut: boardOut}])}); // add hovered move at the end
 	}
 	
 	onMouseOut(i) {
-		
+		const active = this.state.moves.slice(0, this.state.turn + 1)[this.state.turn];
+		const boardOut = active.boardOut.slice();
+		if(!boardOut[i] && !evaluateBoard(boardOut) && this.state.turn !== this.state.moves.length - 1) {
+			let moves = this.state.moves.slice(0, this.state.moves.length - 1); // remove last move
+			this.setState({moves: moves});
+		}
 	}
 	
 	render() {
