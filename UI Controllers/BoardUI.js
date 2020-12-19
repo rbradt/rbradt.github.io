@@ -1,13 +1,61 @@
 // Board Controller
 
-class Cell extends React.Component {
-	Render() {
+class tttCellUI extends React.Component {
+	render() {
 		return (<button onClick={this.props.onClick} onmouseover={this.props.hover} onmouseout={this.props.nohover}> {this.props.value} </button>);
 	}
 }
 
-class TTTBoardUI extends React.Component {
-	createCell
+class tttBoardUI extends React.Component {
+	createCell(i) {
+		return (<Cell value={this.props.boardOut[i]} onClick={() => this.props.onClick(i)} hover={() => this.props.onMouseIn(i)} nohover={() => this.props.onMouseOut(i)}></Cell>);
+	}
+	
+	render() {
+		return (
+			<div>
+				<div>
+					{this.createCell(0)}
+					{this.createCell(1)}
+					{this.createCell(2)}
+				</div>
+				<div>
+					{this.createCell(3)}
+					{this.createCell(4)}
+					{this.createCell(5)}
+				</div>
+				<div>
+					{this.createCell(6)}
+					{this.createCell(7)}
+					{this.createCell(8)}
+				</div>
+			</div>
+		);
+	}
+}
+
+class tttGameUI extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+		}
+	}
+	
+	onClick(i) {
+		
+	}
+	
+	onMouseIn(i) {
+		
+	}
+	
+	onMouseOut(i) {
+		
+	}
+	
+	render() {
+		
+	}
 }
 
 function BoardUI(board) {
