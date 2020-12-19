@@ -1,4 +1,15 @@
 // Board Controller
+
+class Cell extends React.Component {
+	Render() {
+		return (<button onClick={this.props.onClick} onmouseover={this.props.hover} onmouseout={this.props.nohover}> {this.props.value} </button>);
+	}
+}
+
+class TTTBoardUI extends React.Component {
+	createCell
+}
+
 function BoardUI(board) {
 	// inheritance
 	Listener.apply(this, arguments);
