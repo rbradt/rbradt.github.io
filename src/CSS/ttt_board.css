@@ -10,9 +10,9 @@
 }
 
 .ttt_board {
-	background-color: white;
-	width: 80vmin;
-	height: 80vmin;
+	background-color: #0f1011;
+	width: 60vmin;
+	height: 60vmin;
 }
 
 .ttt_row {
@@ -23,24 +23,25 @@
 }
 
 .ttt_board_cell {
-	background-color: #1f1f23;
-	color: white;
-	border-radius: 0px;
-	border: 1px;
-	outline: none;
-	text-align: center;
+	border: 0px;
+	border-radius: 2px;
+	background-color: #0f1011;
+	width: 20vmin;
+	height: 20vmin;
+	outline: #0f1011 solid 2px;
 	padding: 15px 20px;
-	cursor: pointer;
 	float: left;
+	cursor: pointer;
+	color: white;
+	text-align: center;
 	font-family: monospace;
-	font-size: 40px;
-
-	width: 15vmin;
-	height: 15vmin;
+	font-size: 100px;
+	
 }
 
 .ttt_board_cell:hover {
-	
+	background-color: #1f1f23;
+	color: ;
 }
 
 .ttt_board_cell:active {

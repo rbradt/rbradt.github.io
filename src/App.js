@@ -73,7 +73,7 @@ class App extends Component {
 					<button id="nav_support" className="nav-button" style={{float: "right"}} onClick={() => this.setScene('nav_support')}>Support</button>
 					<button id="nav_about" className="nav-button" style={{float: "right"}} onClick={() => this.setScene('nav_about')}>About</button>
 				</div>
-				<div id="scene" className="App-header">{this.nav(this.state.scene)}</div>
+				<div id="scene" className="scene-body">{this.nav(this.state.scene)}</div>
 			</div>
 		);	
 	}
