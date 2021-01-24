@@ -39,22 +39,24 @@ class App extends Component {
 
 			case 'nav_home':
 			default:
-				sceneToRender = (<div className="App">
-									<header className="App-header">
-										<img src={logo} className="App-logo" alt="logo" />
-										<p>
-											Edit <code>src/App.js</code> and save to reload.
-										</p>
-										<a
-											className="App-link"
-											href="https://reactjs.org"
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											Learn React
-										</a>
-									</header>
-			  					</div>);
+				sceneToRender = (
+					<div className="App">
+						<header className="App-header">
+							<img src={logo} className="App-logo" alt="logo" />
+							<p>
+								Edit <code>src/App.js</code> and save to reload.
+							</p>
+							<a
+								className="App-link"
+								href="https://reactjs.org"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Learn React
+							</a>
+						</header>
+					</div>
+				);
 		}
 
 		return sceneToRender;
@@ -73,7 +75,7 @@ class App extends Component {
 					<button id="nav_support" className="nav-button" style={{float: "right"}} onClick={() => this.setScene('nav_support')}>Support</button>
 					<button id="nav_about" className="nav-button" style={{float: "right"}} onClick={() => this.setScene('nav_about')}>About</button>
 				</div>
-				<div id="scene" className="scene-body">{this.nav(this.state.scene)}</div>
+				<div id="scene" className="scene">{this.nav(this.state.scene)}</div>
 			</div>
 		);	
 	}

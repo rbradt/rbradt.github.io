@@ -1,13 +1,8 @@
-.scene-body {
+.scene {
 	background-color: #0f1011;
 	min-height: calc(100vh - 51px);
-	font-family: 'monospace';
-	font-size: 40px;
+	font-size: 15px;
 	color: white;
-}
-
-.title {
-	text-shadow: #fff;
 }
 
 .nav {
@@ -60,9 +55,4 @@
 	display: block;
 	margin-right: auto;
 	margin-left: auto;
-}
-
-.scene {
-    font-family: 'Gafata';
-	font-size: 40px;
 }

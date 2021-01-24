@@ -4,7 +4,7 @@ import '../CSS/ttt_board.css';
 // Board Controller
 class TTTCellUI extends Component {
 	render() {
-		return (<button className="ttt_board_cell" onClick={this.props.onClick} onMouseOver={this.props.hover} onMouseOut={this.props.nohover}> {this.props.value} </button>);
+		return (<button className="ttt_board_cell" onClick={this.props.onClick} onMouseOver={this.props.hover} onMouseOut={this.props.nohover} style={this.props.style}> {this.props.value} </button>);
 	}
 }
 
@@ -13,7 +13,8 @@ class TTTBoardUI extends Component {
 		return (<TTTCellUI value={(this.props.isHovered[i])? this.props.turn%2===0? 'X':'O' : this.props.board[i]}
 						   onClick={() => this.props.onClick(i)}
 						   hover={() => this.props.onMouseIn(i)}
-						   nohover={() => this.props.onMouseOut(i)}/>);
+						   nohover={() => this.props.onMouseOut(i)}
+						   style={(this.props.isHovered[i])? {color: "#0f1011"}: this.props.board[i]==='X'? {color: "#a55463", textShadow: "0px 0px 5px #a55463"}: {color: "#61dafb", textShadow: "0px 0px 5px #ccccff"}}/>);
 	}
 	
 	render() {
@@ -113,7 +114,8 @@ class TTTGameUI extends Component {
 	}
 	
 	goTo(move) {
-		this.setState({turn: move});
+		if(move >= 0)
+			this.setState({turn: move});
 	}
 	
 	// ReactDOM.render() will return this object, but the value of this will be unknown
@@ -159,18 +161,18 @@ class TTTGameUI extends Component {
 		}*/
 		
 		return (
-			<div>
-				<div className="center_block">{info}</div>
+			<div className="ttt_game">
+				<div>{info}</div>
 				<div id="ttt_game">
 					<TTTBoardUI isHovered={hovered} turn={turn} board={current.board} onClick={i => this.onClick(i)} onMouseIn={i => this.onMouseIn(i)} onMouseOut={i => this.onMouseOut(i)}/>
 				</div>
 				{
-					(this.props.gametype !== 2)? (
-							<div className="center_block" onClick={() => this.goTo(turn - (this.props.gametype + 1))}>
+					(this.props.gametype === 2)? <div></div>: (
+							<div onClick={() => this.goTo(turn - (this.props.gametype + 1))}>
 								<div>Undo</div>
 								<div className="">undo symbol class</div>
 							</div>
-						): 	<div></div>
+						)
 				}
 			</div>
 		);

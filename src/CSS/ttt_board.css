@@ -1,12 +1,8 @@
 .ttt_game {
-	background-color: #282c34;
- 	 min-height: 100vh;
  	 display: flex;
  	 flex-direction: column;
  	 align-items: center;
  	 justify-content: center;
- 	 font-size: calc(10px + 2vmin);
- 	 color: white;
 }
 
 .ttt_board {
@@ -25,25 +21,22 @@
 .ttt_board_cell {
 	border: 0px;
 	border-radius: 2px;
-	background-color: #0f1011;
+	background-color: #1b1b1f;
 	width: 20vmin;
 	height: 20vmin;
 	outline: #0f1011 solid 2px;
 	padding: 15px 20px;
 	float: left;
 	cursor: pointer;
-	color: white;
 	text-align: center;
 	font-family: monospace;
-	font-size: 100px;
-	
+	font-size: 14vmin;
 }
 
 .ttt_board_cell:hover {
 	background-color: #1f1f23;
-	color: ;
 }
 
 .ttt_board_cell:active {
-	
+	color: white;
 }
