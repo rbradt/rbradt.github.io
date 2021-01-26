@@ -1,6 +1,6 @@
-import logo, { ReactComponent } from './logo.svg';
+import logo from './logo.svg';
 import {Component} from 'react';
-import {TTTGameUI} from './UI Controllers/BoardUI';
+import {TTTGameUI} from './UI Controllers/TTTBoard';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faHome } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +19,7 @@ class App extends Component {
 			this.setState({scene: newScene});
 	}
 
-	nav(scene) {
+	renderScene(scene) {
 		let sceneToRender;
 
 		switch(scene) {
@@ -75,7 +75,7 @@ class App extends Component {
 					<button id="nav_support" className="nav-button" style={{float: "right"}} onClick={() => this.setScene('nav_support')}>Support</button>
 					<button id="nav_about" className="nav-button" style={{float: "right"}} onClick={() => this.setScene('nav_about')}>About</button>
 				</div>
-				<div id="scene" className="scene">{this.nav(this.state.scene)}</div>
+				<div id="scene" className="scene">{this.renderScene(this.state.scene)}</div>
 			</div>
 		);	
 	}

@@ -1,7 +1,6 @@
 .scene {
 	background-color: #0f1011;
-	min-height: calc(100vh - 51px);
-	font-size: 15px;
+	font-size: 13px;
 	color: white;
 }
 
