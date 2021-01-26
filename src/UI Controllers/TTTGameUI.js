@@ -24,8 +24,7 @@ class TTTBoardUI extends Component {
 		}
 		else {
 			value = this.props.isNewGame? newGameMsg[i]: this.props.board[i];
-			console.log(i/3);
-			style = this.props.board[i]==='X' || this.props.isNewGame && Math.floor(i/3) == 1 ? {color: "#a55463", textShadow: "0px 0px 5px #a55463"}: {color: "#61dafb", textShadow: "0px 0px 5px #ccccff"}
+			style = this.props.board[i]==='X' || this.props.isNewGame && Math.floor(i/3) === 1 ? {color: "#a55463", textShadow: "0px 0px 5px #a55463"}: {color: "#61dafb", textShadow: "0px 0px 5px #ccccff"}
 		}
 
 		return (<TTTCellUI value={value}

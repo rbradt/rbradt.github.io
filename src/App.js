@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import {Component} from 'react';
-import {TTTGameUI} from './UI Controllers/TTTBoard';
+import {GameSelect} from './UI Controllers/GameSelect';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faHome } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +24,7 @@ class App extends Component {
 
 		switch(scene) {
 			case 'nav_ttt':
-				sceneToRender = (<TTTGameUI gametype={0} player={0}/>);
+				sceneToRender = <GameSelect game="ttt" />;
 				break;
 			case 'nav_chess':
 				break;

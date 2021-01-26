@@ -1,0 +1,30 @@
+.gameselect {
+    top: 0;
+    left: 0;
+    min-height: calc(100vh - 51px);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.gs_panel {
+    min-width: calc(100vw/3);
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gs_panel > * { /* child selector > * very useful */
+    font-size: 50px;
+    padding: 20px;
+}
+
+.gs_panel:hover {
+    
+}
+
+.gs_panel:active {
+    
+}
