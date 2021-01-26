@@ -10,23 +10,32 @@ class GameSelect extends Component {
         super(props);
         this.state = {
             gamemode: -1,
-            player: -1
+            player: -1,
+            hovered: Array(3).fill(false),
+            firstInst: true
         }
         library.add(faRobot, faUserFriends, faGlobe, faTimes, faCircle, faCog);
     }
 
     setGamemode(gamemode, player) {
-        console.log(gamemode + " " + player);
         this.setState({
             gamemode: gamemode,
-            player: player
+            player: player,
+            firstInst: true
         });
+    }
+
+    setHovered(i, flag) {
+        const isHovered = this.state.hovered.slice();
+        isHovered[i] = flag;
+
+        this.setState({hovered: isHovered, firstInst: false});
     }
 
     panelButton(index, gamemode) {
         switch(this.props.game) {
             case "ttt":
-                return <TTTGameSelectButton i={index} gamemode={gamemode} onClick={(g,p)=>this.setGamemode(g,p)}/>;
+                return <TTTGameSelectButton i={index} gamemode={this.state.gamemode} hovered={this.state.hovered} firstInst={this.state.firstInst} setHovered={(b) => this.setHovered(index, b)} onClick={(g,p)=>this.setGamemode(g,p)}/>;
                 break;
             case "chess":
                 break;
@@ -40,7 +49,7 @@ class GameSelect extends Component {
 
         if(player == -1)
             display = (
-                <div className="gameselect"> 
+                <div className="gameselect unselectable"> 
                     {this.panelButton(0, gamemode)}
                     {this.panelButton(1, gamemode)}
                     {this.panelButton(2, gamemode)}
@@ -61,12 +70,18 @@ class TTTGameSelectButton extends Component {
         const selectedPlayer = isGSMenu? isLocal? 0: -1: this.props.i;
         const j = isGSMenu? this.props.i: this.props.i + this.props.gamemode*3;
 
+        let style;
+        if(this.props.hovered[this.props.i] || this.props.firstInst && this.props.i==1)
+            style = this.props.gamemode==1? {filter: "none", flexDirection: "row"}: {filter: "none", flexDirection: "column"};
+        else
+            style = this.props.gamemode==1? {filter: "blur(10px)", flexDirection: "row"}: {filter: "blur(10px)", flexDirection: "column"};
+
         const icons = ['user-friends', 'robot', 'globe','times','robot','robot','times','circle','cog'];
         const gamemodes = ['Local', 'vs Computer', 'Online','vs','vs','vs','Quick Match', 'Quick Match', 'Custom Match'];
         const aiIcons = ['robot', 'circle', 'robot'];
 
         return(
-            <div className="gs_panel" style={this.props.gamemode==1? {flexDirection: "row"}: {flexDirection: "column"}} onClick={()=>this.props.onClick(selectedMode, selectedPlayer)}>
+            <div className="gs_panel" style={style} onMouseOver={()=>this.props.setHovered(true)} onMouseOut={()=>this.props.setHovered(false)} onClick={()=>this.props.onClick(selectedMode, selectedPlayer)}>
                 <FontAwesomeIcon icon={icons[j]}/>
                 <div>{gamemodes[j]}</div>
                 {this.props.gamemode==1? <FontAwesomeIcon icon={aiIcons[this.props.i]}/>: <div></div>}
