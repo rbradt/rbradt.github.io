@@ -7,7 +7,7 @@ import '../CSS/ttt_board.css';
 // Board Controller
 class TTTCellUI extends Component {
 	render() {
-		return (<button className="ttt_board_cell" onClick={this.props.onClick} onMouseOver={this.props.hover} onMouseOut={this.props.nohover} style={this.props.style}> {this.props.value} </button>);
+		return (<button className="ttt-board-cell" onClick={this.props.onClick} onMouseOver={this.props.hover} onMouseOut={this.props.nohover} style={this.props.style}> {this.props.value} </button>);
 	}
 }
 
@@ -36,18 +36,18 @@ class TTTBoardUI extends Component {
 	
 	render() {
 		return (
-			<div className="ttt_board">
-				<div className="ttt_row">
+			<div className="ttt-board">
+				<div className="ttt-row">
 					{this.createCell(0)}
 					{this.createCell(1)}
 					{this.createCell(2)}
 				</div>
-				<div className="ttt_row">
+				<div className="ttt-row">
 					{this.createCell(3)}
 					{this.createCell(4)}
 					{this.createCell(5)}
 				</div>
-				<div className="ttt_row">
+				<div className="ttt-row">
 					{this.createCell(6)}
 					{this.createCell(7)}
 					{this.createCell(8)}
@@ -100,7 +100,7 @@ class TTTGameUI extends Component {
 	}
 	
 	onMouseIn(i) {
-		if(this.props.gametype && this.state.turn%2 !== this.props.player)
+		if(this.state.isHovered[i] || this.props.gametype && this.state.turn%2 !== this.props.player)
 			return;
 		
 		const active = this.state.moves.slice(0, this.state.turn + 1)[this.state.turn];
@@ -117,7 +117,7 @@ class TTTGameUI extends Component {
 	}
 	
 	onMouseOut(i) {
-		if(this.props.gametype && this.state.turn%2 !== this.props.player)
+		if(!this.state.isHovered[i] || this.props.gametype && this.state.turn%2 !== this.props.player)
 			return;
 		
 		const active = this.state.moves.slice(0, this.state.turn + 1)[this.state.turn];
@@ -157,11 +157,16 @@ class TTTGameUI extends Component {
 			this.props.observers[i].update(/*new model(activeBoard)*/);
 	}
 
+	shouldComponentUpdate() {
+		// may be unecessary
+		return true;
+	}
+
 	undoButton(turn) {
 		let newTurn = turn - (this.props.gametype + 1);
 		if(this.props.gametype !== 2) 
 			return (
-				<div className="ttt_undo" onClick={() => this.goTo(newTurn)}>
+				<div className="ttt-undo" onClick={() => this.goTo(newTurn)}>
 					<div>Undo</div>
 					<div className=""><FontAwesomeIcon icon='undo'/></div>
 				</div>
@@ -180,9 +185,9 @@ class TTTGameUI extends Component {
 		if(evaluateBoard(current.board) !== null) {
 			info += (evaluateBoard(current.board) === 0)? 'X Wins': 'O Wins';
 		}*/
-		
+
 		return (
-			<div className="ttt_game font unselectable">
+			<div className="ttt-game font unselectable">
 				<div>{info}</div>
 				<div>
 					<TTTBoardUI isNewGame={newGame} isHovered={hovered} turn={turn} board={current.board} onClick={i => this.onClick(i)} onMouseIn={i => this.onMouseIn(i)} onMouseOut={i => this.onMouseOut(i)}/>

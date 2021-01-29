@@ -11,7 +11,9 @@
 
 .game-select-panel {
     min-width: calc(100vw/3);
+    max-width: calc(100vw/3);
     min-height: calc(100vh - 51px);
+    max-height: calc(100vh - 51px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,7 +48,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
     .game-select-panel {
-        transition: min-width 0.4s;
+        transition: min-width 0.3s;
     }
 
     @media (min-width: 1000px) {
@@ -63,7 +65,7 @@
 
     .game-select-panel {
         min-height: calc((100vh - 51px)/3);
-        overflow: hidden;
+        min-width: 100vw;
     }
 }
 

@@ -11,9 +11,9 @@ class GameSelect extends Component {
         this.state = {
             gamemode: -1,
             player: -1,
-            hovered: Array(3).fill(false),
-            firstInst: true
+            hovered: 1
         }
+        this.hovered = Array(3).fill(false);
         library.add(faRobot, faUserFriends, faGlobe, faTimes, faCircle, faCog);
     }
 
@@ -21,22 +21,20 @@ class GameSelect extends Component {
         this.setState({
             gamemode: gamemode,
             player: player,
-            firstInst: true
         });
     }
 
-    setHovered(i, flag) {
-        const isHovered = this.state.hovered.slice();
-        isHovered[i] = flag;
+    setHovered(i) {
+        if(this.state.hovered == i)
+            return;
 
-        this.setState({hovered: isHovered, firstInst: false});
+        this.setState({hovered: i});
     }
 
     panelButton(index) {
         switch(this.props.game) {
             case "ttt":
-                return <TTTGameSelectButton i={index} gamemode={this.state.gamemode} hovered={this.state.hovered} firstInst={this.state.firstInst} setHovered={(b) => this.setHovered(index, b)} onClick={(g,p)=>this.setGamemode(g,p)}/>;
-                break;
+                return <TTTGameSelectButton i={index} gamemode={this.state.gamemode} hovered={this.state.hovered} firstInst={this.state.firstInst} setHovered={() => this.setHovered(index)} onClick={(g,p)=>this.setGamemode(g,p)}/>;
             case "chess":
                 break;
         }
@@ -49,10 +47,14 @@ class GameSelect extends Component {
 
         if(player == -1)
             display = (
-                <div className="game-select unselectable"> 
-                    {this.panelButton(0)}
-                    {this.panelButton(1)}
-                    {this.panelButton(2)}
+                <div>
+                    <div>Select gamemode:</div>
+                    <div className="game-select unselectable"> 
+                        {this.panelButton(0)}
+                        {this.panelButton(1)}
+                        {this.panelButton(2)}
+                    </div>
+                    {(gamemode == -1)? <div></div>: <div>Back</div>}
                 </div>
             );
         else
@@ -64,6 +66,10 @@ class GameSelect extends Component {
 
 class TTTGameSelectButton extends Component {
     render() {
+        const icons = ['user-friends', 'robot', 'globe','times','robot','robot','times','circle','cog'];
+        const gamemodes = ['Local', 'vs Computer', 'Online','vs','vs','vs','Quick Match', 'Quick Match', 'Custom Match'];
+        const aiIcons = ['robot', 'circle', 'robot'];
+
         const isGSMenu = this.props.gamemode == -1;
         const isLocal = this.props.i == 0;
         const selectedMode = isGSMenu? this.props.i: this.props.gamemode;
@@ -71,17 +77,13 @@ class TTTGameSelectButton extends Component {
         const j = isGSMenu? this.props.i: this.props.i + this.props.gamemode*3;
 
         let style;
-        if(this.props.hovered[this.props.i] || this.props.firstInst && this.props.i==1)
+        if(this.props.hovered == this.props.i /*|| this.props.firstInst && this.props.i==1*/)
             style = this.props.gamemode==1? {filter: "none", flexDirection: "row"}: {filter: "none", flexDirection: "column"};
         else
             style = this.props.gamemode==1? {filter: "blur(10px)", flexDirection: "row"}: {filter: "blur(10px)", flexDirection: "column"};
 
-        const icons = ['user-friends', 'robot', 'globe','times','robot','robot','times','circle','cog'];
-        const gamemodes = ['Local', 'vs Computer', 'Online','vs','vs','vs','Quick Match', 'Quick Match', 'Custom Match'];
-        const aiIcons = ['robot', 'circle', 'robot'];
-
         return(
-            <div className="game-select-panel" style={style} onMouseOver={()=>this.props.setHovered(true)} onMouseOut={()=>this.props.setHovered(false)} onClick={()=>this.props.onClick(selectedMode, selectedPlayer)}>
+            <div className="game-select-panel" style={style} onMouseEnter={()=>this.props.setHovered()} onClick={()=>this.props.onClick(selectedMode, selectedPlayer)}>
                 <FontAwesomeIcon icon={icons[j]}/>
                 <div>{gamemodes[j]}</div>
                 {this.props.gamemode==1? <FontAwesomeIcon icon={aiIcons[this.props.i]}/>: <div></div>}
