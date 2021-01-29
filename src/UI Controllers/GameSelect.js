@@ -32,7 +32,7 @@ class GameSelect extends Component {
         this.setState({hovered: isHovered, firstInst: false});
     }
 
-    panelButton(index, gamemode) {
+    panelButton(index) {
         switch(this.props.game) {
             case "ttt":
                 return <TTTGameSelectButton i={index} gamemode={this.state.gamemode} hovered={this.state.hovered} firstInst={this.state.firstInst} setHovered={(b) => this.setHovered(index, b)} onClick={(g,p)=>this.setGamemode(g,p)}/>;
@@ -49,10 +49,10 @@ class GameSelect extends Component {
 
         if(player == -1)
             display = (
-                <div className="gameselect unselectable"> 
-                    {this.panelButton(0, gamemode)}
-                    {this.panelButton(1, gamemode)}
-                    {this.panelButton(2, gamemode)}
+                <div className="game-select unselectable"> 
+                    {this.panelButton(0)}
+                    {this.panelButton(1)}
+                    {this.panelButton(2)}
                 </div>
             );
         else
@@ -81,7 +81,7 @@ class TTTGameSelectButton extends Component {
         const aiIcons = ['robot', 'circle', 'robot'];
 
         return(
-            <div className="gs_panel" style={style} onMouseOver={()=>this.props.setHovered(true)} onMouseOut={()=>this.props.setHovered(false)} onClick={()=>this.props.onClick(selectedMode, selectedPlayer)}>
+            <div className="game-select-panel" style={style} onMouseOver={()=>this.props.setHovered(true)} onMouseOut={()=>this.props.setHovered(false)} onClick={()=>this.props.onClick(selectedMode, selectedPlayer)}>
                 <FontAwesomeIcon icon={icons[j]}/>
                 <div>{gamemodes[j]}</div>
                 {this.props.gamemode==1? <FontAwesomeIcon icon={aiIcons[this.props.i]}/>: <div></div>}

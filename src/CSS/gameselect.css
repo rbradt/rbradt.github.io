@@ -1,4 +1,4 @@
-.gameselect {
+.game-select {
     top: 0;
     left: 0;
     min-height: calc(100vh - 51px);
@@ -6,40 +6,65 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
-.gs_panel {
+.game-select-panel {
     min-width: calc(100vw/3);
     min-height: calc(100vh - 51px);
     display: flex;
     justify-content: center;
     align-items: center;
-    /*filter: blur(10px);*/
 }
 
-.gs_panel > * { /* child selector > * all children */
+.game-select-panel > * { /* child selector > * all children */
     font-size: 10vh;
     padding: 15px;
+    transition: font-size 0.4s;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    text-shadow:1px 1px 1px rgba(0,0,0,0.004);
 }
 
-.gs_panel > div {
+.game-select-panel > div {
     font-size: 4vh;
 }
 
-.gs_panel:hover {
+.game-select-panel:hover {
     cursor: pointer;
+    text-shadow: 0 0 8px white;
 }
 
-.gs_panel:hover > * {
+.game-select-panel:hover > * {
     font-size: 13vh;
 }
 
-.gs_panel:hover > div {
+.game-select-panel:hover > div {
     font-size: 5vh;
 }
 
-.gs_panel:active {
-    
+@media (prefers-reduced-motion: no-preference) {
+    .game-select-panel {
+        transition: min-width 0.4s;
+    }
+
+    @media (min-width: 1000px) {
+        .game-select-panel:hover {
+            min-width: 40vw;
+        }
+    }
+  }
+
+@media (max-width: 1000px) {
+    .game-select {
+        flex-direction: column;
+    }
+
+    .game-select-panel {
+        min-height: calc((100vh - 51px)/3);
+        overflow: hidden;
+    }
 }
 
 *.unselectable {
@@ -49,18 +74,3 @@
 	-ms-user-select: none;
 	user-select: none;
  }
-
-.gs_panel_background::after {
-    content: "";
-    position: absolute;
-    overflow: hidden;
-    top: 51px;
-    bottom: 0;
-    left: 0;
-    right: 0;background: inherit;
-    min-width: 100px;
-    min-height: 100px;
-    -webkit-filter: blur(20px);
-    filter: blur(10px);
-    overflow: hidden;
-}

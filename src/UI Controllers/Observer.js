@@ -1,4 +1,4 @@
-
+// Also useless
 function Observer() {
 	this.listeners = [];
 	

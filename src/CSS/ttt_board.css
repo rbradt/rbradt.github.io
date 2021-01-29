@@ -1,4 +1,4 @@
-.ttt_game {
+.ttt-game {
 	min-height: calc(100vh - 51px);
 	display: flex;
 	flex-direction: column;
@@ -6,43 +6,43 @@
 	justify-content: space-evenly;
 }
 
-.ttt_board {
+.ttt-board {
 	background-color: #0f1011;
 	width: 60vmin;
 	height: 60vmin;
 }
 
-.ttt_row {
+.ttt-row {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
 }
 
-.ttt_board_cell {
+.ttt-board-cell {
 	border: 0px;
 	border-radius: 2px;
 	background-color: #1b1b1f;
 	width: 20vmin;
 	height: 20vmin;
 	outline: #0f1011 solid 2px;
-	padding: 15px 20px;
 	float: left;
 	cursor: pointer;
 	text-align: center;
+	justify-content: center;
 	font-family: monospace;
-	font-size: 14vmin;
+	font-size: 15vmin;
 }
 
-.ttt_board_cell:hover {
+.ttt-board-cell:hover {
 	background-color: #1f1f23;
 }
 
-.ttt_board_cell:active {
+.ttt-board-cell:active {
 	color: white;
 }
 
-.ttt_undo {
+.ttt-undo {
 	background-color: #0f1011;
 	display: flex;
 	flex-direction: row;
