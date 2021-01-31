@@ -1,10 +1,15 @@
 .scene {
+	position: relative;
+	top: 51px;
+	left: 0;
 	background-color: #0f1011;
 	font-size: 13px;
 	color: white;
 }
 
 .nav {
+	position: fixed;
+	z-index: 2020;
 	top: 0px;
 	left: 0px;
 	overflow: hidden;

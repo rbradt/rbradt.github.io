@@ -1,7 +1,8 @@
 import {TTTGameUI} from "./TTTGameUI.js"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faRobot, faUserFriends, faGlobe, faTimes, faCircle, faCog} from '@fortawesome/free-solid-svg-icons';
+import {faRobot, faUserFriends, faGlobe, faTimes, faDotCircle, faCog} from "@fortawesome/free-solid-svg-icons";
+import {faCircle} from "@fortawesome/free-regular-svg-icons";
 import { Component } from "react";
 import '../CSS/gameselect.css'
 
@@ -14,7 +15,7 @@ class GameSelect extends Component {
             hovered: 1
         }
         this.hovered = Array(3).fill(false);
-        library.add(faRobot, faUserFriends, faGlobe, faTimes, faCircle, faCog);
+        library.add(faRobot, faUserFriends, faGlobe, faTimes, faDotCircle, faCog, faCircle);
     }
 
     setGamemode(gamemode, player) {
@@ -54,7 +55,7 @@ class GameSelect extends Component {
                         {this.panelButton(1)}
                         {this.panelButton(2)}
                     </div>
-                    {(gamemode == -1)? <div></div>: <div>Back</div>}
+                    {(gamemode == -1)? null: <div>Back</div>}
                 </div>
             );
         else
@@ -66,9 +67,9 @@ class GameSelect extends Component {
 
 class TTTGameSelectButton extends Component {
     render() {
-        const icons = ['user-friends', 'robot', 'globe','times','robot','robot','times','circle','cog'];
+        const icons = ['user-friends', 'robot', 'globe','times','robot','robot','times','dot-circle','cog'];
         const gamemodes = ['Local', 'vs Computer', 'Online','vs','vs','vs','Quick Match', 'Quick Match', 'Custom Match'];
-        const aiIcons = ['robot', 'circle', 'robot'];
+        const aiIcons = ['robot', 'dot-circle', 'robot'];
 
         const isGSMenu = this.props.gamemode == -1;
         const isLocal = this.props.i == 0;
@@ -77,7 +78,7 @@ class TTTGameSelectButton extends Component {
         const j = isGSMenu? this.props.i: this.props.i + this.props.gamemode*3;
 
         let style;
-        if(this.props.hovered == this.props.i /*|| this.props.firstInst && this.props.i==1*/)
+        if(this.props.hovered == this.props.i)
             style = this.props.gamemode==1? {filter: "none", flexDirection: "row"}: {filter: "none", flexDirection: "column"};
         else
             style = this.props.gamemode==1? {filter: "blur(10px)", flexDirection: "row"}: {filter: "blur(10px)", flexDirection: "column"};
@@ -86,7 +87,7 @@ class TTTGameSelectButton extends Component {
             <div className="game-select-panel" style={style} onMouseEnter={()=>this.props.setHovered()} onClick={()=>this.props.onClick(selectedMode, selectedPlayer)}>
                 <FontAwesomeIcon icon={icons[j]}/>
                 <div>{gamemodes[j]}</div>
-                {this.props.gamemode==1? <FontAwesomeIcon icon={aiIcons[this.props.i]}/>: <div></div>}
+                {this.props.gamemode==1? <FontAwesomeIcon icon={aiIcons[this.props.i]}/>: null}
             </div>
         );
     }
