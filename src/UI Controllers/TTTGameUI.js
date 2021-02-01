@@ -58,7 +58,7 @@ class TTTBoardUI extends Component {
 }
 
 class TTTGameUI extends Component {
-	constructor(props) {
+	constructor(props, TTTGame) {
 		super(props);
 		var _this = this;
 		this.state = {

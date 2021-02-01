@@ -1,27 +1,11 @@
-class Move {
-    constructor(row, col) {
-        this.row = row;
-        this.col = col;
-    }
-
-    row() {
-        return this.row;
-    }
-
-    col() {
-        return this.col;
-    }
-
-    exists() {
-        return row < 8 && row > -1 && col < 8 && col > -1;
-    }
-}
+import { Move } from "../Move.js";
 
 class direction {
     constructor(x, y) {
         this.x = x;
         this.y = y;
     }
+
     delta_row() {return this.y;}
     delta_col() {return this.x;}
 }
@@ -39,21 +23,10 @@ class Piece {
         this.currentCol = col;
     }
 
-    getSide() {
-        return this.side;
-    }
-
-    isWhitePiece() {
-        return this.side == 0;
-    }
-
-    row() {
-        return this.currentRow;
-    }
-
-    col() {
-        return this.currentCol;
-    }
+    getSide() {return this.side;}
+    isWhitePiece() {return this.side == 0;}
+    row() {return this.currentRow;}
+    col() {return this.currentCol;}
 }
 
 class Pawn extends Piece {
@@ -77,7 +50,7 @@ class Pawn extends Piece {
         let move;
 
         r += r_direction;
-        move = new Move(r, c);
+        move = new Move(r, c, this.side);
         if(board.isEmpty(move))
             moves.push(move);
         move = new Move(r, c-1);
@@ -86,19 +59,10 @@ class Pawn extends Piece {
         move = new Move(r, c+1);
         if(!board.isEmpty(move) && board.pieceAt(move).getSide() != this.side)
             moves.push(move);
-        
-        if(this.isWhitePiece()) {
-            if(currentBoard[r-1][c] == null)
-                moves.push(new Move(r - 1, c));
-            if(r == 6 && currentBoard[r-2][c] == null)
-                moves.push(new Move(r - 2, c));
-            if(currentBoard[r-1][c-1]!=null && currentBoard[r-1][c-1].getSide != this.side)
-            if(currentBoard[r-1][c+1]!=null && currentBoard[r-1][c+1].getSide != this.side)
-        }r-1 c+1
-        else {
-
-        }
-        
+        r += r_direction;
+        move = new Move(r, c);
+        if(board.isEmpty(move))
+            moves.push(move);
     }
 
     attackedPositions() {
