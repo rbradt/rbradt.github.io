@@ -1,4 +1,5 @@
 import {TTTGameUI} from "./TTTGameUI.js"
+import {TTTGame, TTTBoard} from "../Game/TTT/TTTGame.js"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faRobot, faUserFriends, faGlobe, faTimes, faDotCircle, faCog} from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +15,7 @@ class GameSelect extends Component {
             player: -1,
             hovered: 1
         }
-        this.hovered = Array(3).fill(false);
+        //this.hovered = Array(3).fill(false);
         library.add(faRobot, faUserFriends, faGlobe, faTimes, faDotCircle, faCog, faCircle);
     }
 
@@ -30,6 +31,10 @@ class GameSelect extends Component {
             return;
 
         this.setState({hovered: i});
+    }
+
+    back() {
+        this.setState({gamemode: -1});
     }
 
     panelButton(index) {
@@ -55,12 +60,33 @@ class GameSelect extends Component {
                         {this.panelButton(1)}
                         {this.panelButton(2)}
                     </div>
-                    {(gamemode == -1)? null: <div>Back</div>}
+                    {(gamemode == -1)? null: <div onClick={()=>this.back()}>Back</div>}
                 </div>
             );
-        else
-            display = this.props.game=="ttt"? <TTTGameUI gametype={gamemode} player={player}/>: <div>Chess coming soon!</div>
-
+        else if(this.props.game === "ttt") {
+            switch(gamemode*3 + player) {
+                case 0:
+                case 1:  
+                case 2:
+                    let tttGame = new TTTGame(player, gamemode);
+                    display = <TTTGameUI gametype={gamemode} player={player} TTTGame={tttGame} />;
+                case 3:
+                case 4:
+                    let tttAI = new Minimax()
+                    tttGame.addObserver(tttAI);
+                case 5:
+                    display =<div>ai vs ai</div>;
+                    break;
+                case 6:
+                case 7:
+                    display =<div>loading screen/login</div>;
+                    break;
+                case 8:
+                    display =<div>custom lobby</div>;   
+                    break;
+            }   
+        }
+            
         return display;
     }
 }

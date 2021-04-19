@@ -58,97 +58,93 @@ class TTTBoardUI extends Component {
 }
 
 class TTTGameUI extends Component {
-	constructor(props, TTTGame) {
+	constructor(props) {
 		super(props);
 		var _this = this;
 		this.state = {
-			moves: [{board: Array(9).fill(null)}],
+			board: Array(9).fill(null),
+			/*moves: [{board: Array(9).fill(null)}],*/
 			isHovered: Array(9).fill(false),
 			newGame: true,
 			turn: 0
 		};
 		library.add(faUndo);
+		this.props.model.addObserver(this);
 		// this.props.observers // list of observers to be notified of user input on board
 		// this.props.gametype // specifies game type (0 = local, 1 = vsAI, 2 = vsPlayer)
 		// this.props.player // specifies player's turn (X or O)
+		// this.props.model
 	}
 	
 	onClick(i) {
-		if(this.props.gametype && this.state.turn%2 !== this.props.player)
-			return;
-		
-		const moves = this.state.moves.slice(0, this.state.turn + 1);
-		const active = moves[this.state.turn];
-		const board = active.board.slice();
-		const isHovered = this.state.isHovered.slice();
-		
-		// if board space is occupied or game is over -> exit method
-		if(board[i] /*|| evaluateBoard(board)*/)
-			return;
-		
-		// update ui
-		isHovered[i] = false;
-		board[i] = this.state.turn%2 === 0? 'X': 'O';
-		this.setState({
-		  moves: moves.concat([{board: board}]),
-		  isHovered: isHovered,
-		  turn: moves.length,
-		  newGame: false
-		});
-		
-		/*this.notifyObservers(board);*/
+		const thisMove = new Move(i/3, i%3, this.props.player);
+
+		if(this.model.verifyMove(thisMove)) {
+			/*const moves = this.state.moves.slice(0, this.state.turn + 1);
+			const active = moves[this.state.turn];
+			const board = active.board.slice();*/
+			const board = this.props.model.getBoard().toOutputBoard();
+			const isHovered = this.state.isHovered.slice();
+
+			// update observer
+			this.props.model.update(this.state.turn, new Move(i/3, i%3, this.props.player));
+
+			// update ui
+			isHovered[i] = false;
+			board[i] = this.state.turn%2 === 0? 'X': 'O';
+			this.setState({
+				/*moves: moves.concat([{board: board}]),*/
+				board: board,
+				isHovered: isHovered,
+				turn: moves.length,
+				newGame: false
+			});
+		}
 	}
 	
 	onMouseIn(i) {
-		if(this.state.isHovered[i] || this.props.gametype && this.state.turn%2 !== this.props.player)
-			return;
-		
-		const active = this.state.moves.slice(0, this.state.turn + 1)[this.state.turn];
-		const board = active.board.slice();
-		const isHovered = this.state.isHovered.slice();
-		
-		// if board space is occupied or game is over -> exit method
-		if(board[i] /*|| evaluateBoard(board)*/)
-			return;
-		
-		// update ui
-		isHovered[i] = true;
-		this.setState({isHovered: isHovered});
+		const thisMove = new Move(i/3, i%3, this.props.player);
+		if(this.model.verifyMove(thisMove)) {
+			const isHovered = this.state.isHovered.slice();
+			
+			// update ui
+			isHovered[i] = true;
+			this.setState({isHovered: isHovered});
+		}
 	}
 	
 	onMouseOut(i) {
-		if(!this.state.isHovered[i] || this.props.gametype && this.state.turn%2 !== this.props.player)
-			return;
-		
-		const active = this.state.moves.slice(0, this.state.turn + 1)[this.state.turn];
-		const board = active.board.slice();
-		const isHovered = this.state.isHovered.slice();
-		
-		// if board space is occupied or game is over -> exit method
-		if(board[i] /*|| evaluateBoard(board)*/)
-			return;
-		
-		// update ui
-		isHovered[i] = false;
-		this.setState({isHovered: isHovered});
+		const thisMove = new Move(i/3, i%3, this.props.player);
+		if(this.model.verifyMove(thisMove)) {
+			const isHovered = this.state.isHovered.slice();
+			
+			// update ui
+			isHovered[i] = false;
+			this.setState({isHovered: isHovered});
+		}
 	}
 	
 	goTo(move) {
-		if(move >= 0)
-			this.setState({turn: move});
+		if(move >= 0) {
+			this.props.model.update(move);
+			/*this.setState({turn: move});*/
+		}
 	}
 	
 	// ReactDOM.render() will return this object, but the value of this will be unknown
 	//Observe TTT board model
 	update(model) {
-		const newTurn = model.getTurn();
-		const newBoard = model.toOutputBoard();
-		const moves = this.state.moves.slice(0, newTurn + 1);
-		
-		this.setState({
-			moves: moves.concat([{board: newBoard}]),
-			turn: newTurn
-		});
+		if(!this.props.model.getBoard().equals(model)) {
+			const newTurn = model.getTurn();
+			const newBoard = model.toOutputBoard();
+			/*const moves = this.state.moves.slice(0, newTurn);*/
+			
+			this.setState({
+				/*moves: moves.concat([{board: newBoard}]),*/
+				board: newBoard,
+				turn: newTurn
+			});
+		}
 	}
 	
 	// Notify model of user input
@@ -157,10 +153,10 @@ class TTTGameUI extends Component {
 			this.props.observers[i].update(/*new model(activeBoard)*/);
 	}
 
-	shouldComponentUpdate() {
+	/*shouldComponentUpdate() {
 		// may be unecessary
 		return true;
-	}
+	}*/
 
 	undoButton(turn) {
 		let newTurn = turn - (this.props.gametype + 1);
@@ -174,23 +170,23 @@ class TTTGameUI extends Component {
 	}
 	
 	render() {
-		const moves = this.state.moves;
+		/*const moves = this.state.moves;*/
 		const turn = this.state.turn;
-		const current = moves[turn];
+		/*const current = moves[turn];*/
+		const current = this.props.model.getBoard();
 		const hovered = this.state.isHovered;
 		const newGame = this.state.newGame;
 		
-		let info = 'X Wins!';
-		/*
-		if(evaluateBoard(current.board) !== null) {
-			info += (evaluateBoard(current.board) === 0)? 'X Wins': 'O Wins';
-		}*/
+		let info = 'Game Over -> ';
+		let eval = TTTEvaluator.evaluate(current);
+		if(eval !== null)
+			info += eval === 0? 'Tie': eval === -1? 'X Wins': 'O Wins';
 
 		return (
 			<div className="ttt-game font unselectable">
 				<div>{info}</div>
 				<div>
-					<TTTBoardUI isNewGame={newGame} isHovered={hovered} turn={turn} board={current.board} onClick={i => this.onClick(i)} onMouseIn={i => this.onMouseIn(i)} onMouseOut={i => this.onMouseOut(i)}/>
+					<TTTBoardUI isNewGame={newGame} isHovered={hovered} turn={turn} board={current.toOutputBoard()} onClick={i => this.onClick(i)} onMouseIn={i => this.onMouseIn(i)} onMouseOut={i => this.onMouseOut(i)}/>
 				</div>
 				{this.undoButton(turn)}
 			</div>
