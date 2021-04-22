@@ -82,26 +82,24 @@ class TTTGameUI extends Component {
 	}
 
 	tick() {
-		if(this.getSide() !== this.props.model.getTurn()%2) {
+		if(/*this.getSide() !==*/ this.props.model.getTurn()%2) {
 			//poll server - periodically poll server instead of awaiting instruction from an open connection
 		}
 	}
 	
 	onClick(i) {
-		const move = new Move(Math.floor(i/3), i%3, this.getSide());
-		const newTurn = this.props.model.getTurn() + 1;
-
+		const move = new Move(Math.floor(i/3), i%3);
 		if(this.props.model.verifyMove(move)) {
+			// update model
+			const newTurn = this.props.model.getTurn() + 1;
 			this.props.model.update(this.update, newTurn, move);
-
-			const board = this.props.model.getBoard().toOutputBoard();
-			const isHovered = this.state.isHovered.slice();
-
+			
 			// update ui
+			const isHovered = this.state.isHovered.slice();
 			isHovered[i] = false;
-
+			
 			this.setState({
-				board: board,
+				board: this.props.model.getBoard().toOutputBoard(),
 				isHovered: isHovered,
 				newGame: false
 			});
@@ -109,7 +107,7 @@ class TTTGameUI extends Component {
 	}
 	
 	onMouseIn(i) {
-		const move = new Move(Math.floor(i/3), i%3, this.getSide());
+		const move = new Move(Math.floor(i/3), i%3);
 		if(this.props.model.verifyMove(move)) {
 			const isHovered = this.state.isHovered.slice();
 			
@@ -120,7 +118,7 @@ class TTTGameUI extends Component {
 	}
 	
 	onMouseOut(i) {
-		const move = new Move(Math.floor(i/3), i%3, this.getSide());
+		const move = new Move(Math.floor(i/3), i%3);
 		if(this.props.model.verifyMove(move)) {
 			const isHovered = this.state.isHovered.slice();
 			
@@ -133,13 +131,8 @@ class TTTGameUI extends Component {
 	goTo(turn) {
 		if(turn >= 0) {
 			this.props.model.update(this.update, turn);
-			const board = this.props.model.getBoard().toOutputBoard();
-			this.setState({board: board});
+			this.setState({board: this.props.model.getBoard().toOutputBoard()});
 		}
-	}
-
-	getSide() {
-		return this.props.gametype==0? this.props.model.getTurn()%2: this.props.player;
 	}
 	
 	// callback
@@ -164,9 +157,10 @@ class TTTGameUI extends Component {
 		const newGame = this.state.newGame;
 		
 		let info  = "TTT";
-		let evaluation = TTTEvaluator.evaluate(current);
-		if(evaluation !== null)
+		if(this.props.model.isGameOver()) {
+			let evaluation = TTTEvaluator.evaluate(current);
 			info = evaluation === 0? 'Tie': evaluation === -1? 'X Wins': 'O Wins';
+		}
 
 		return (
 			<div className="ttt-game font unselectable">

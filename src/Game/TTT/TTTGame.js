@@ -1,5 +1,8 @@
 import { Move } from "../Move.js";
 
+    /*---------------------------------------------------------------------------------------------------
+     *                                        TTTBoard - ttt board model
+     *---------------------------------------------------------------------------------------------------*/
 class TTTBoard {
     constructor(tttBoard = null, turn = null) {
         this.board = (tttBoard == null)? Array(9).fill(null) : tttBoard.board.slice();
@@ -36,6 +39,9 @@ class TTTBoard {
     }
 }
 
+    /*---------------------------------------------------------------------------------------------------
+     *                                      TTTGame - game logic
+     *---------------------------------------------------------------------------------------------------*/
 class TTTGame {
     constructor(gamemode, player) {
         this.history = [new TTTBoard()];
@@ -46,13 +52,12 @@ class TTTGame {
         this.gameOver = false;
     }
     
-    // private
-    goToTurn(callback, turn) {
+    // private - helper method
+    goToTurn(turn) {
         if(turn >= 0 && turn <= this.turn) {
             this.turn = turn;
             this.history = this.history.slice(0, turn + 1);
             this.gameOver = false;
-            this.notifyObservers(callback);
         }
     }
 
@@ -75,17 +80,22 @@ class TTTGame {
         return this.gameOver;
     }
 
-    // update model
+    // --- Observer pattern ---
     update(callback, newTurn, newMove=null) {
         if(newMove !== null && newTurn === this.turn + 1 && this.verifyMove(newMove)) {
-            let board = new TTTBoard(this.history[this.turn], ++this.turn);
-            board.set(newMove.row*3 + newMove.col, newMove.side===0? 'X':'O');
+            let board = new TTTBoard(this.history[this.turn], this.turn + 1);
+            board.set(newMove.row*3 + newMove.col, this.turn++%2===0? 'X':'O');
             this.gameOver = TTTEvaluator.evaluate(board) !== null;
             this.history.push(board);
-            this.notifyObservers(callback);
         }
-        else
-            this.goToTurn(callback, newTurn);
+        else if(turn >= 0 && turn <= this.turn) {
+            this.turn = turn;
+            this.history = this.history.slice(0, turn + 1);
+            this.gameOver = false;
+        }
+            //this.goToTurn(newTurn);
+
+        this.notifyObservers(callback);
     }
 
     addObserver(observer) {
@@ -107,6 +117,9 @@ class TTTGame {
     }
 }
 
+    /*---------------------------------------------------------------------------------------------------
+     *                  TTTEvaluator - game evaluator w/ weighted gamestate evaluations
+     *---------------------------------------------------------------------------------------------------*/
 class TTTEvaluator {
     static winningIndeces = [
             [0,1,2],
