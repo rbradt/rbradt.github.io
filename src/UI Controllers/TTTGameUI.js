@@ -62,8 +62,11 @@ class TTTBoardUI extends Component {
 class TTTGameUI extends Component {
 	constructor(props) { // IMPORTANT - React strictmode will call constructor and other lifecycle methods multiple times
 		super(props);	 // 			https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
-		var _this = this;
-		this.turn = 0;
+		
+		// this.props.observers // list of observers to be notified of user input on board
+		// this.props.gametype // specifies game type (0 = local, 1 = vsAI, 2 = vsPlayer)
+		// this.props.player // specifies player's turn (X or O)
+		// this.props.model
 
 		this.state = {
 			board: Array(9).fill(null),
@@ -71,32 +74,25 @@ class TTTGameUI extends Component {
 			newGame: true
 		};
 
-		//this.update = (model) => this.updateComponent(model, _this);
-
-		// this.props.observers // list of observers to be notified of user input on board
-		// this.props.gametype // specifies game type (0 = local, 1 = vsAI, 2 = vsPlayer)
-		// this.props.player // specifies player's turn (X or O)
-		// this.props.model
 		library.add(faUndo);
-		/*this.update = this.update.bind(this);*/
 	}
 
 	componentDidMount() {
-		this.props.model.addObserver(this);
+
 	}
 
 	tick() {
 		if(this.getSide() !== this.props.model.getTurn()%2) {
-			//poll server
-			//poll ai
+			//poll server - periodically poll server instead of awaiting instruction from an open connection
 		}
 	}
 	
 	onClick(i) {
 		const move = new Move(Math.floor(i/3), i%3, this.getSide());
+		const newTurn = this.props.model.getTurn() + 1;
 
 		if(this.props.model.verifyMove(move)) {
-			this.props.model.update(++this.turn, move);
+			this.props.model.update(this.update, newTurn, move);
 
 			const board = this.props.model.getBoard().toOutputBoard();
 			const isHovered = this.state.isHovered.slice();
@@ -136,27 +132,23 @@ class TTTGameUI extends Component {
 	
 	goTo(turn) {
 		if(turn >= 0) {
-			this.props.model.update(turn);
+			this.props.model.update(this.update, turn);
 			const board = this.props.model.getBoard().toOutputBoard();
 			this.setState({board: board});
 		}
 	}
 
 	getSide() {
-		return this.props.gametype==0? this.turn%2: this.props.player;
+		return this.props.gametype==0? this.props.model.getTurn()%2: this.props.player;
 	}
 	
-	// ReactDOM.render() will return this object, but the value of this will be unknown
-	//Observe TTT board model
-	update(model, info) {
-		const newBoard = model.getBoard().toOutputBoard();
-		this.turn = model.getTurn();
-		//console.log(this);
-		this.setState({board: newBoard});
+	// callback
+	update = () => function() {
+		setTimeout(()=>this.setState({board: this.props.model.getBoard().toOutputBoard()}), 1000);
 	}
 
 	undoButton() {
-		let newTurn = this.turn - (this.props.gametype + 1);
+		let newTurn = this.props.model.getTurn() - (this.props.gametype + 1);
 		if(this.props.gametype !== 2) 
 			return (
 				<div className="ttt-undo" onClick={() => this.goTo(newTurn)}>
@@ -180,7 +172,7 @@ class TTTGameUI extends Component {
 			<div className="ttt-game font unselectable">
 				<div>{info}</div>
 				<div>
-					<TTTBoardUI isNewGame={newGame} isHovered={hovered} turn={this.turn} board={current.toOutputBoard()} onClick={i => this.onClick(i)} onMouseIn={i => this.onMouseIn(i)} onMouseOut={i => this.onMouseOut(i)}/>
+					<TTTBoardUI isNewGame={newGame} isHovered={hovered} turn={this.props.model.getTurn()} board={current.toOutputBoard()} onClick={i => this.onClick(i)} onMouseIn={i => this.onMouseIn(i)} onMouseOut={i => this.onMouseOut(i)}/>
 				</div>
 				{this.undoButton()}
 			</div>

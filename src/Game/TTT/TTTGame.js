@@ -41,26 +41,26 @@ class TTTGame {
         this.history = [new TTTBoard()];
         this.turn = 0;
         this.gamemode = gamemode;
-        this.player = player;
+        this.player = (gamemode == 0 || player == 2)? null: player;
         this.observers = [];
-        this.isGameOver = false;
+        this.gameOver = false;
     }
     
     // private
-    goToTurn(turn) {
+    goToTurn(callback, turn) {
         if(turn >= 0 && turn <= this.turn) {
             this.turn = turn;
             this.history = this.history.slice(0, turn + 1);
-            this.isGameOver = false;
-            this.notifyObservers();
+            this.gameOver = false;
+            this.notifyObservers(callback);
         }
     }
 
     // public
     verifyMove(move) {
-        return !this.isGameOver
+        return !this.gameOver
                 && this.history[this.turn].at(move.row*3 + move.col) == null
-                && this.turn%2 == move.side;
+                && (this.player == null || this.turn%2 == this.player);
     }
 
     getBoard() {
@@ -71,18 +71,21 @@ class TTTGame {
         return this.turn;
     }
 
-    // Observer Pattern
-    update(newTurn, newMove=null) {
+    isGameOver() {
+        return this.gameOver;
+    }
+
+    // update model
+    update(callback, newTurn, newMove=null) {
         if(newMove !== null && newTurn === this.turn + 1 && this.verifyMove(newMove)) {
             let board = new TTTBoard(this.history[this.turn], ++this.turn);
             board.set(newMove.row*3 + newMove.col, newMove.side===0? 'X':'O');
-            console.log(board.toOutputBoard());
-            this.isGameOver = TTTEvaluator.evaluate(board) !== null;
+            this.gameOver = TTTEvaluator.evaluate(board) !== null;
             this.history.push(board);
-            this.notifyObservers(newMove.side);
+            this.notifyObservers(callback);
         }
         else
-            this.goToTurn(newTurn);
+            this.goToTurn(callback, newTurn);
     }
 
     addObserver(observer) {
@@ -99,10 +102,8 @@ class TTTGame {
     }
 
     notifyObservers(info = null) {
-        for(let i = 0; i < this.observers.length; i++) {
+        for(let i = 0; i < this.observers.length; i++)
             this.observers[i].update(this, info);
-            console.log(this.observers[i]);
-        }
     }
 }
 

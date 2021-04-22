@@ -65,7 +65,7 @@ class GameSelect extends Component {
                 </div>
             );
         else if(this.props.game === "ttt") {
-            this.game = new TTTGame(gamemode);
+            this.game = new TTTGame(gamemode, player);
             switch(gamemode*3 + player) {
                 case 3:
                 case 4:
