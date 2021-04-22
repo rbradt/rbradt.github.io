@@ -17,6 +17,7 @@ class GameSelect extends Component {
         }
         //this.hovered = Array(3).fill(false);
         library.add(faRobot, faUserFriends, faGlobe, faTimes, faDotCircle, faCog, faCircle);
+        this.game = null;
     }
 
     setGamemode(gamemode, player) {
@@ -64,16 +65,17 @@ class GameSelect extends Component {
                 </div>
             );
         else if(this.props.game === "ttt") {
+            this.game = new TTTGame(gamemode);
             switch(gamemode*3 + player) {
+                case 3:
+                case 4:
+                    /*let tttAI = new Minimax()
+                    tttGame.addObserver(tttAI);*/
                 case 0:
                 case 1:  
                 case 2:
-                    let tttGame = new TTTGame(player, gamemode);
-                    display = <TTTGameUI gametype={gamemode} player={player} TTTGame={tttGame} />;
-                case 3:
-                case 4:
-                    let tttAI = new Minimax()
-                    tttGame.addObserver(tttAI);
+                    display = <TTTGameUI gametype={gamemode} player={player} model={this.game} />;
+                    break;
                 case 5:
                     display =<div>ai vs ai</div>;
                     break;

@@ -1,17 +1,11 @@
 import { Move } from "../Move.js";
 
 class TTTBoard {
-    constructor() {
-        this.board = Array(9).fill(null);
-        this.turn = 0;
+    constructor(tttBoard = null, turn = null) {
+        this.board = (tttBoard == null)? Array(9).fill(null) : tttBoard.board.slice();
+        this.turn = (turn == null)? 0 : turn;
         this.movesIterator = 0;
     }
-
-    /*constructor(TTTBoard, turn) {
-        this.board = TTTBoard.board.slice();
-        this.turn = turn;
-        this.movesIterator = 0;
-    }*/
 
     at(i) {return this.board[i];}
     set(i, data) {this.board[i] = data;}
@@ -43,11 +37,11 @@ class TTTBoard {
 }
 
 class TTTGame {
-    constructor(player, gamemode) {
+    constructor(gamemode, player) {
         this.history = [new TTTBoard()];
         this.turn = 0;
-        this.player = player;
         this.gamemode = gamemode;
+        this.player = player;
         this.observers = [];
         this.isGameOver = false;
     }
@@ -57,15 +51,16 @@ class TTTGame {
         if(turn >= 0 && turn <= this.turn) {
             this.turn = turn;
             this.history = this.history.slice(0, turn + 1);
+            this.isGameOver = false;
             this.notifyObservers();
         }
     }
 
     // public
     verifyMove(move) {
-        return TTTEvaluator.evaluate(this.getBoard()) == null
-                && this.history[this.turn].at(move.row()*3 + move.col()) == null
-                && (this.gamemode==0 || this.turn%2==move.side());
+        return !this.isGameOver
+                && this.history[this.turn].at(move.row*3 + move.col) == null
+                && this.turn%2 == move.side;
     }
 
     getBoard() {
@@ -76,30 +71,38 @@ class TTTGame {
         return this.turn;
     }
 
-    isPlayersMove() {
-        return this.gamemode==0 || this.turn%2 == this.player;
-    } 
-
     // Observer Pattern
-    update(turn, move=null) {
-        if(turn == ++this.turn && this.verifyMove(move)) {
-            let board = new TTTBoard(this.history[this.turn - 1], this.turn);
-            board.set(move.row()*3 + move.col(), move.side()==0? 'X':'O');
-            this.isGameOver = TTTEvaluator.evaluate(board);
+    update(newTurn, newMove=null) {
+        if(newMove !== null && newTurn === this.turn + 1 && this.verifyMove(newMove)) {
+            let board = new TTTBoard(this.history[this.turn], ++this.turn);
+            board.set(newMove.row*3 + newMove.col, newMove.side===0? 'X':'O');
+            console.log(board.toOutputBoard());
+            this.isGameOver = TTTEvaluator.evaluate(board) !== null;
             this.history.push(board);
-            this.notifyObservers();
+            this.notifyObservers(newMove.side);
         }
         else
-            this.goToTurn(turn);
+            this.goToTurn(newTurn);
     }
 
     addObserver(observer) {
-        this.observers.push(observer);
+        // prevent duplicate observers from being added
+        let duplicate = false;
+        for(let i = 0; i < this.observers.length; i++)
+            if(typeof observer === typeof this.observers[i]) {
+                duplicate = true;
+                break;
+            }
+
+        if(!duplicate)
+            this.observers.push(observer);
     }
 
-    notifyObservers(message = null) {
-        for(let i = 0; i < this.observers.length; i++)
-            this.observers[i].update(this, message);
+    notifyObservers(info = null) {
+        for(let i = 0; i < this.observers.length; i++) {
+            this.observers[i].update(this, info);
+            console.log(this.observers[i]);
+        }
     }
 }
 
@@ -116,11 +119,11 @@ class TTTEvaluator {
         ];
 
     static evaluate(TTTBoard, weighted=false) {
-        for(let i = 0; i < this.winningIndeces.length(); i++) {
+        for(let i = 0; i < this.winningIndeces.length; i++) {
             let order = this.winningIndeces[i];
             if(TTTBoard.at(order[0]) != null && TTTBoard.at(order[0]) === TTTBoard.at(order[1]) && TTTBoard.at(order[0]) === TTTBoard.at(order[2])) {
-                let eval = TTTBoard.at(order[0]) === 'X'? -1: 1;
-                return weighted? eval*(100 - TTTBoard.getTurn()): eval;
+                let evaluation = TTTBoard.at(order[0]) === 'X'? -1: 1;
+                return weighted? evaluation*(100 - TTTBoard.getTurn()): evaluation;
             }       
         }
 
@@ -128,7 +131,7 @@ class TTTEvaluator {
     }
 }
 
-export{TTTGame, TTTBoard};
+export{TTTGame, TTTBoard, TTTEvaluator};
 
 /* IN AI
 update(game) {

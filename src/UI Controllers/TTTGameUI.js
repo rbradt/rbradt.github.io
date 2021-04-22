@@ -2,6 +2,8 @@ import {Component} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faUndo} from '@fortawesome/free-solid-svg-icons';
+import {Move} from "../Game/Move.js"
+import {TTTEvaluator} from "../Game/TTT/TTTGame.js";
 import '../CSS/ttt_board.css';
 
 // Board Controller
@@ -58,53 +60,61 @@ class TTTBoardUI extends Component {
 }
 
 class TTTGameUI extends Component {
-	constructor(props) {
-		super(props);
+	constructor(props) { // IMPORTANT - React strictmode will call constructor and other lifecycle methods multiple times
+		super(props);	 // 			https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
 		var _this = this;
+		this.turn = 0;
+
 		this.state = {
 			board: Array(9).fill(null),
-			/*moves: [{board: Array(9).fill(null)}],*/
 			isHovered: Array(9).fill(false),
-			newGame: true,
-			turn: 0
+			newGame: true
 		};
-		library.add(faUndo);
-		this.props.model.addObserver(this);
+
+		//this.update = (model) => this.updateComponent(model, _this);
+
 		// this.props.observers // list of observers to be notified of user input on board
 		// this.props.gametype // specifies game type (0 = local, 1 = vsAI, 2 = vsPlayer)
 		// this.props.player // specifies player's turn (X or O)
 		// this.props.model
+		library.add(faUndo);
+		/*this.update = this.update.bind(this);*/
+	}
+
+	componentDidMount() {
+		this.props.model.addObserver(this);
+	}
+
+	tick() {
+		if(this.getSide() !== this.props.model.getTurn()%2) {
+			//poll server
+			//poll ai
+		}
 	}
 	
 	onClick(i) {
-		const thisMove = new Move(i/3, i%3, this.props.player);
+		const move = new Move(Math.floor(i/3), i%3, this.getSide());
 
-		if(this.model.verifyMove(thisMove)) {
-			/*const moves = this.state.moves.slice(0, this.state.turn + 1);
-			const active = moves[this.state.turn];
-			const board = active.board.slice();*/
+		if(this.props.model.verifyMove(move)) {
+			this.props.model.update(++this.turn, move);
+
 			const board = this.props.model.getBoard().toOutputBoard();
 			const isHovered = this.state.isHovered.slice();
 
-			// update observer
-			this.props.model.update(this.state.turn, new Move(i/3, i%3, this.props.player));
-
 			// update ui
 			isHovered[i] = false;
-			board[i] = this.state.turn%2 === 0? 'X': 'O';
+
 			this.setState({
-				/*moves: moves.concat([{board: board}]),*/
 				board: board,
 				isHovered: isHovered,
-				turn: moves.length,
 				newGame: false
 			});
 		}
 	}
 	
 	onMouseIn(i) {
-		const thisMove = new Move(i/3, i%3, this.props.player);
-		if(this.model.verifyMove(thisMove)) {
+		const move = new Move(Math.floor(i/3), i%3, this.getSide());
+		if(this.props.model.verifyMove(move)) {
 			const isHovered = this.state.isHovered.slice();
 			
 			// update ui
@@ -114,8 +124,8 @@ class TTTGameUI extends Component {
 	}
 	
 	onMouseOut(i) {
-		const thisMove = new Move(i/3, i%3, this.props.player);
-		if(this.model.verifyMove(thisMove)) {
+		const move = new Move(Math.floor(i/3), i%3, this.getSide());
+		if(this.props.model.verifyMove(move)) {
 			const isHovered = this.state.isHovered.slice();
 			
 			// update ui
@@ -124,42 +134,29 @@ class TTTGameUI extends Component {
 		}
 	}
 	
-	goTo(move) {
-		if(move >= 0) {
-			this.props.model.update(move);
-			/*this.setState({turn: move});*/
+	goTo(turn) {
+		if(turn >= 0) {
+			this.props.model.update(turn);
+			const board = this.props.model.getBoard().toOutputBoard();
+			this.setState({board: board});
 		}
+	}
+
+	getSide() {
+		return this.props.gametype==0? this.turn%2: this.props.player;
 	}
 	
 	// ReactDOM.render() will return this object, but the value of this will be unknown
 	//Observe TTT board model
-	update(model) {
-		if(!this.props.model.getBoard().equals(model)) {
-			const newTurn = model.getTurn();
-			const newBoard = model.toOutputBoard();
-			/*const moves = this.state.moves.slice(0, newTurn);*/
-			
-			this.setState({
-				/*moves: moves.concat([{board: newBoard}]),*/
-				board: newBoard,
-				turn: newTurn
-			});
-		}
-	}
-	
-	// Notify model of user input
-	notifyObservers(activeBoard) {
-		for(var i = 0; i < this.props.observers.length; i++)
-			this.props.observers[i].update(/*new model(activeBoard)*/);
+	update(model, info) {
+		const newBoard = model.getBoard().toOutputBoard();
+		this.turn = model.getTurn();
+		//console.log(this);
+		this.setState({board: newBoard});
 	}
 
-	/*shouldComponentUpdate() {
-		// may be unecessary
-		return true;
-	}*/
-
-	undoButton(turn) {
-		let newTurn = turn - (this.props.gametype + 1);
+	undoButton() {
+		let newTurn = this.turn - (this.props.gametype + 1);
 		if(this.props.gametype !== 2) 
 			return (
 				<div className="ttt-undo" onClick={() => this.goTo(newTurn)}>
@@ -170,25 +167,22 @@ class TTTGameUI extends Component {
 	}
 	
 	render() {
-		/*const moves = this.state.moves;*/
-		const turn = this.state.turn;
-		/*const current = moves[turn];*/
 		const current = this.props.model.getBoard();
 		const hovered = this.state.isHovered;
 		const newGame = this.state.newGame;
 		
-		let info = 'Game Over -> ';
-		let eval = TTTEvaluator.evaluate(current);
-		if(eval !== null)
-			info += eval === 0? 'Tie': eval === -1? 'X Wins': 'O Wins';
+		let info  = "TTT";
+		let evaluation = TTTEvaluator.evaluate(current);
+		if(evaluation !== null)
+			info = evaluation === 0? 'Tie': evaluation === -1? 'X Wins': 'O Wins';
 
 		return (
 			<div className="ttt-game font unselectable">
 				<div>{info}</div>
 				<div>
-					<TTTBoardUI isNewGame={newGame} isHovered={hovered} turn={turn} board={current.toOutputBoard()} onClick={i => this.onClick(i)} onMouseIn={i => this.onMouseIn(i)} onMouseOut={i => this.onMouseOut(i)}/>
+					<TTTBoardUI isNewGame={newGame} isHovered={hovered} turn={this.turn} board={current.toOutputBoard()} onClick={i => this.onClick(i)} onMouseIn={i => this.onMouseIn(i)} onMouseOut={i => this.onMouseOut(i)}/>
 				</div>
-				{this.undoButton(turn)}
+				{this.undoButton()}
 			</div>
 		);
 	}

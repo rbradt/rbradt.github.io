@@ -5,9 +5,9 @@ class Move {
         this.side = side;
     }
 
-    row() {return this.row;}
-    col() {return this.col;}
-    side() {return this.side;}
+    getRow() {return this.row;}
+    getCol() {return this.col;}
+    getSide() {return this.side;}
 }
 
 export {Move};
