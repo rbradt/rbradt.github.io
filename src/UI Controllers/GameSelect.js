@@ -20,28 +20,19 @@ class GameSelect extends Component {
         this.game = null;
     }
 
-    setGamemode(gamemode, player) {
-        this.setState({
-            gamemode: gamemode,
-            player: player,
-        });
-    }
+    setGamemode = (gamemode, player) => this.setState({gamemode: gamemode, player: player});
+
+    back = () => this.setState({gamemode: -1});
 
     setHovered(i) {
-        if(this.state.hovered == i)
-            return;
-
-        this.setState({hovered: i});
-    }
-
-    back() {
-        this.setState({gamemode: -1});
+        if(this.state.hovered != i)
+            this.setState({hovered: i});
     }
 
     panelButton(index) {
         switch(this.props.game) {
             case "ttt":
-                return <TTTGameSelectButton i={index} gamemode={this.state.gamemode} hovered={this.state.hovered} firstInst={this.state.firstInst} setHovered={() => this.setHovered(index)} onClick={(g,p)=>this.setGamemode(g,p)}/>;
+                return <TTTGameSelectButton i={index} gamemode={this.state.gamemode} hovered={this.state.hovered} firstInst={this.state.firstInst} setHovered={() => this.setHovered(index)} onClick={this.setGamemode}/>;
             case "chess":
                 break;
         }
@@ -61,7 +52,7 @@ class GameSelect extends Component {
                         {this.panelButton(1)}
                         {this.panelButton(2)}
                     </div>
-                    {(gamemode == -1)? null: <div onClick={()=>this.back()}>Back</div>}
+                    {(gamemode == -1)? null: <div onClick={this.back}>Back</div>}
                 </div>
             );
         else if(this.props.game === "ttt") {
@@ -69,15 +60,14 @@ class GameSelect extends Component {
             switch(gamemode*3 + player) {
                 case 3:
                 case 4:
+                case 5:
+                    display =<div>ai vs ai</div>;
                     /*let tttAI = new Minimax()
                     tttGame.addObserver(tttAI);*/
                 case 0:
                 case 1:  
                 case 2:
-                    display = <TTTGameUI gametype={gamemode} player={player} model={this.game} />;
-                    break;
-                case 5:
-                    display =<div>ai vs ai</div>;
+                    display = <TTTGameUI gametype={gamemode} model={this.game} />;
                     break;
                 case 6:
                 case 7:
@@ -112,7 +102,7 @@ class TTTGameSelectButton extends Component {
             style = this.props.gamemode==1? {filter: "blur(10px)", flexDirection: "row"}: {filter: "blur(10px)", flexDirection: "column"};
 
         return(
-            <div className="game-select-panel" style={style} onMouseEnter={()=>this.props.setHovered()} onClick={()=>this.props.onClick(selectedMode, selectedPlayer)}>
+            <div className="game-select-panel" style={style} onMouseEnter={this.props.setHovered} onClick={() => this.props.onClick(selectedMode, selectedPlayer)}>
                 <FontAwesomeIcon icon={icons[j]}/>
                 <div>{gamemodes[j]}</div>
                 {this.props.gamemode==1? <FontAwesomeIcon icon={aiIcons[this.props.i]}/>: null}

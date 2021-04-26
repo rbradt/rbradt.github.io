@@ -51,17 +51,7 @@ class TTTGame {
         this.observers = [];
         this.gameOver = false;
     }
-    
-    // private - helper method
-    goToTurn(turn) {
-        if(turn >= 0 && turn <= this.turn) {
-            this.turn = turn;
-            this.history = this.history.slice(0, turn + 1);
-            this.gameOver = false;
-        }
-    }
 
-    // public
     verifyMove(move) {
         return !this.gameOver
                 && this.history[this.turn].at(move.row*3 + move.col) == null
@@ -81,39 +71,36 @@ class TTTGame {
     }
 
     // --- Observer pattern ---
-    update(callback, newTurn, newMove=null) {
-        if(newMove !== null && newTurn === this.turn + 1 && this.verifyMove(newMove)) {
+    update(callback, info) {
+        let isUpdateValid = false;
+        
+        // add new move
+        if(info instanceof Move && this.verifyMove(info)) {
             let board = new TTTBoard(this.history[this.turn], this.turn + 1);
-            board.set(newMove.row*3 + newMove.col, this.turn++%2===0? 'X':'O');
+            board.set(info.row*3 + info.col, this.turn++%2===0? 'X':'O');
             this.gameOver = TTTEvaluator.evaluate(board) !== null;
             this.history.push(board);
+            isUpdateValid = true;
         }
-        else if(turn >= 0 && turn <= this.turn) {
-            this.turn = turn;
-            this.history = this.history.slice(0, turn + 1);
+        // rollback to previous turn
+        else if(typeof info == 'number' && info >= 0 && info <= this.turn) {
+            this.turn = info;
+            this.history = this.history.slice(0, info + 1);
             this.gameOver = false;
+            isUpdateValid = true;
         }
-            //this.goToTurn(newTurn);
 
-        this.notifyObservers(callback);
+        if(callback != null && isUpdateValid)
+            this.notifyObservers(callback);
     }
 
     addObserver(observer) {
-        // prevent duplicate observers from being added
-        let duplicate = false;
-        for(let i = 0; i < this.observers.length; i++)
-            if(typeof observer === typeof this.observers[i]) {
-                duplicate = true;
-                break;
-            }
-
-        if(!duplicate)
-            this.observers.push(observer);
+        this.observers.push(observer);
     }
 
-    notifyObservers(info = null) {
+    notifyObservers(callback) {
         for(let i = 0; i < this.observers.length; i++)
-            this.observers[i].update(this, info);
+            this.observers[i].update(callback, this);
     }
 }
 

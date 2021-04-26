@@ -91,8 +91,7 @@ class TTTGameUI extends Component {
 		const move = new Move(Math.floor(i/3), i%3);
 		if(this.props.model.verifyMove(move)) {
 			// update model
-			const newTurn = this.props.model.getTurn() + 1;
-			this.props.model.update(this.update, newTurn, move);
+			this.props.model.update(this.update, move);
 			
 			// update ui
 			const isHovered = this.state.isHovered.slice();
