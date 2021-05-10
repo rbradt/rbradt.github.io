@@ -38,6 +38,7 @@
 	float: left;
 	font-family: monospace;
 	font-size: 13px;
+	transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .nav-button:hover {
@@ -51,6 +52,7 @@
 .nav-button:active {
 	color: white;
 	transform: translateY(0px) translateX(0px);
+	transition: transform 0.1s, box-shadow 0.1s;
 	box-shadow: 0 0;
 	text-shadow: 0 0 4px #ccccff;
 }

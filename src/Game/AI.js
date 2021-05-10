@@ -45,7 +45,7 @@ class Minimax {
     minimax(board, depth, alpha, beta, maximizer) {
         let optimalPos = 0;
 
-        let value = this.evaluate(board, true);                                    // return evaluation of final board state
+        let value = this.evaluate(board, true);                                     // return evaluation of final board state
         if(value != null)
             return value;
 
@@ -55,13 +55,13 @@ class Minimax {
         while(nextMove != null) {                                    
             value = Minimax.minimax(nextMove, depth + 1, alpha, beta, !maximizer);  // recurse on possible move
 
-            if((maximizer && minmax < value) || (!maximizer && minmax > value)) {       // update max/min
+            if((maximizer && minmax < value) || (!maximizer && minmax > value)) {   // update max/min
                 minmax = value;
                 if(depth == 0)
                     optimalPos = i;
             }
 
-            if(maximizer && value > alpha)                                              // prune
+            if(maximizer && value > alpha)                                          // prune
                 alpha = value;
             if(!maximizer && value < beta)
                 beta = value;

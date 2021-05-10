@@ -83,7 +83,7 @@ class TTTGame {
             isUpdateValid = true;
         }
         // rollback to previous turn
-        else if(typeof info == 'number' && info >= 0 && info <= this.turn) {
+        else if(typeof info == 'number' && info >= 0 && info <= this.turn) { // NEED TO DO - allow negative turn, but set turn to zero
             this.turn = info;
             this.history = this.history.slice(0, info + 1);
             this.gameOver = false;
