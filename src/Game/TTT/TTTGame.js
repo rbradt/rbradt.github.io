@@ -70,6 +70,10 @@ class TTTGame {
         return this.gameOver;
     }
 
+    isPlayerMove() {
+        return this.turn%2 == this.player;
+    }
+
     // --- Observer pattern ---
     update(callback, info) {
         let isUpdateValid = false;
@@ -133,10 +137,3 @@ class TTTEvaluator {
 }
 
 export{TTTGame, TTTBoard, TTTEvaluator};
-
-/* IN AI
-update(game) {
-    if(!game.isPlayersMove())
-        // generate move
-        notifyObservers(turn, move)
-}*/

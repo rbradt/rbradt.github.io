@@ -18,11 +18,12 @@ class AI {
 
 class Minimax extends AI {
     constructor(evaluate) {
+        super();
         this.evaluate = evaluate;
     }
 
     update(callback, model) {
-        if(callback != null) {
+        if(!model.isPlayerMove()) {
             // update model
             this.notifyObservers(this.generateTurn(model.getBoard()));
 
@@ -32,14 +33,14 @@ class Minimax extends AI {
     }
 
     generateTurn(board) {
-        let pos = minimax(board, 0, alpha, beta, board.getTurn()%2 == 1);
+        let pos = this.minimax(board, 0, alpha, beta, board.getTurn()%2 == 1);
         return new Move(Math.floor(pos/3), pos%3);
     }
 
     minimax(board, depth, alpha, beta, maximizer) {
         let optimalPos = 0;
 
-        let value = this.evaluate(board, true);                                     // return evaluation of final board state
+        let value = this.evaluate(board);                                     // return evaluation of final board state
         if(value != null)
             return value;
 
@@ -47,7 +48,7 @@ class Minimax extends AI {
         board.resetMoveIterator();
         let nextMove = getNextMove();
         while(nextMove != null) {                                    
-            value = Minimax.minimax(nextMove, depth + 1, alpha, beta, !maximizer);  // recurse on possible move
+            value = this.minimax(nextMove, depth + 1, alpha, beta, !maximizer);  // recurse on possible move
 
             if((maximizer && minmax < value) || (!maximizer && minmax > value)) {   // update max/min
                 minmax = value;

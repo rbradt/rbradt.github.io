@@ -127,7 +127,6 @@ class TTTGameUI extends Component {
 		}
 	}
 	
-	// NEED TO DO - allow negative turn, but set turn to zero
 	goTo(turn) {
 		this.props.model.update(this.update, turn);
 		this.setState({board: this.props.model.getBoard().toOutputBoard()});

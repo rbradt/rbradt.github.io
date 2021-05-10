@@ -1,5 +1,6 @@
 import {TTTGameUI} from "./TTTGameUI.js"
-import {TTTGame, TTTBoard} from "../Game/TTT/TTTGame.js"
+import {TTTGame, TTTEvaluator} from "../Game/TTT/TTTGame.js"
+import {Minimax} from "../Game/AI.js"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faRobot, faUserFriends, faGlobe, faTimes, faDotCircle, faCog} from "@fortawesome/free-solid-svg-icons";
@@ -62,8 +63,8 @@ class GameSelect extends Component {
                 case 4:
                 case 5:
                     display =<div>ai vs ai</div>;
-                    /*let tttAI = new Minimax()
-                    tttGame.addObserver(tttAI);*/
+                    let tttAI = new Minimax((board) => TTTEvaluator.evaluate(board, true));
+                    this.game.addObserver(tttAI);
                 case 0:
                 case 1:  
                 case 2:
