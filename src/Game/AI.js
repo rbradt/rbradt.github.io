@@ -1,7 +1,6 @@
 
 class AI {
-    constructor(ai, game) {
-        this.AI = ai;
+    constructor() {
         this.observers = [];
     }
 
@@ -14,27 +13,22 @@ class AI {
             this.observers[i].update(null, move);
     }
 
+    update(callback, model) {return null;}
+}
+
+class Minimax extends AI {
+    constructor(evaluate) {
+        this.evaluate = evaluate;
+    }
+
     update(callback, model) {
         if(callback != null) {
-            // get turn
-            switch(this.AI_type) {
-                case "Minimax":
-
-            }
-
-
             // update model
-            this.notifyObservers();
+            this.notifyObservers(this.generateTurn(model.getBoard()));
 
             // update UI
             callback();
         }
-    }
-}
-
-class Minimax {
-    constructor(evaluate) {
-        this.evaluate = evaluate;
     }
 
     generateTurn(board) {
