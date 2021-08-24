@@ -29,7 +29,7 @@ class Minimax extends AI {
             setTimeout(()=>this.notifyObservers(this.generateTurn(model.getBoard())), 1);
 
             // update UI
-            callback();
+            callback(200);
         }
     }
 

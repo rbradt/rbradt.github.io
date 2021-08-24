@@ -91,7 +91,7 @@ class TTTGameUI extends Component {
 		const move = new Move(Math.floor(i/3), i%3);
 		if(this.props.model.verifyMove(move)) {
 			// update model
-			this.props.model.update(() => this.update(), move);
+			this.props.model.update(delay => this.update(delay), move);
 			
 			// update ui
 			const isHovered = this.state.isHovered.slice();
@@ -128,15 +128,15 @@ class TTTGameUI extends Component {
 	}
 	
 	goTo(turn) {
-		this.props.model.update(() => this.update(), turn);
+		this.props.model.update(delay => this.update(0), turn);
 		this.setState({board: this.props.model.getBoard().toOutputBoard()});
 	}
 
-	update() {
+	update(delay) {
 		setTimeout(() => this.setState((state, props) => {
 			console.log(props.model.getBoard().toOutputBoard());
 			return {board: props.model.getBoard().toOutputBoard()}
-		}), 100);
+		}), delay);
 	}
 
 	undoButton() {
