@@ -26,10 +26,10 @@ class Minimax extends AI {
     update(callback, model) {
         if(!(model.isPlayerMove() || model.isGameOver())) {
             // update model
-            this.notifyObservers(this.generateTurn(model.getBoard()));
+            setTimeout(()=>this.notifyObservers(this.generateTurn(model.getBoard())), 1);
 
             // update UI
-            callback(1);
+            callback();
         }
     }
 

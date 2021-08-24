@@ -30,10 +30,8 @@ class TTTBoard {
     resetMoveIterator() {this.movesIterator = -1;}
     getMoveIterator() {return this.movesIterator;}
     getNextMove() {
-        this.movesIterator++;
-        while(this.board[this.movesIterator] != null && this.movesIterator < 9)
-            this.movesIterator++;
-            
+        while(this.board[++this.movesIterator] != null && this.movesIterator < 9){}
+
         if(this.movesIterator > 8)
             return null;
 

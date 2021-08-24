@@ -91,7 +91,7 @@ class TTTGameUI extends Component {
 		const move = new Move(Math.floor(i/3), i%3);
 		if(this.props.model.verifyMove(move)) {
 			// update model
-			this.props.model.update(this.update, move);
+			this.props.model.update(() => this.update(), move);
 			
 			// update ui
 			const isHovered = this.state.isHovered.slice();
@@ -117,33 +117,35 @@ class TTTGameUI extends Component {
 	}
 	
 	onMouseOut(i) {
-	/*	const move = new Move(Math.floor(i/3), i%3);
+		const move = new Move(Math.floor(i/3), i%3);
 		if(this.props.model.verifyMove(move)) {
 			const isHovered = this.state.isHovered.slice();
 			
 			// update ui
 			isHovered[i] = false;
 			this.setState({isHovered: isHovered});
-		}*/
+		}
 	}
 	
 	goTo(turn) {
-		this.props.model.update(this.update, turn);
+		this.props.model.update(() => this.update(), turn);
 		this.setState({board: this.props.model.getBoard().toOutputBoard()});
 	}
-	
-	// callback
-	update = () => function() {
-		console.log("callback");
-		setTimeout(()=>this.setState({board: this.props.model.getBoard().toOutputBoard()}), 100000);
+
+	update() {
+		setTimeout(() => this.setState((state, props) => {
+			console.log(props.model.getBoard().toOutputBoard());
+			return {board: props.model.getBoard().toOutputBoard()}
+		}), 100);
 	}
 
 	undoButton() {
-		let newTurn = this.props.model.getTurn() - (this.props.gametype + 1);
+		let gameOver = this.props.model.isGameOver();
+		let newTurn = gameOver? 0: this.props.model.getTurn() - (this.props.gametype + 1);
 		if(this.props.gametype !== 2) 
 			return (
 				<div className="ttt-undo" onClick={() => this.goTo(newTurn)}>
-					<div>Undo</div>
+					<div>{gameOver? "Restart": "Undo"}</div>
 					<div className=""><FontAwesomeIcon icon='undo'/></div>
 				</div>
 			);
