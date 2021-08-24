@@ -27,14 +27,18 @@ class TTTBoard {
     }
 
     // iterator for all possible moves from current board state
-    resetMoveIterator() {this.movesIterator = 0;}
+    resetMoveIterator() {this.movesIterator = -1;}
+    getMoveIterator() {return this.movesIterator;}
     getNextMove() {
-        while(this.board[this.movesIterator] != null)
-            if(++this.movesIterator > 8)
-                return null;
+        this.movesIterator++;
+        while(this.board[this.movesIterator] != null && this.movesIterator < 9)
+            this.movesIterator++;
+            
+        if(this.movesIterator > 8)
+            return null;
 
         let newMove = new TTTBoard(this, this.turn + 1);
-        newMove.board[this.movesIterator] = (newMove.turn%2 == 0)? 'X': 'O';
+        newMove.board[this.movesIterator] = (this.turn%2 == 0)? 'X': 'O';
         return newMove;
     }
 }
@@ -79,7 +83,7 @@ class TTTGame {
         let isUpdateValid = false;
         
         // add new move
-        if(info instanceof Move && this.verifyMove(info)) {
+        if(info instanceof Move && (this.verifyMove(info) || callback == null)) {
             let board = new TTTBoard(this.history[this.turn], this.turn + 1);
             board.set(info.row*3 + info.col, this.turn++%2===0? 'X':'O');
             this.gameOver = TTTEvaluator.evaluate(board) !== null;

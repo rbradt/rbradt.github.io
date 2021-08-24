@@ -64,6 +64,7 @@ class GameSelect extends Component {
                 case 5:
                     display =<div>ai vs ai</div>;
                     let tttAI = new Minimax((board) => TTTEvaluator.evaluate(board, true));
+                    tttAI.addObserver(this.game);
                     this.game.addObserver(tttAI);
                 case 0:
                 case 1:  

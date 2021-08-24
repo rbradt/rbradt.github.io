@@ -1,3 +1,4 @@
+import { Move } from "./Move.js";
 
 class AI {
     constructor() {
@@ -23,47 +24,51 @@ class Minimax extends AI {
     }
 
     update(callback, model) {
-        if(!model.isPlayerMove()) {
+        if(!(model.isPlayerMove() || model.isGameOver())) {
             // update model
             this.notifyObservers(this.generateTurn(model.getBoard()));
 
             // update UI
-            callback();
+            callback(1);
         }
     }
 
     generateTurn(board) {
-        let pos = this.minimax(board, 0, alpha, beta, board.getTurn()%2 == 1);
-        return new Move(Math.floor(pos/3), pos%3);
+        let pos = this.minimax(board, 0, -1000, 1000, board.getTurn()%2 == 1);
+        return new Move(Math.floor(pos/3), pos%3, board.getTurn());
     }
 
     minimax(board, depth, alpha, beta, maximizer) {
         let optimalPos = 0;
 
-        let value = this.evaluate(board);                                     // return evaluation of final board state
+        // return evaluation of final board state 
+        let value = this.evaluate(board);
         if(value != null)
             return value;
 
-        let minmax = (maximizer)? Integer.MIN_VALUE: Integer.MAX_VALUE;
+        let minmax = (maximizer)? -1000: 1000;
         board.resetMoveIterator();
-        let nextMove = getNextMove();
-        while(nextMove != null) {                                    
-            value = this.minimax(nextMove, depth + 1, alpha, beta, !maximizer);  // recurse on possible move
+        let nextMove = board.getNextMove();
+        while(nextMove != null) {
+            // recurse on possible move                                    
+            value = this.minimax(nextMove, depth + 1, alpha, beta, !maximizer);  
 
-            if((maximizer && minmax < value) || (!maximizer && minmax > value)) {   // update max/min
+            // update max/min
+            if((maximizer && minmax < value) || (!maximizer && minmax > value)) {   
                 minmax = value;
                 if(depth == 0)
-                    optimalPos = i;
+                    optimalPos = board.getMoveIterator();
             }
 
-            if(maximizer && value > alpha)                                          // prune
+            // prune 
+            if(maximizer && value > alpha) 
                 alpha = value;
             if(!maximizer && value < beta)
                 beta = value;
             if(beta <= alpha)
                 break;
 
-            nextMove = getNextMove();
+            nextMove = board.getNextMove();
         }
 
         if(depth == 0)
@@ -71,6 +76,6 @@ class Minimax extends AI {
 
         return minmax;
     }
-
-
 }
+
+export {Minimax};

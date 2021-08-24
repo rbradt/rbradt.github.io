@@ -64,8 +64,8 @@ class TTTGameUI extends Component {
 		super(props);	 // 			https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
 		
 		// this.props.observers // list of observers to be notified of user input on board
-		// this.props.gametype // specifies game type (0 = local, 1 = vsAI, 2 = vsPlayer)
-		// this.props.player // specifies player's turn (X or O)
+		// this.props.gametype  // specifies game type (0 = local, 1 = vsAI, 2 = vsPlayer)
+		// this.props.player    // specifies player's turn (X or O)
 		// this.props.model
 
 		this.state = {
@@ -117,14 +117,14 @@ class TTTGameUI extends Component {
 	}
 	
 	onMouseOut(i) {
-		const move = new Move(Math.floor(i/3), i%3);
+	/*	const move = new Move(Math.floor(i/3), i%3);
 		if(this.props.model.verifyMove(move)) {
 			const isHovered = this.state.isHovered.slice();
 			
 			// update ui
 			isHovered[i] = false;
 			this.setState({isHovered: isHovered});
-		}
+		}*/
 	}
 	
 	goTo(turn) {
@@ -134,7 +134,8 @@ class TTTGameUI extends Component {
 	
 	// callback
 	update = () => function() {
-		setTimeout(()=>this.setState({board: this.props.model.getBoard().toOutputBoard()}), 1000);
+		console.log("callback");
+		setTimeout(()=>this.setState({board: this.props.model.getBoard().toOutputBoard()}), 100000);
 	}
 
 	undoButton() {
