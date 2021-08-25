@@ -108,8 +108,8 @@ class MovingBanner extends Component {
 div.a {
   position:fixed;
   top: -100vh;
-  left: -600px;
-  width: 100vh;
+  left: -725px;
+  width: 120vh;
   background-color: rgb(240, 239, 238);
   font-size: 170px;
   color: rgb(15,16,17); 
@@ -120,14 +120,12 @@ div.a {
   justify-content: center;
   align-items: center;
 }
-
 .x {
 	display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
-
 @keyframes banner-slide {
 	from {
        	top:-90vh;
@@ -136,7 +134,6 @@ div.a {
         top:135vh;
     }
 }
-
 @media (prefers-reduced-motion: no-preference) {
 	div.a {
     	animation: banner-slide infinite 6s linear;
@@ -148,19 +145,16 @@ div.a {
 </style>
 </head>
 <body>
-
 <div class="x">
 	<div class="a">
-    	<div>______________</div>
+    	<div>__________________</div>
     	<div>RILEY BRADT</div>
     </div>
     <div class="a y">
-    	<div>______________</div>
+    	<div>___________________</div>
     	<div>RILEY BRADT</div>
     </div>
 </div>
-
-
 </body>
 </html>*/
 
