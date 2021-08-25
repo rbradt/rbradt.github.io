@@ -133,10 +133,7 @@ class TTTGameUI extends Component {
 	}
 
 	update(delay) {
-		setTimeout(() => this.setState((state, props) => {
-			console.log(props.model.getBoard().toOutputBoard());
-			return {board: props.model.getBoard().toOutputBoard()}
-		}), delay);
+		setTimeout(() => this.setState((state, props) => {return {board: props.model.getBoard().toOutputBoard()}}), delay);
 	}
 
 	undoButton() {
@@ -146,7 +143,7 @@ class TTTGameUI extends Component {
 			return (
 				<div className="ttt-undo" onClick={() => this.goTo(newTurn)}>
 					<div>{gameOver? "Restart": "Undo"}</div>
-					<div className=""><FontAwesomeIcon icon='undo'/></div>
+					<div className="ttt-undo-symbol"><FontAwesomeIcon icon='undo'/></div>
 				</div>
 			);
 	}
@@ -169,6 +166,7 @@ class TTTGameUI extends Component {
 					<TTTBoardUI isNewGame={newGame} isHovered={hovered} turn={this.props.model.getTurn()} board={current.toOutputBoard()} onClick={i => this.onClick(i)} onMouseIn={i => this.onMouseIn(i)} onMouseOut={i => this.onMouseOut(i)}/>
 				</div>
 				{this.undoButton()}
+				<div onClick={this.props.back}>Back</div>
 			</div>
 		);
 	}

@@ -11,19 +11,22 @@ import '../CSS/gameselect.css'
 class GameSelect extends Component {
     constructor(props) {
         super(props);
+        
+        this.game = null;
         this.state = {
             gamemode: -1,
             player: -1,
             hovered: 1
         }
-        //this.hovered = Array(3).fill(false);
+        
         library.add(faRobot, faUserFriends, faGlobe, faTimes, faDotCircle, faCog, faCircle);
-        this.game = null;
     }
 
     setGamemode = (gamemode, player) => this.setState({gamemode: gamemode, player: player});
 
     back = () => this.setState({gamemode: -1});
+
+    returnToSelect = () => this.setState({gamemode: -1, player: -1, hovered: 1});
 
     setHovered(i) {
         if(this.state.hovered != i)
@@ -53,7 +56,7 @@ class GameSelect extends Component {
                         {this.panelButton(1)}
                         {this.panelButton(2)}
                     </div>
-                    {(gamemode == -1)? null: <div onClick={this.back}>Back</div>}
+                    {(gamemode == -1)? null: <div onClick={() => this.back(1)}>Back</div>}
                 </div>
             );
         else if(this.props.game === "ttt") {
@@ -69,7 +72,7 @@ class GameSelect extends Component {
                 case 0:
                 case 1:  
                 case 2:
-                    display = <TTTGameUI gametype={gamemode} model={this.game} />;
+                    display = <TTTGameUI gametype={gamemode} model={this.game} back={this.returnToSelect} />;
                     break;
                 case 6:
                 case 7:
@@ -88,7 +91,7 @@ class GameSelect extends Component {
 class TTTGameSelectButton extends Component {
     render() {
         const icons = ['user-friends', 'robot', 'globe','times','robot','robot','times','dot-circle','cog'];
-        const gamemodes = ['Local', 'vs Computer', 'Online','vs','vs','vs','Quick Match', 'Quick Match', 'Custom Match'];
+        const gamemodes = ['Local', 'VS Computer', 'Online','vs','vs','vs','Quick Match', 'Quick Match', 'Custom Match'];
         const aiIcons = ['robot', 'dot-circle', 'robot'];
 
         const isGSMenu = this.props.gamemode == -1;

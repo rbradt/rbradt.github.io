@@ -82,4 +82,20 @@ class App extends Component {
   	
 }
 
+class MovingBanner extends Component {
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return (
+		<div>
+			<div></div>
+			<div>{this.props.scene}</div>
+			<div></div>
+		</div>
+		);
+	}
+}
+
 export default App;

@@ -48,9 +48,12 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-evenly;
-	min-width: 72px;
 	min-height: 28px;
 	color:rgb(255, 255, 255);
+}
+
+.ttt-undo-symbol {
+	padding: 0px 7.5px;
 }
 
 *.font {
