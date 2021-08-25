@@ -98,4 +98,71 @@ class MovingBanner extends Component {
 	}
 }
 
+// EXPERIMENTAL MOVING BANNER CODE
+// NEEDS FIXING
+
+/*<!DOCTYPE html>
+<html>
+<head>
+<style> 
+div.a {
+  position:fixed;
+  top: -100vh;
+  left: -600px;
+  width: 100vh;
+  background-color: rgb(240, 239, 238);
+  font-size: 170px;
+  color: rgb(15,16,17); 
+  -ms-transform: rotate(90deg);
+  transform: scale(-1, 1) rotate(90deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.x {
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes banner-slide {
+	from {
+       	top:-90vh;
+    }
+    to {
+        top:135vh;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	div.a {
+    	animation: banner-slide infinite 6s linear;
+    }
+    div.y {
+    	animation: banner-slide infinite 6s linear 3s;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="x">
+	<div class="a">
+    	<div>______________</div>
+    	<div>RILEY BRADT</div>
+    </div>
+    <div class="a y">
+    	<div>______________</div>
+    	<div>RILEY BRADT</div>
+    </div>
+</div>
+
+
+</body>
+</html>*/
+
+
 export default App;
