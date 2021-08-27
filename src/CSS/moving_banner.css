@@ -1,0 +1,62 @@
+.banner-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+    align-items: center;
+    background-image: url(https://i.redd.it/w8ws8kf51gs41.png);
+}
+
+.main-scene {
+    margin: 0px;
+    padding: 0px;
+    width: 85vw;
+}
+
+.banner {
+    width: 7.5vw;
+    height: calc(100vh - 52px);
+    overflow: hidden;
+    background-color: rgb(15, 16, 17, 1);
+}
+
+.pane {
+    position: relative;
+    width: 120vh;
+    font-size: 5vw;
+    color:  white;
+    display: flex;
+    justify-content: center;
+}
+
+.left {
+    -ms-transform: scale(-1, 1) rotate(90deg);
+    transform: scale(-1, 1) rotate(90deg);
+    left: calc(5.2vw - 120vh/2);
+}
+
+.right {
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    left: calc(2.3vw - 120vh/2);
+}
+
+@keyframes banner-slide {
+	0% {
+		top: -90vh;
+	}
+    50% {
+        top: 135vh;
+    }
+    100% {
+        top: 135vh;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.left {
+		animation: banner-slide infinite 10s linear;
+	}
+	.right {
+		animation: banner-slide infinite 10s linear 1s reverse;
+	}
+}

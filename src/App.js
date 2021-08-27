@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import {Component} from 'react';
 import {GameSelect} from './UI Controllers/GameSelect';
+import {MovingBanner} from './UI Controllers/MovingBanner';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faHome } from '@fortawesome/free-solid-svg-icons';
@@ -39,7 +40,7 @@ class App extends Component {
 
 			case 'nav_home':
 			default:
-				sceneToRender = (
+				sceneToRender = (<MovingBanner scene={
 					<div className="App">
 						<header className="App-header">
 							<img src={logo} className="App-logo" alt="logo" />
@@ -56,7 +57,7 @@ class App extends Component {
 							</a>
 						</header>
 					</div>
-				);
+				} ></MovingBanner>);
 		}
 
 		return sceneToRender;
@@ -81,82 +82,5 @@ class App extends Component {
 	}
   	
 }
-
-class MovingBanner extends Component {
-	constructor(props) {
-		super(props);
-	}
-
-	render() {
-		return (
-		<div>
-			<div></div>
-			<div>{this.props.scene}</div>
-			<div></div>
-		</div>
-		);
-	}
-}
-
-// EXPERIMENTAL MOVING BANNER CODE
-// NEEDS FIXING
-
-/*<!DOCTYPE html>
-<html>
-<head>
-<style> 
-div.a {
-  position:fixed;
-  top: -100vh;
-  left: -725px;
-  width: 120vh;
-  background-color: rgb(240, 239, 238);
-  font-size: 170px;
-  color: rgb(15,16,17); 
-  -ms-transform: rotate(90deg);
-  transform: scale(-1, 1) rotate(90deg);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.x {
-	display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-@keyframes banner-slide {
-	from {
-       	top:-90vh;
-    }
-    to {
-        top:135vh;
-    }
-}
-@media (prefers-reduced-motion: no-preference) {
-	div.a {
-    	animation: banner-slide infinite 6s linear;
-    }
-    div.y {
-    	animation: banner-slide infinite 6s linear 3s;
-    }
-}
-</style>
-</head>
-<body>
-<div class="x">
-	<div class="a">
-    	<div>__________________</div>
-    	<div>RILEY BRADT</div>
-    </div>
-    <div class="a y">
-    	<div>___________________</div>
-    	<div>RILEY BRADT</div>
-    </div>
-</div>
-</body>
-</html>*/
-
 
 export default App;

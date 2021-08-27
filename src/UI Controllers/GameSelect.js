@@ -16,7 +16,7 @@ class GameSelect extends Component {
         this.state = {
             gamemode: -1,
             player: -1,
-            hovered: 1
+            hovered: 0
         }
         
         library.add(faRobot, faUserFriends, faGlobe, faTimes, faDotCircle, faCog, faCircle);
@@ -49,14 +49,13 @@ class GameSelect extends Component {
 
         if(player == -1)
             display = (
-                <div>
-                    <div>Select gamemode:</div>
+                <div className="gs-container">
                     <div className="game-select unselectable"> 
                         {this.panelButton(0)}
                         {this.panelButton(1)}
                         {this.panelButton(2)}
                     </div>
-                    {(gamemode == -1)? null: <div onClick={() => this.back(1)}>Back</div>}
+                    {(gamemode == -1)? null: <div onClick={() => this.back()}>Back</div>}
                 </div>
             );
         else if(this.props.game === "ttt") {
