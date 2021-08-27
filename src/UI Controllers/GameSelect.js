@@ -50,12 +50,13 @@ class GameSelect extends Component {
         if(player == -1)
             display = (
                 <div className="gs-container">
+                    {(gamemode == -1)? null: <div className="back" onClick={() => this.back()}><span>back</span></div>}
                     <div className="game-select unselectable"> 
                         {this.panelButton(0)}
                         {this.panelButton(1)}
                         {this.panelButton(2)}
                     </div>
-                    {(gamemode == -1)? null: <div onClick={() => this.back()}>Back</div>}
+                    
                 </div>
             );
         else if(this.props.game === "ttt") {
