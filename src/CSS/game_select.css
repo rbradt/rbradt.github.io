@@ -5,25 +5,6 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-image: url(https://i.redd.it/w8ws8kf51gs41.png);
-}
-
-@keyframes panning-background {
-    0% {
-        background-position: top left;
-    }
-    25% {
-        background-position: top right;
-    }
-    50% {
-        background-position: bottom right;
-    }
-    75% {
-        background-position: bottom left;
-    }
-    100% {
-        background-position: top left;
-    }
 }
 
 .game-select {
@@ -75,13 +56,22 @@
     font-size: 5vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .gs-container {
-        animation: panning-background 1500s infinite linear;
+@keyframes gs-panel-animation {
+    from {
+        opacity: 0;
     }
+    to {
+        opacity: 1;
+    }
+}
 
+@media (prefers-reduced-motion: no-preference) {
     .game-select-panel {
         transition: min-width 0.3s;
+    }
+
+    .game-select-panel > * {
+        animation: gs-panel-animation 1s linear;
     }
 
     @media (min-width: 1000px) {

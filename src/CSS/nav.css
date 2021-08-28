@@ -1,10 +1,13 @@
 .nav-scene {
-	position: relative;
+	position: fixed;
 	top: 51px;
-	left: 0;
+    left: 0;
+    width: 100vw;
+    min-height: calc(100vh - 51px);
 	background-color: #0f1011;
 	font-size: 13px;
-	color: white;
+    color: white;
+    background-image: url(https://i.redd.it/w8ws8kf51gs41.png);
 }
 
 .nav-panel {
@@ -94,7 +97,29 @@
     left: 0;
 }
 
+@keyframes panning-background {
+    0% {
+        background-position: top left;
+    }
+    25% {
+        background-position: top right;
+    }
+    50% {
+        background-position: bottom right;
+    }
+    75% {
+        background-position: bottom left;
+    }
+    100% {
+        background-position: top left;
+    }
+}
+
 @media (prefers-reduced-motion: no-preference) {
+    .nav-scene {
+        animation: panning-background 1500s infinite linear;
+    }
+
     .nav-back {
         transition: all 0.5s;
     }

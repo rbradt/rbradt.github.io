@@ -167,7 +167,7 @@ class TTTGameUI extends Component {
 					<TTTBoardUI isNewGame={newGame} isHovered={hovered} turn={this.props.model.getTurn()} board={current.toOutputBoard()} onClick={i => this.onClick(i)} onMouseIn={i => this.onMouseIn(i)} onMouseOut={i => this.onMouseOut(i)}/>
 				</div>
 				{this.undoButton()}
-				<div className="nav-back" onClick={this.props.back}><span>Back</span></div>
+				<div className="nav-back" onClick={this.props.back}><span>back</span></div>
 			</div>
 		);
 	}

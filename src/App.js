@@ -67,7 +67,6 @@ class App extends Component {
 	}
 
 	render() {
-		console.log(this.state.scene);
 		return (
 			<div>
 				<div id="nav" className="nav-panel">
