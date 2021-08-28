@@ -34,12 +34,11 @@ class Minimax extends AI {
     }
 
     generateTurn(board) {
-        let pos = this.minimax(board, 0, -1000, 1000, board.getTurn()%2 == 1);
-        return new Move(Math.floor(pos/3), pos%3, board.getTurn());
+        return this.minimax(board, 0, -1000, 1000, board.getTurn()%2 == 1);
     }
 
     minimax(board, depth, alpha, beta, maximizer) {
-        let optimalPos = 0;
+        let optimalMove = null;
 
         // return evaluation of final board state 
         let value = this.evaluate(board);
@@ -57,7 +56,7 @@ class Minimax extends AI {
             if((maximizer && minmax < value) || (!maximizer && minmax > value)) {   
                 minmax = value;
                 if(depth == 0)
-                    optimalPos = board.getMoveIterator();
+                    optimalMove = board.getMove();
             }
 
             // prune 
@@ -72,7 +71,7 @@ class Minimax extends AI {
         }
 
         if(depth == 0)
-            minmax = optimalPos;
+            minmax = optimalMove;
 
         return minmax;
     }

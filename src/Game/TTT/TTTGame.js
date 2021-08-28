@@ -28,7 +28,7 @@ class TTTBoard {
 
     // iterator for all possible moves from current board state
     resetMoveIterator() {this.movesIterator = -1;}
-    getMoveIterator() {return this.movesIterator;}
+    getMove() {return new Move(Math.floor(this.movesIterator/3), this.movesIterator%3, this.turn);}
     getNextMove() {
         while(this.board[++this.movesIterator] != null && this.movesIterator < 9){}
 

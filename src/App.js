@@ -1,12 +1,13 @@
 import logo from './logo.svg';
 import {Component} from 'react';
+import {Home} from './UI Controllers/Home';
 import {GameSelect} from './UI Controllers/GameSelect';
 import {MovingBanner} from './UI Controllers/MovingBanner';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faHome } from '@fortawesome/free-solid-svg-icons';
 import './CSS/App.css';
-import './CSS/home.css';
+import './CSS/nav.css';
 
 class App extends Component {
 	constructor(props) {
@@ -37,8 +38,10 @@ class App extends Component {
 				break;
 			case 'nav_about':
 				break;
-
 			case 'nav_home':
+				sceneToRender = <Home />;
+				break;
+
 			default:
 				sceneToRender = (<MovingBanner scene={
 					<div className="App">
@@ -57,7 +60,7 @@ class App extends Component {
 							</a>
 						</header>
 					</div>
-				} ></MovingBanner>);
+				} />);
 		}
 
 		return sceneToRender;
@@ -67,7 +70,7 @@ class App extends Component {
 		console.log(this.state.scene);
 		return (
 			<div>
-				<div id="nav" className="nav">
+				<div id="nav" className="nav-panel">
 					<button id="nav_home" className="nav-button nav-icon" aria-label="Home" style={{height: 45, width: 75, padding: (13, 20)}} onClick={() => this.setScene('nav_home')}><FontAwesomeIcon icon="home" /></button>
 					<button id="nav_ttt" className="nav-button" onClick={() => this.setScene('nav_ttt')}>Tic-Tac-Toe</button>
 					<button id="nav_chess" className="nav-button" onClick={() => this.setScene('nav_chess')}>Chess</button>
@@ -76,7 +79,7 @@ class App extends Component {
 					<button id="nav_support" className="nav-button" style={{float: "right"}} onClick={() => this.setScene('nav_support')}>Support</button>
 					<button id="nav_about" className="nav-button" style={{float: "right"}} onClick={() => this.setScene('nav_about')}>About</button>
 				</div>
-				<div id="scene" className="scene">{this.renderScene(this.state.scene)}</div>
+				<div id="scene" className="nav-scene">{this.renderScene(this.state.scene)}</div>
 			</div>
 		);	
 	}

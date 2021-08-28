@@ -5,6 +5,7 @@ import {faUndo} from '@fortawesome/free-solid-svg-icons';
 import {Move} from "../Game/Move.js"
 import {TTTEvaluator} from "../Game/TTT/TTTGame.js";
 import '../CSS/ttt_board.css';
+import '../CSS/nav.css'
 
 // Board Controller
 class TTTCellUI extends Component {
@@ -166,7 +167,7 @@ class TTTGameUI extends Component {
 					<TTTBoardUI isNewGame={newGame} isHovered={hovered} turn={this.props.model.getTurn()} board={current.toOutputBoard()} onClick={i => this.onClick(i)} onMouseIn={i => this.onMouseIn(i)} onMouseOut={i => this.onMouseOut(i)}/>
 				</div>
 				{this.undoButton()}
-				<div onClick={this.props.back}>Back</div>
+				<div className="nav-back" onClick={this.props.back}><span>Back</span></div>
 			</div>
 		);
 	}

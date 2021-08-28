@@ -5,12 +5,24 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  transition: 1s cubic-bezier(0.65, 0.05, 0.36, 1);
+  transform: rotate(0deg);
 }
+
+.App-header:hover .App-logo{
+    box-shadow: 1px 1px 0 0 white;
+    
+    transform: rotate(720deg);
+    animation-play-state: running;
+  }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    /*animation: App-logo-spin infinite 3s linear 1s;*/
+    animation-play-state: paused;
   }
+  
+  
 }
 
 .App-header {

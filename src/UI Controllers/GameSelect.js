@@ -6,7 +6,8 @@ import {library} from "@fortawesome/fontawesome-svg-core";
 import {faRobot, faUserFriends, faGlobe, faTimes, faDotCircle, faCog} from "@fortawesome/free-solid-svg-icons";
 import {faCircle} from "@fortawesome/free-regular-svg-icons";
 import { Component } from "react";
-import '../CSS/gameselect.css'
+import '../CSS/game_select.css'
+import '../CSS/nav.css'
 
 class GameSelect extends Component {
     constructor(props) {
@@ -26,7 +27,11 @@ class GameSelect extends Component {
 
     back = () => this.setState({gamemode: -1});
 
-    returnToSelect = () => this.setState({gamemode: -1, player: -1, hovered: 1});
+    returnToSelect = () => this.setState(
+            (state, props) => {
+                return state.gamemode==0? {gamemode: -1, player: -1, hovered: 0}: {player: -1, hovered: 0};
+            }
+        );
 
     setHovered(i) {
         if(this.state.hovered != i)
@@ -50,13 +55,12 @@ class GameSelect extends Component {
         if(player == -1)
             display = (
                 <div className="gs-container">
-                    {(gamemode == -1)? null: <div className="back" onClick={() => this.back()}><span>back</span></div>}
+                    {(gamemode == -1)? null: <div className="nav-back" onClick={() => this.back()}><span>back</span></div>}
                     <div className="game-select unselectable"> 
                         {this.panelButton(0)}
                         {this.panelButton(1)}
                         {this.panelButton(2)}
                     </div>
-                    
                 </div>
             );
         else if(this.props.game === "ttt") {
@@ -65,7 +69,7 @@ class GameSelect extends Component {
                 case 3:
                 case 4:
                 case 5:
-                    display =<div>ai vs ai</div>;
+                    display = <div>ai vs ai</div>;
                     let tttAI = new Minimax((board) => TTTEvaluator.evaluate(board, true));
                     tttAI.addObserver(this.game);
                     this.game.addObserver(tttAI);

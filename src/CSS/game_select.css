@@ -1,10 +1,29 @@
 .gs-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     background-image: url(https://i.redd.it/w8ws8kf51gs41.png);
+}
+
+@keyframes panning-background {
+    0% {
+        background-position: top left;
+    }
+    25% {
+        background-position: top right;
+    }
+    50% {
+        background-position: bottom right;
+    }
+    75% {
+        background-position: bottom left;
+    }
+    100% {
+        background-position: top left;
+    }
 }
 
 .game-select {
@@ -56,47 +75,11 @@
     font-size: 5vh;
 }
 
-.back {
-    position: fixed;
-    top: 94vh;
-    left: 1vw;
-    padding: 20px 40px;
-    font-family: monospace;
-    font-size: 20px;
-    cursor: pointer;
-    transition: all 0.5s;
-}
-
-.back span {
-    position: relative;
-    display: inline-block;
-    transition: 0.5s;
-}
-
-.back span:before {
-    content: '\00ab';
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    left: -20px;
-    transition: 0.5s;
-}
-
-.back:hover {
-    color: rgb(255, 255, 255);
-    text-shadow: 0px 0px 5px #ffffff;
-}
-
-.back:hover span {
-    padding-left: 15px;
-}
-
-.back:hover span:before {
-    opacity: 1;
-    left: 0;
-}
-
 @media (prefers-reduced-motion: no-preference) {
+    .gs-container {
+        animation: panning-background 1500s infinite linear;
+    }
+
     .game-select-panel {
         transition: min-width 0.3s;
     }
