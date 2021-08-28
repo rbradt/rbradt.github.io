@@ -68,7 +68,7 @@ class App extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="nav-container">
 				<div id="nav" className="nav-panel">
 					<button id="nav_home" className="nav-button nav-icon" aria-label="Home" style={{height: 45, width: 75, padding: (13, 20)}} onClick={() => this.setScene('nav_home')}><FontAwesomeIcon icon="home" /></button>
 					<button id="nav_ttt" className="nav-button" onClick={() => this.setScene('nav_ttt')}>Tic-Tac-Toe</button>

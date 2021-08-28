@@ -19,6 +19,7 @@
 }
 
 .game-select-panel {
+    top: 51px;
     min-width: calc(100vw/3);
     max-width: calc(100vw/3);
     min-height: calc(100vh - 51px);

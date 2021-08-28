@@ -17,7 +17,7 @@ class GameSelect extends Component {
         this.state = {
             gamemode: -1,
             player: -1,
-            hovered: -1
+            hovered: 0
         }
         
         library.add(faRobot, faUserFriends, faGlobe, faTimes, faDotCircle, faCog, faCircle);
