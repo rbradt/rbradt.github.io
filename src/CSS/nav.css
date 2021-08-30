@@ -1,3 +1,7 @@
+.nav-container {
+
+}
+
 .nav-scene::before {
     content: '';
     position: fixed;
@@ -5,19 +9,21 @@
     top: 0;
     left: 0;
     min-height: 100vh;
-    min-width: 100%;
+    min-width: 100vw;
     background-image: url(https://i.redd.it/w8ws8kf51gs41.png);
     z-index: -1;
 }
 
 .nav-scene {
     position: relative;
+    overflow: hidden;
 	top: 51px;
     left: 0;
     min-height: calc(100vh - 51px);
-	background-color: #0f101100;
+	background-color: #0f1011;
 	font-size: 13px;
     color: white;
+    animation: load-in-scene 1s 1s linear forwards;
 }
 
 .nav-panel {
@@ -28,10 +34,11 @@
 	overflow: hidden;
 	max-height: 45px;
 	width: 100%;
-	background-color: #1f1f236e;
+	background-color: #1f1f23;
 	margin: 0;
     padding: 3px 0px;
     backdrop-filter: blur(15px);
+    animation: load-in-panel 1s 1s linear forwards;
 }
 
 .nav-icon {
@@ -55,8 +62,12 @@
 	transition: transform 0.2s, box-shadow 0.2s;
 }
 
+.nav-button.tr {
+    float: right;
+}
+
 .nav-button:hover {
-	background-color: #26262b6e;
+	background-color: #ffffff0c;
 	color: #ccccff;
 	transform: translateY(-2px) translateX(2px);
 	box-shadow: -2px 2px 3px #ccccff;
@@ -109,26 +120,34 @@
 }
 
 @keyframes panning-background {
-    0% {
-        background-position: top left;
-    }
-    25% {
-        background-position: top right;
-    }
-    50% {
-        background-position: bottom right;
-    }
-    75% {
-        background-position: bottom left;
-    }
-    100% {
-        background-position: top left;
-    }
+    0% {background-position: 0% 0%;}
+    25% {background-position: 100% 0%;}
+    50% {background-position: 100% 100%;}
+    75% {background-position: 0% 100%;}
+    100% {background-position: 0% 0%;}
+}
+
+@keyframes load-in-scene {
+    from {background-color: #0f1011;}
+    to {background-color: #0f101100;}
+}
+
+@keyframes load-in-panel {
+    from {background-color: #1f1f23;}
+    to {background-color: #1f1f236e;}
 }
 
 @media (prefers-reduced-motion: no-preference) {
     .nav-scene::before {
         animation: panning-background 1000s infinite linear;
+    }
+
+    .nav-scene {
+        
+    }
+
+    .nav-panel {
+        
     }
 
     .nav-back {

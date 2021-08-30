@@ -37,9 +37,8 @@ class App extends Component {
 			case 'nav_support':
 				break;
 			case 'nav_about':
-				break;
 			case 'nav_home':
-				sceneToRender = <Home />;
+				sceneToRender = <Home focus={scene} />;
 				break;
 
 			default:
@@ -74,9 +73,9 @@ class App extends Component {
 					<button id="nav_ttt" className="nav-button" onClick={() => this.setScene('nav_ttt')}>Tic-Tac-Toe</button>
 					<button id="nav_chess" className="nav-button" onClick={() => this.setScene('nav_chess')}>Chess</button>
 					<button id="nav_coming" className="nav-button" onClick={() => this.setScene('nav_coming')}>Projects</button>
-					<button id="nav_login" className="nav-button" style={{float: "right"}} onClick={() => this.setScene('nav_login')}>Login</button>
-					<button id="nav_support" className="nav-button" style={{float: "right"}} onClick={() => this.setScene('nav_support')}>Support</button>
-					<button id="nav_about" className="nav-button" style={{float: "right"}} onClick={() => this.setScene('nav_about')}>About</button>
+					<button id="nav_login" className="nav-button tr" onClick={() => this.setScene('nav_login')}>Login</button>
+					<button id="nav_support" className="nav-button tr" onClick={() => this.setScene('nav_support')}>Support</button>
+					<button id="nav_about" className="nav-button tr" onClick={() => this.setScene('nav_about')}>About</button>
 				</div>
 				<div id="scene" className="nav-scene">{this.renderScene(this.state.scene)}</div>
 			</div>
