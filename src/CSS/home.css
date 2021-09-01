@@ -1,7 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Megrim);
 
 .main-container {
-	scroll-behavior: smooth;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -10,7 +9,7 @@
 }
 
 .header {
-	font-size: 10vh;
+	font-size: 11vh;
 	font-family: Megrim;
 	color: white;
 	text-shadow: 0 0 4px white,
@@ -21,27 +20,27 @@
 				0 0 90px #ff0000;
 }
 
-.header-wrapper {
-	position: relative;
-	height: calc(88vh + 51px);
+.home-wrapper {
+	height: 88vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	padding-bottom: calc(12vh - 51px);
 }
+.projects-wrapper {
+	height: 80vh;
+}
 
-.section-wrapper {
-	position: relative;
-	top: 0px;
+.about-wrapper {
+	height: 80vh;
 }
 
 .window {
-
+	
 }
 
 .content-row {
-	height: 80vh;
 }
 
 .content-left {

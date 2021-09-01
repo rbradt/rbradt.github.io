@@ -5,7 +5,7 @@
 .nav-scene::before {
     content: '';
     position: fixed;
-    overflow: hidden;
+    /*overflow: hidden;*/
     top: 0;
     left: 0;
     min-height: 100vh;
@@ -75,7 +75,7 @@
 }
 
 .nav-button:active {
-	color: white;
+	color: #ccccff;
 	transform: translateY(0px) translateX(0px);
 	transition: transform 0.1s, box-shadow 0.1s;
 	box-shadow: 0 0;
@@ -140,14 +140,6 @@
 @media (prefers-reduced-motion: no-preference) {
     .nav-scene::before {
         animation: panning-background 1000s infinite linear;
-    }
-
-    .nav-scene {
-        
-    }
-
-    .nav-panel {
-        
     }
 
     .nav-back {

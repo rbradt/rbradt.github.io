@@ -12,13 +12,20 @@ import './CSS/nav.css';
 class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {scene: 'nav_home'};
+		this.state = {
+			scene: 'nav_home',
+			goTo: 'nav_home'
+		};
 		library.add(faHome);
 	}
 
 	setScene(newScene) {
 		if(this.state.scene !== newScene)
-			this.setState({scene: newScene});
+			this.setState({scene: newScene, goTo: null});
+	}
+
+	scrollToScene(newScene) {
+		this.setState({scene: newScene, goTo: newScene});
 	}
 
 	renderScene(scene) {
@@ -30,15 +37,14 @@ class App extends Component {
 				break;
 			case 'nav_chess':
 				break;
-			case 'nav_coming':
-				break;
 			case 'nav_login':
 				break;
 			case 'nav_support':
 				break;
 			case 'nav_about':
+			case 'nav_coming':
 			case 'nav_home':
-				sceneToRender = <Home focus={scene} />;
+				sceneToRender = <Home focus={this.state.goTo} setScene={scene => this.setScene(scene)} />;
 				break;
 
 			default:
@@ -65,17 +71,21 @@ class App extends Component {
 		return sceneToRender;
 	}
 
+	setSelected(id) {
+		return id == this.state.scene? {color: '#ccccff'}: {color: 'white'};
+	}
+
 	render() {
 		return (
 			<div className="nav-container">
 				<div id="nav" className="nav-panel">
-					<button id="nav_home" className="nav-button nav-icon" aria-label="Home" style={{height: 45, width: 75, padding: (13, 20)}} onClick={() => this.setScene('nav_home')}><FontAwesomeIcon icon="home" /></button>
-					<button id="nav_ttt" className="nav-button" onClick={() => this.setScene('nav_ttt')}>Tic-Tac-Toe</button>
-					<button id="nav_chess" className="nav-button" onClick={() => this.setScene('nav_chess')}>Chess</button>
-					<button id="nav_coming" className="nav-button" onClick={() => this.setScene('nav_coming')}>Projects</button>
-					<button id="nav_login" className="nav-button tr" onClick={() => this.setScene('nav_login')}>Login</button>
-					<button id="nav_support" className="nav-button tr" onClick={() => this.setScene('nav_support')}>Support</button>
-					<button id="nav_about" className="nav-button tr" onClick={() => this.setScene('nav_about')}>About</button>
+					<button id="nav_home" className="nav-button nav-icon" style={this.setSelected("nav_home")} aria-label="Home" style={{height: 45, width: 75, padding: (13, 20)}} onClick={() => this.scrollToScene('nav_home')}><FontAwesomeIcon icon="home" /></button>
+					<button id="nav_ttt" className="nav-button" style={this.setSelected("nav_ttt")} onClick={() => this.setScene('nav_ttt')}>Tic-Tac-Toe</button>
+					<button id="nav_chess" className="nav-button" style={this.setSelected("nav_chess")} onClick={() => this.setScene('nav_chess')}>Chess</button>
+					<button id="nav_coming" className="nav-button" style={this.setSelected("nav_coming")} onClick={() => this.scrollToScene('nav_coming')}>Projects</button>
+					<button id="nav_login" className="nav-button tr" style={this.setSelected("nav_login")} onClick={() => this.setScene('nav_login')}>Login</button>
+					<button id="nav_support" className="nav-button tr" style={this.setSelected("nav_support")} onClick={() => this.setScene('nav_support')}>Support</button>
+					<button id="nav_about" className="nav-button tr" style={this.setSelected("nav_about")} onClick={() => this.scrollToScene('nav_about')}>About</button>
 				</div>
 				<div id="scene" className="nav-scene">{this.renderScene(this.state.scene)}</div>
 			</div>
