@@ -22,22 +22,36 @@
 	margin: .4em 0;
 }
 
-.shuttle-icon {
-
-}
-
-.shuttle-icon-active {
+.shuttle-active {
 	position: fixed;
+	transform-origin: 0% 0%;
+	transition: filter 2s, transform 2s linear, position 5s;
+	filter: none;
 	/*follow cursor*/
 	/* actively rotate to face cursor
 		move to curser after it is a set distance away (on a timeout)
 	*/
 }
 
+.shuttle-active > * {
+	position: relative;
+	top: -0.5em;
+	left: calc(-20px - 50%);
+}
+
+.shuttle-active.motion {
+	filter: drop-shadow(-2px 0 2px yellow)
+			drop-shadow(-6px 0 5px rgba(255, 105, 105, 0.719));
+}
+
+.shuttle-active.motion > * {
+	filter: none;
+}
+
 .section-wrapper {
 	padding-top: 51px;
 	height: calc(100vh - 51px);
-	display: flex; /* need to replace with table container */
+	display: flex;
 	align-items: center;
 	justify-content: center;
 }
@@ -52,14 +66,15 @@
 
 .section-wrapper.home > div > button {
 	background-color: transparent;
-	color: rgba(255, 255, 255, 0.384);
+	color: rgb(255, 255, 255);
 	font-size: 4vh;
 	border: 0;
 	padding: 0px 20px;
 }
 
 .section-wrapper.home > div > button > * {
-	filter: drop-shadow( 3px 3px 2px red);
+	filter: drop-shadow(0 0 3px rgb(255, 255, 255))
+			drop-shadow(0px 0 10px rgba(253, 134, 134, 0.719));
 }
 
 .projects {
@@ -126,9 +141,15 @@
 	}
 }
 
-@keyframes scroll {
-	from {scroll-margin-top: 0;}
-	to {scroll-margin-top: 100vh;}
+@keyframes shuttle-burner {
+	0%, 100% {
+		filter: drop-shadow(0 0 2px yellow)
+			drop-shadow(0 0 2px rgba(255, 0, 0, 0.719));
+	}
+	50% {
+		filter: drop-shadow(-2px 0 2px yellow)
+			drop-shadow(-6px 0 5px rgba(253, 134, 134, 0.719));
+	}
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -144,6 +165,14 @@
 		animation: scroll 3s 5s linear forwards;
 	}
 }
+
+.unselectable {
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+ }
 
 /*
 position: relative;

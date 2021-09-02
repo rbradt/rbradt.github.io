@@ -44,7 +44,7 @@ class App extends Component {
 			case 'nav_about':
 			case 'nav_coming':
 			case 'nav_home':
-				sceneToRender = <Home focus={this.state.goTo} scene={this.state.scene} setScene={scene => this.setScene(scene)} />;
+				sceneToRender = <Home focus={this.state.goTo} scene={this.state.scene} setScene={scene => this.setScene(scene)} rmFocus={()=>this.setState({goTo: null})} />;
 				break;
 
 			default:
@@ -72,7 +72,7 @@ class App extends Component {
 	}
 
 	setSelected(id) {
-		return id == this.state.scene? {color: '#ff9595', textShadow: "0px 0px 5px #ff9595"}: {};
+		return id == this.state.scene? {color: '#ffffff', filter: "drop-shadow(0 0 1px white) drop-shadow(0 0 2px red)"}: {};
 	}
 
 	render() {
