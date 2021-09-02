@@ -1,4 +1,8 @@
 import {Component} from 'react';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {faLinkedin, faGithubSquare, faCog} from "@fortawesome/free-brands-svg-icons";
+import {faSpaceShuttle} from "@fortawesome/free-solid-svg-icons";
 import '../CSS/home.css'
 
 class Home extends Component {
@@ -6,6 +10,7 @@ class Home extends Component {
         super(props);
         
         this.delay = null;
+        library.add(faLinkedin, faGithubSquare, faSpaceShuttle);
     }
 
     componentDidMount() {
@@ -36,23 +41,30 @@ class Home extends Component {
     }
 
     onScroll() {
-        console.log("scroll called");
         this.props.setScene(window.pageYOffset > (window.innerHeight*4/5)? 'nav_about': 'nav_home');
         this.delay = null;
     }
 
+    renderAnimation() {
+        // set animation property based off of selected scene
+    }
+
     render() {  
         return (
-            <div className="main-container" onScroll={() => this.onScroll()}>
-                <div id="home" className="home-wrapper">
+            <div className="main-container">
+                <div id="home" className="section-wrapper home">
                     <h1 className="header">ril<span className="flicker1">e</span>y bradt</h1>
-                    <div className="content-row"></div>
+                    <div className="content-row">
+                        <button><FontAwesomeIcon icon={["fab", "linkedin"]}/></button>
+                        <button><FontAwesomeIcon icon={["fab", "github-square"]}/></button>
+                        <button><FontAwesomeIcon icon="space-shuttle"/></button>
+                    </div>
                 </div>
-                <div id="about" className="about-wrapper">
+                <div id="about" className="section-wrapper">
                     <img></img>
                     <div></div>
                 </div>
-                <div id="projects" className="projects-wrapper">
+                <div id="projects" className="section-wrapper">
 
                 </div>
                 <p>a</p>

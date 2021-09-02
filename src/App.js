@@ -44,11 +44,11 @@ class App extends Component {
 			case 'nav_about':
 			case 'nav_coming':
 			case 'nav_home':
-				sceneToRender = <Home focus={this.state.goTo} setScene={scene => this.setScene(scene)} />;
+				sceneToRender = <Home focus={this.state.goTo} scene={this.state.scene} setScene={scene => this.setScene(scene)} />;
 				break;
 
 			default:
-				sceneToRender = (<MovingBanner scene={
+				/*sceneToRender = (<MovingBanner scene={
 					<div className="App">
 						<header className="App-header">
 							<img src={logo} className="App-logo" alt="logo" />
@@ -65,21 +65,21 @@ class App extends Component {
 							</a>
 						</header>
 					</div>
-				} />);
+				} />);*/
 		}
 
 		return sceneToRender;
 	}
 
 	setSelected(id) {
-		return id == this.state.scene? {color: '#ccccff'}: {color: 'white'};
+		return id == this.state.scene? {color: '#ff9595', textShadow: "0px 0px 5px #ff9595"}: {};
 	}
 
 	render() {
 		return (
 			<div className="nav-container">
 				<div id="nav" className="nav-panel">
-					<button id="nav_home" className="nav-button nav-icon" style={this.setSelected("nav_home")} aria-label="Home" style={{height: 45, width: 75, padding: (13, 20)}} onClick={() => this.scrollToScene('nav_home')}><FontAwesomeIcon icon="home" /></button>
+					<button id="nav_home" className="nav-button nav-icon" style={this.setSelected("nav_home")} aria-label="Home" onClick={() => this.scrollToScene('nav_home')}><FontAwesomeIcon icon="home" /></button>
 					<button id="nav_ttt" className="nav-button" style={this.setSelected("nav_ttt")} onClick={() => this.setScene('nav_ttt')}>Tic-Tac-Toe</button>
 					<button id="nav_chess" className="nav-button" style={this.setSelected("nav_chess")} onClick={() => this.setScene('nav_chess')}>Chess</button>
 					<button id="nav_coming" className="nav-button" style={this.setSelected("nav_coming")} onClick={() => this.scrollToScene('nav_coming')}>Projects</button>

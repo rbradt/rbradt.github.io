@@ -74,14 +74,14 @@
         animation: gs-panel-animation 1s linear;
     }
 
-    @media (min-width: 1000px) {
+    @media (min-width: 1200px) {
         .game-select-panel:hover {
             min-width: 40vw;
         }
     }
   }
 
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
     .game-select {
         flex-direction: column;
     }
