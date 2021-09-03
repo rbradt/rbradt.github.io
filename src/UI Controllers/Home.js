@@ -48,12 +48,13 @@ class Home extends Component {
 
     onMouseMove(e) {
         let currShuttle = this.state.shuttle;
+        let pos = e.currentTarget.firstElementChild.lastElementChild.lastElementChild.getBoundingClientRect();
         if(currShuttle.isActive())
-            this.setState({shuttle: new AnimatedSpaceShuttle(currShuttle.isInMotion? null: [e.clientX, e.clientY], this.state.shuttle)});
+            this.setState({shuttle: new AnimatedSpaceShuttle([e.clientX, e.clientY], this.state.shuttle, [pos.left, pos.top])});
     }
 
     onShuttleClicked() {
-        let newShuttle = new AnimatedSpaceShuttle([0, 0], this.state.shuttle);
+        let newShuttle = new AnimatedSpaceShuttle([0, 0], this.state.shuttle, [0, 0]);
         newShuttle.setActive(!newShuttle.isActive());
         this.setState({shuttle: newShuttle});
     }
@@ -90,16 +91,16 @@ class Home extends Component {
 }
 
 class AnimatedSpaceShuttle {
-    constructor(cursorCoords, obj) {
+    constructor(cursorCoords, obj, ssCoords) {
         if(obj instanceof AnimatedSpaceShuttle) {
-            this.ssCoords = obj.ssCoords;
+            this.ssCoords = ssCoords instanceof Array? ssCoords: obj.ssCoords;
             this.cursorCoords = cursorCoords instanceof Array? cursorCoords: obj.cursorCoords;
             this.angle = obj.angle;
             this.active = obj.active;
             this.motion = obj.motion;
         }
         else {
-            this.ssCoords = [500, 500];
+            this.ssCoords = ssCoords instanceof Array? ssCoords: [0,0];
             this.cursorCoords = cursorCoords instanceof Array? cursorCoords: [0, 0];
             this.angle = 0;
             this.active = false;
@@ -145,18 +146,18 @@ class AnimatedSpaceShuttle {
 
     getStyle() {
         let style = {};
-        if(this.motion) {
+        /*if(this.motion) {
             style={left: this.cursorCoords[0] + "px", top: this.cursorCoords[1] + "px", transform: "rotate(" + this.angle +"deg)"};
             console.log("motion style: " + this.cursorCoords[0] + "px " + this.cursorCoords[1] + "px " + "rotate(" + this.angle +"deg)");
             this.ssCoords[0] = this.cursorCoords[0];
             this.ssCoords[1] = this.cursorCoords[1];
-        }
-        else if(this.active) {  
-            if(this.distanceToCursor() > 200)
-                this.motion = true;
-            else {
+        }*/
+        if(this.active) {  
+            if(this.distanceToCursor() > 100) {
+        /*        this.motion = true;
+            else {*/
                 this.angle = this.angleToCursor();
-                style={left: this.ssCoords[0] + "px", top: this.ssCoords[1] + "px", transform: "rotate(" + this.angle +"deg)"};
+                style={left: this.cursorCoords[0] + "px", top: this.cursorCoords[1] + "px", transform: "rotate(" + this.angle +"deg)"};
             }    
         }
 
