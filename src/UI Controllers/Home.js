@@ -42,7 +42,6 @@ class Home extends Component {
     }
 
     onScroll(e) {
-        console.log("onscroll called");
         this.props.setScene(window.pageYOffset > (window.innerHeight*4/5)? 'nav_about': 'nav_home');
     }
 
@@ -53,13 +52,9 @@ class Home extends Component {
             this.setState({shuttle: new AnimatedSpaceShuttle(this.state.shuttle, [pos.left, pos.top], [e.clientX, e.clientY])});
     }
 
-    onMouseStopped(e) {
-
-    }
-
     onShuttleClicked(e) {
         let pos = document.getElementById("shuttle").getBoundingClientRect();
-        let newShuttle = new AnimatedSpaceShuttle(this.state.shuttle, [pos.left, pos.top], [pos.left + pos.width/2, pos.top + pos.height/2]);
+        let newShuttle = new AnimatedSpaceShuttle(this.state.shuttle, [pos.left + pos.width/2, pos.top + pos.height/2], [pos.left + pos.width/2, pos.top + pos.height/2]);
         newShuttle.setActive(!newShuttle.isActive());
         this.setState({shuttle: newShuttle});
     }
@@ -122,12 +117,13 @@ class AnimatedSpaceShuttle {
     delta(coord) {return this.cursorCoords[coord] - this.ssCoords[coord]}
     distanceToCursor() {return Math.sqrt(Math.pow(this.delta(0), 2) + Math.pow(this.delta(1), 2));}
     angleToCursor() {
-        /* inverted signs because css rotates clockwise :/ */
+        // inverted signs because css rotates clockwise :/
         let theta   =  this.delta(0) >= 0? this.delta(1) >= 0? /* Q4 (+x and +y) */ Math.atan(this.delta(1)/this.delta(0))*180/Math.PI:
                                                                 /* Q1 (+x and -y) */ 360 - Math.atan(-1*this.delta(1)/this.delta(0))*180/Math.PI: 
                                             this.delta(1) >= 0? /* Q3 (-x and +y) */ 180 - Math.atan(-1*this.delta(1)/this.delta(0))*180/Math.PI:
                                                                 /* Q2 (-x and -y) */ 180 + Math.atan(this.delta(1)/this.delta(0))*180/Math.PI;
-                                                                
+        
+        // determine angle that will result in the shortest rotational transformation (when using css rotate())
         let delta = theta - this.angle;
         if(Math.abs(delta) > 180)
             theta = this.angle + ((Math.abs(delta%360) <= 180)? delta%360: (delta <= 0? 1: -1)*(360 - Math.abs(delta%360)));
