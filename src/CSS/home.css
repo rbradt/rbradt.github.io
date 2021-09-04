@@ -25,27 +25,16 @@
 .shuttle-active {
 	position: fixed;
 	transform-origin: 0% 0%;
-	transition: filter 2s, transform 2s linear, position 5s;
+	transition: filter 2s, transform 1s linear, left 6s, top 6s;
 	filter: none;
-	/*follow cursor*/
-	/* actively rotate to face cursor
-		move to curser after it is a set distance away (on a timeout)
-	*/
 }
 
 .shuttle-active > * {
 	position: relative;
 	top: -0.5em;
 	left: calc(-20px - 50%);
-}
-
-.shuttle-active.motion {
-	filter: drop-shadow(-2px 0 2px yellow)
-			drop-shadow(-6px 0 5px rgba(255, 105, 105, 0.719));
-}
-
-.shuttle-active.motion > * {
-	filter: none;
+	/*filter: drop-shadow(-2px 0 2px yellow)
+			drop-shadow(-6px 0 5px rgba(255, 105, 105, 0.719));*/
 }
 
 .section-wrapper {
@@ -143,12 +132,11 @@
 
 @keyframes shuttle-burner {
 	0%, 100% {
-		filter: drop-shadow(0 0 2px yellow)
-			drop-shadow(0 0 2px rgba(255, 0, 0, 0.719));
+		filter: none;
 	}
-	50% {
+	50%, 75% {
 		filter: drop-shadow(-2px 0 2px yellow)
-			drop-shadow(-6px 0 5px rgba(253, 134, 134, 0.719));
+			drop-shadow(-6px 0 5px rgba(255, 105, 105, 0.719));
 	}
 }
 

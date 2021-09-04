@@ -48,13 +48,18 @@ class Home extends Component {
 
     onMouseMove(e) {
         let currShuttle = this.state.shuttle;
-        let pos = e.currentTarget.firstElementChild.lastElementChild.lastElementChild.getBoundingClientRect();
+        let pos = document.getElementById("shuttle").getBoundingClientRect();
         if(currShuttle.isActive())
-            this.setState({shuttle: new AnimatedSpaceShuttle([e.clientX, e.clientY], this.state.shuttle, [pos.left, pos.top])});
+            this.setState({shuttle: new AnimatedSpaceShuttle(this.state.shuttle, [pos.left, pos.top], [e.clientX, e.clientY])});
     }
 
-    onShuttleClicked() {
-        let newShuttle = new AnimatedSpaceShuttle([0, 0], this.state.shuttle, [0, 0]);
+    onMouseStopped(e) {
+
+    }
+
+    onShuttleClicked(e) {
+        let pos = document.getElementById("shuttle").getBoundingClientRect();
+        let newShuttle = new AnimatedSpaceShuttle(this.state.shuttle, [pos.left, pos.top], [pos.left + pos.width/2, pos.top + pos.height/2]);
         newShuttle.setActive(!newShuttle.isActive());
         this.setState({shuttle: newShuttle});
     }
@@ -71,7 +76,7 @@ class Home extends Component {
                     <div className="content-row">
                         <button><FontAwesomeIcon icon={["fab", "linkedin"]}/></button>
                         <button><FontAwesomeIcon icon={["fab", "github-square"]}/></button>
-                        <button className={this.state.shuttle.getStyleClass()} style={this.state.shuttle.getStyle()} onClick={() => this.onShuttleClicked()}>
+                        <button id="shuttle" className={this.state.shuttle.getStyleClass()} style={this.state.shuttle.getStyle()} onClick={e => this.onShuttleClicked(e)}>
                             <FontAwesomeIcon icon="space-shuttle"/>
                         </button>
                     </div>
@@ -91,17 +96,17 @@ class Home extends Component {
 }
 
 class AnimatedSpaceShuttle {
-    constructor(cursorCoords, obj, ssCoords) {
+    constructor(obj, shuttlePos, cursorPos) {
         if(obj instanceof AnimatedSpaceShuttle) {
-            this.ssCoords = ssCoords instanceof Array? ssCoords: obj.ssCoords;
-            this.cursorCoords = cursorCoords instanceof Array? cursorCoords: obj.cursorCoords;
+            this.ssCoords = shuttlePos;
+            this.cursorCoords = cursorPos;
             this.angle = obj.angle;
             this.active = obj.active;
             this.motion = obj.motion;
         }
         else {
-            this.ssCoords = ssCoords instanceof Array? ssCoords: [0,0];
-            this.cursorCoords = cursorCoords instanceof Array? cursorCoords: [0, 0];
+            this.cursorCoords = cursorPos instanceof Array? cursorPos: [0, 0];
+            this.ssCoords = shuttlePos instanceof Array? shuttlePos: [0, 0];
             this.angle = 0;
             this.active = false;
             this.motion = false;
@@ -127,38 +132,34 @@ class AnimatedSpaceShuttle {
     delta(coord) {return this.cursorCoords[coord] - this.ssCoords[coord]}
     distanceToCursor() {return Math.sqrt(Math.pow(this.delta(0), 2) + Math.pow(this.delta(1), 2));}
     angleToCursor() {
-                                                        /* inverted signs because css rotates clockwise :/ */
-        return  this.delta(0) >= 0? this.delta(1) >= 0? /* Q4 (+x and +y) */ Math.atan(this.delta(1)/this.delta(0))*180/Math.PI:
-                                                        /* Q1 (+x and -y) */ 360 - Math.atan(-1*this.delta(1)/this.delta(0))*180/Math.PI: 
-                                    this.delta(1) >= 0? /* Q3 (-x and +y) */ 180 - Math.atan(-1*this.delta(1)/this.delta(0))*180/Math.PI:
-                                                        /* Q2 (-x and -y) */ 180 + Math.atan(this.delta(1)/this.delta(0))*180/Math.PI;  
+        /* inverted signs because css rotates clockwise :/ */
+        let theta   =  this.delta(0) >= 0? this.delta(1) >= 0? /* Q4 (+x and +y) */ Math.atan(this.delta(1)/this.delta(0))*180/Math.PI:
+                                                                /* Q1 (+x and -y) */ 360 - Math.atan(-1*this.delta(1)/this.delta(0))*180/Math.PI: 
+                                            this.delta(1) >= 0? /* Q3 (-x and +y) */ 180 - Math.atan(-1*this.delta(1)/this.delta(0))*180/Math.PI:
+                                                                /* Q2 (-x and -y) */ 180 + Math.atan(this.delta(1)/this.delta(0))*180/Math.PI;
+                                                                
+        let delta = theta - this.angle;
+        if(Math.abs(delta) > 180)
+            theta = this.angle + ((Math.abs(delta%360) <= 180)? delta%360: (delta <= 0? 1: -1)*(360 - Math.abs(delta%360)));
+
+        return theta;
     }
 
     getStyleClass() {
-        let className = "";
-        if(this.active)
-            className += "shuttle-active";    
-        if(this.motion)
-            className += " motion";
-        
-        return className;
+        return (this.active)? "shuttle-active": "";
     }
 
     getStyle() {
         let style = {};
-        /*if(this.motion) {
-            style={left: this.cursorCoords[0] + "px", top: this.cursorCoords[1] + "px", transform: "rotate(" + this.angle +"deg)"};
-            console.log("motion style: " + this.cursorCoords[0] + "px " + this.cursorCoords[1] + "px " + "rotate(" + this.angle +"deg)");
-            this.ssCoords[0] = this.cursorCoords[0];
-            this.ssCoords[1] = this.cursorCoords[1];
-        }*/
         if(this.active) {  
             if(this.distanceToCursor() > 100) {
-        /*        this.motion = true;
-            else {*/
                 this.angle = this.angleToCursor();
                 style={left: this.cursorCoords[0] + "px", top: this.cursorCoords[1] + "px", transform: "rotate(" + this.angle +"deg)"};
-            }    
+            }   
+            else {
+                this.angle = this.angleToCursor();
+                style={left: this.ssCoords[0] + "px", top: this.ssCoords[1] + "px", transform: "rotate(" + this.angle +"deg)"};
+            } 
         }
 
         return style;
