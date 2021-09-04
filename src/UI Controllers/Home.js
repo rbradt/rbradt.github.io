@@ -70,7 +70,7 @@ class Home extends Component {
 
     render() {  
         return (
-            <div className="main-container" onMouseMove={this.mouseMoveDelay.postDelay()}>
+            <div className="main-container" onMouseMove={this.mouseMoveDelay.postDelay() /* postDelay w/ 200ms or pause w/ 50ms work here */}>
                 <div id="home" className="section-wrapper home unselectable">
                     <h1 className="header">ril<span className="flicker1">e</span>y bradt</h1>
                     <div className="content-row">
@@ -102,31 +102,21 @@ class AnimatedSpaceShuttle {
             this.cursorCoords = cursorPos;
             this.angle = obj.angle;
             this.active = obj.active;
-            this.motion = obj.motion;
         }
         else {
             this.cursorCoords = cursorPos instanceof Array? cursorPos: [0, 0];
             this.ssCoords = shuttlePos instanceof Array? shuttlePos: [0, 0];
             this.angle = 0;
             this.active = false;
-            this.motion = false;
         }
     }
 
     isActive() {
         return this.active;
     }
-    
-    isInMotion() {
-        return this.motion;
-    }
 
     setActive(bool) {
         this.active = bool;
-    }
-
-    setInMotion(bool) {
-        this.motion = bool;
     }
 
     delta(coord) {return this.cursorCoords[coord] - this.ssCoords[coord]}
