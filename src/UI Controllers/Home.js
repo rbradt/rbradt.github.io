@@ -67,24 +67,105 @@ class Home extends Component {
         return (
             <div className="main-container" onMouseMove={this.mouseMoveDelay.postDelay() /* postDelay w/ 200ms or pause w/ 50ms work here */}>
                 <div id="home" className="section-wrapper home unselectable">
-                    <h1 className="header">ril<span className="flicker1">e</span>y bradt</h1>
-                    <div className="content-row">
-                        <button><FontAwesomeIcon icon={["fab", "linkedin"]}/></button>
-                        <button><FontAwesomeIcon icon={["fab", "github-square"]}/></button>
-                        <button id="shuttle" className={this.state.shuttle.getStyleClass()} style={this.state.shuttle.getStyle()} onClick={e => this.onShuttleClicked(e)}>
+                    <h1>ril<span className="flicker1">e</span>y bradt</h1>
+                    <div className="content layout-row home-button-container">
+                        <a aria-label="LinkedIn" href="https://www.linkedin.com/in/riley-b-09b8301a5/"><FontAwesomeIcon icon={["fab", "linkedin"]}/></a>
+                        <a aria-label="GitHub" href="https://github.com/rbradt"><FontAwesomeIcon icon={["fab", "github-square"]}/></a>
+                        <a aria-label="Shuttle" id="shuttle" className={this.state.shuttle.getStyleClass()} style={this.state.shuttle.getStyle()} onClick={e => this.onShuttleClicked(e)}>
                             <FontAwesomeIcon icon="space-shuttle"/>
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div id="about" className="section-wrapper about">
-                    <img></img>
-                    <div></div>
+                    <div className="content layout-column">
+                        <img></img>
+                    </div>
+                    <div className="content layout-column">
+                        <h2>Yo,</h2>
+                        <p><span>I'm Riley Bradt</span>, an undergraduate student at the University of California, Riverside pursuing
+                        a B.S. in Mathematics with a minor in Computer Science.
+                        I low level languages, such as C++ and ARM Assembly Language, and am interested
+                        in cybersecurity, DevSecOps, cryptography and networking.</p>
+                    </div>
                 </div>
                 <div id="projects" className="section-wrapper projects">
-
+                    <h2>Projects: </h2>
+                    <Projects i={0} />
+                    <Projects i={1} />
+                    <Projects i={2} />
+                    <Projects i={3} />
+                    <Projects i={4} />
                 </div>
-                <p>a</p>
-                <div>b</div>
+                
+            </div>
+        );
+    }
+}
+
+class Projects extends Component {
+    constructor(props) {
+        super(props);
+
+        this.titles = [
+            <h3>rbradt.github.io</h3>,
+            <h3>TTT</h3>,
+            <h3>MLB Trip Planner</h3>,
+            <h3>Messenger</h3>,
+            <h3>RASM</h3>
+        ];
+
+        this.descriptions = [
+            <p>This website. 100% local for now, but I plan on implementing a RESTful api (likely Spring Boot with Docker
+            and Kubernates to create microservices).</p>,
+
+            <p>TTT is an application that allows players to connect to online tic-tac-toe games. Users can create personal
+            accounts and may view their match history/statistics, while administrators have access to tools to remove users
+            and end active matches. The app creation of this app involved a number of design patterns, specifically the
+            observer, factory method, adapter and singleton patterns. Additionally, the app features multiple microservices
+            that I built from the ground up (using Java threading and socketing) to independently handle database management
+            and game logic. The client application utilizes a pruning minimax algorithm for the tic-tac-toe AI.</p>,
+
+            <p>The MLB Trip Planner is a niche application that seeks to help MLB superfans in planning an ideal trip to
+            any number of the MLB stadiums that dot the United States. This app is reliant on graph data structures (both
+            adjacency list and adjacency matrix), using graph-based algorithms such as A*, Dijkstra's and Kruskal's algorithms
+            to determine the optimal path for any trip. Furthermore, this app involved Huffman Coding, skip lists and a heap
+            sort to increase the efficiency of the app, thus, providing a quality user experience.</p>,
+
+            <p>Messenger is a simplistic application that is reminiscent of AOL's Instant Messenger. It involved
+            multithreading, networking and database management to provide a basic messenging service.</p>,
+
+            <p>My Rasberry Assembly (RASM) projects are a series of projects that I wrote in ARM Assembly Language that
+            cover a wide variety of Computer Science concepts: ranging from an assembly level linked list to assembly level
+            sorting algorithms with ultra-optimized runtimes.</p>
+        ];
+
+        this.dependencies = [
+            <div>HTML, CSS, JavaScript, TypeScript, Reactjs, NPM, FontAwesome</div>,
+            <div>Java, JavaFX, MySQL</div>,
+            <div>QTCreator, MySQL, C++</div>,
+            <div>Java, MySQL, JavaFX</div>,
+            <div>Rasberry Pi, Linux, ARM Assembly, C++</div>
+        ];
+    }
+
+    render() {
+        console.log(this.titles[this.props.i]);
+        return (
+            <div className="content layout-column">
+                <div className="project-glossy-pane">
+                    <div className="content layout-row">
+                        <img /*Project Image*/></img>
+                        <div className="content layout-column">
+                            {this.titles[this.props.i]}
+                            {this.descriptions[this.props.i]}
+                            {this.dependencies[this.props.i]}
+                            <div className="content layout-row">
+                                replace with icon row
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="project-window-pane"></div>
             </div>
         );
     }
