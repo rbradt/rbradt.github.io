@@ -20,20 +20,11 @@ class Home extends Component {
 
     componentDidMount() {
         window.addEventListener('scroll', this.scrollDelay.preDelay());
-
-        if(this.props.focus != null) {
-            let pos = this.props.focus==='nav_home'? 0: window.innerHeight;
-            window.scrollTo({top: pos, left: 0, behavior: 'auto'});
-            this.props.rmFocus();
-        }
+        this.autoScroll();
     }
         
     componentDidUpdate() {
-        if(this.props.focus != null) {
-            let pos = this.props.focus==='nav_home'? 0: window.innerHeight;
-            window.scrollTo({top: pos, left: 0, behavior: 'smooth'});
-            this.props.rmFocus();
-        }
+        this.autoScroll();
     }
 
     componentWillUnmount() {
@@ -41,8 +32,34 @@ class Home extends Component {
         window.removeEventListener('scroll', this.scrollDelay.preDelay());
     }
 
+    autoScroll() {
+        if(this.props.focus != null) {
+            let pos;
+            switch(this.props.focus) {   
+                case "nav_about":
+                    pos = window.innerHeight;
+                    break;
+                case "nav_coming":
+                    pos = 2*window.innerHeight;
+                    break;
+                case "nav_home":
+                default:
+                    pos = 0;
+            }
+
+            window.scrollTo({top: pos, left: 0, behavior: 'smooth'});
+            this.props.rmFocus();
+        }
+    }
+
     onScroll(e) {
-        this.props.setScene(window.pageYOffset > (window.innerHeight*4/5)? 'nav_about': 'nav_home');
+        if(window.pageYOffset < window.innerHeight*4/5)
+            this.props.setScene('nav_home');
+        else if(window.pageYOffset < window.innerHeight*9/5)
+            this.props.setScene('nav_about');
+        else
+            this.props.setScene('nav_coming');
+
     }
 
     onMouseMove(e) {
@@ -106,66 +123,66 @@ class Projects extends Component {
     constructor(props) {
         super(props);
 
+        // move all of this data to a server later (using SQL) to allow for dynamic addition and removal of projects
         this.titles = [
-            <h3>rbradt.github.io</h3>,
-            <h3>TTT</h3>,
-            <h3>MLB Trip Planner</h3>,
-            <h3>Messenger</h3>,
-            <h3>RASM</h3>
+            "rbradt.github.io",
+            "TTT",
+            "MLB Trip Planner",
+            "Messenger",
+            "RASM"
         ];
 
         this.descriptions = [
-            <p>This website. 100% local for now, but I plan on implementing a RESTful api (likely Spring Boot with Docker
-            and Kubernates to create microservices).</p>,
+            "This website. 100% local for now, but I plan on implementing a RESTful api with Spring Boot (ideally with" +
+            " Docker and Kubernates to create microservices).",
 
-            <p>TTT is an application that allows players to connect to online tic-tac-toe games. Users can create personal
-            accounts and may view their match history/statistics, while administrators have access to tools to remove users
-            and end active matches. The app creation of this app involved a number of design patterns, specifically the
-            observer, factory method, adapter and singleton patterns. Additionally, the app features multiple microservices
-            that I built from the ground up (using Java threading and socketing) to independently handle database management
-            and game logic. The client application utilizes a pruning minimax algorithm for the tic-tac-toe AI.</p>,
+            "TTT Online is an application that allows players to connect to online tic-tac-toe games. Users can create" +
+            " personal accounts and may view their match history/statistics, while administrators have access to tools to remove" +
+            " users and end active matches. The creation of this app involved a number of design patterns, specifically the" +
+            " observer, factory method, adapter and singleton patterns. The server-side app features multiple microservices" +
+            " that I built from the ground up (using Java threading and socketing) to independently handle database management" +
+            " and game logic, while the client-side application utilizes a pruning minimax algorithm for the tic-tac-toe AI.</p>",
 
-            <p>The MLB Trip Planner is a niche application that seeks to help MLB superfans in planning an ideal trip to
-            any number of the MLB stadiums that dot the United States. This app is reliant on graph data structures (both
-            adjacency list and adjacency matrix), using graph-based algorithms such as A*, Dijkstra's and Kruskal's algorithms
-            to determine the optimal path for any trip. Furthermore, this app involved Huffman Coding, skip lists and a heap
-            sort to increase the efficiency of the app, thus, providing a quality user experience.</p>,
+            "The MLB Trip Planner is a niche application that seeks to help MLB superfans in planning an ideal trip to" +
+            " any number of the MLB stadiums that dot the United States. This app is reliant on graph data structures (both" +
+            " adjacency list and adjacency matrix), using graph-based algorithms such as A*, Dijkstra's and Kruskal's algorithms" +
+            " to determine the optimal path for any trip. Furthermore, this app involved Huffman Coding, skip lists and a heap" +
+            " sort to increase the efficiency of the app, thus, providing a quality user experience.",
 
-            <p>Messenger is a simplistic application that is reminiscent of AOL's Instant Messenger. It involved
-            multithreading, networking and database management to provide a basic messenging service.</p>,
+            "Messenger is a simple application that emulates AOL's Instant Messenger. It involved multithreading, networking" +
+            " and database management to provide a basic messenging service.",
 
-            <p>My Rasberry Assembly (RASM) projects are a series of projects that I wrote in ARM Assembly Language that
-            cover a wide variety of Computer Science concepts: ranging from an assembly level linked list to assembly level
-            sorting algorithms with ultra-optimized runtimes.</p>
+            "My Rasberry Assembly (RASM) projects are a series of reusable, optimized data structures and algorithms written" +
+            " in ARM Assembly Language."
         ];
 
         this.dependencies = [
-            <div>HTML, CSS, JavaScript, TypeScript, Reactjs, NPM, FontAwesome</div>,
-            <div>Java, JavaFX, MySQL</div>,
-            <div>QTCreator, MySQL, C++</div>,
-            <div>Java, MySQL, JavaFX</div>,
-            <div>Rasberry Pi, Linux, ARM Assembly, C++</div>
+            "HTML, CSS, JavaScript, TypeScript, Reactjs, NPM, FontAwesome",
+            "Java, CSS, JavaFX, MySQL",
+            "QTCreator, MySQL, CSS, C++",
+            "Java, MySQL, CSS, JavaFX",
+            "Rasberry Pi, Linux, ARM Assembly, C++"
         ];
     }
 
     render() {
-        console.log(this.titles[this.props.i]);
         return (
             <div className="content layout-column">
-                <div className="project-glossy-pane">
-                    <div className="content layout-row">
-                        <img /*Project Image*/></img>
-                        <div className="content layout-column">
-                            {this.titles[this.props.i]}
-                            {this.descriptions[this.props.i]}
-                            {this.dependencies[this.props.i]}
-                            <div className="content layout-row">
-                                replace with icon row
-                            </div>
+                <div className="project-glossy-pane content layout-row">
+                    <div className="project-img content layout-row">
+
+                        <img src="https://cdn.betterttv.net/emote/600b65ea4e3ab965ef7576f5/3x"/*Project Image*/></img>
+                    </div>
+                    <div className="project-divider"></div>
+                    <div className="project-info content layout-column">
+                        <div className="info-wrapper"><h3>{this.titles[this.props.i]}</h3></div>
+                        <div className="info-wrapper"><p>{this.descriptions[this.props.i]}</p></div>
+                        <div className="info-wrapper">{this.dependencies[this.props.i]}</div>
+                        <div className="content layout-row">
+                            replace with icon row
                         </div>
                     </div>
                 </div>
-                <div className="project-window-pane"></div>
             </div>
         );
     }
