@@ -1,0 +1,125 @@
+.projects-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.project-element {
+    position: relative;
+    transition: top 2s;
+	width: 1700px;
+	height: 350px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    border-radius: 10px;
+	background-color: rgba(255, 255, 255, 0.03);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.692);
+	backdrop-filter: blur(8px);
+}
+
+.project-img {
+	margin: 0 50px;
+	min-width: 400px;
+}
+
+.project-img > img {
+    width: 400px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.project-divider {
+	height: 310px;
+	min-width: 2px;
+	filter: drop-shadow(0 0 3px rgb(255, 255, 255))
+			drop-shadow(0 0 10px rgb(0, 255, 255));
+	background-color: white;
+	border-radius: 1px;
+}
+
+.project-info {
+    margin: 0 50px;
+}
+
+.project-info > div {
+	width: 1098px;
+	text-align: left;
+}
+
+.project-info h3 {
+	font-size: 75px;
+	margin: 0 0 9px 0;
+}
+
+.project-info p {
+    font-size: 17.5px;
+}
+
+.description {
+    min-height: 150px;
+}
+
+.links {
+    height: 70px;
+}
+
+@media (max-width: 1700px) {
+    .projects-list {
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .project-element {
+        flex-direction: column;
+        width: 500px;
+        margin: 50px;
+        padding: 25px 0 0 0;
+        height: unset;
+    }
+
+    .project-img {
+        position: relative;
+        top: 65px;
+        height: 300px;
+        margin: 50px;
+    }
+
+    .project-img > img {
+        height: 375px;
+    }
+
+    .project-divider {
+        display: none;
+    }
+
+    .project-info {
+        margin: 0 50px 50px 50px;
+        align-items: center;
+    }
+    
+    .project-info > div {
+        width: 400px;
+    }
+    
+    .project-info h3 {
+        font-size: 40px;
+        text-align: center;
+        margin: 0 0 9px 0;
+    }
+
+    .project-info p {
+        font-size: 20px;
+    }
+
+    .title {
+        position: relative;
+        top: -388px
+    }
+}

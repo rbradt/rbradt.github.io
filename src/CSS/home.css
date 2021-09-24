@@ -89,37 +89,6 @@ h2 {
 	flex-direction: row;
 }
 
-.projects p {
-	font-size: 20px;
-}
-
-.project-glossy-pane {
-	width: 1700px; /*70vw;*/
-	min-height: 350px; /*25vh;*/
-	border-radius: 10px;
-	background-color: rgba(255, 255, 255, 0.03);
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.692);
-	backdrop-filter: blur(8px);
-	margin-bottom: 50px;
-}
-
-.project-info {
-	margin: 0 50px;
-}
-
-.project-divider {
-	height: 310px;
-	min-width: 2px;
-	
-	background-color: white;
-	border-radius: 1px;
-}
-
-.project-img {
-	margin: 0 50px;
-	min-width: 420px;
-}
-
 .content {
 	display: flex;
 	justify-content: center;
@@ -133,10 +102,6 @@ h2 {
 
 .content.layout-column {
 	flex-direction: column;
-}
-
-.sliding-panel {
-
 }
 
 @keyframes flicker {
