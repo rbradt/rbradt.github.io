@@ -1,8 +1,8 @@
 import {Component} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faLinkedin, faGithubSquare, faCog} from "@fortawesome/free-brands-svg-icons";
-import {faSpaceShuttle, faSquareRootAlt} from "@fortawesome/free-solid-svg-icons";
+import {faLinkedin, faGithubSquare} from "@fortawesome/free-brands-svg-icons";
+import {faSpaceShuttle} from "@fortawesome/free-solid-svg-icons";
 import {Projects} from "./Projects.js";
 import '../CSS/home.css'
 
@@ -107,7 +107,7 @@ class Home extends Component {
                 </div>
                 <div id="projects" className="section-wrapper projects">
                     <h2>Projects: </h2>
-                    <Projects />
+                    <Projects/>
                 </div>
             </div>
         );

@@ -53,19 +53,53 @@
 
 .project-info h3 {
 	font-size: 75px;
-	margin: 0 0 9px 0;
+	margin: 0;
 }
 
 .project-info p {
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 17.5px;
+    margin-top: 0;
 }
 
 .description {
-    min-height: 150px;
+    min-height: 132.5px;
+}
+
+.languages {
+    font-family: 'Courier New', Courier, monospace;
+    padding-top: 11px;
 }
 
 .links {
-    height: 70px;
+    position: relative;
+    height: 91.5px;
+}
+
+.links > a {
+    font-size: 50px;
+    padding: 0 10px 4px 10px;
+    filter: drop-shadow(0 0 2px rgb(255, 255, 255));
+    color: rgba(255, 255, 255, 0.658);
+    text-decoration: none;
+}
+
+.links > .cpp span {
+    position: relative;
+    top: -10px;
+    font-size: 30px;
+    margin: 0;
+}
+
+.links > .assembly::before {
+    content: 'ASM';
+    position: absolute;
+    top: 25px;
+    left: 23px;
+    color: #ffffff;
+    text-shadow: 0 0 2px #000000;
+    font-size: 10px;
+    font-weight: bolder;
 }
 
 @media (max-width: 1700px) {

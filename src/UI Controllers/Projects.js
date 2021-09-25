@@ -1,4 +1,8 @@
 import {Component} from 'react';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {faRaspberryPi, faGithub, faHtml5, faCss3, faJsSquare, faReact, faNpm, faJava, faLinux, faCuttlefish} from "@fortawesome/free-brands-svg-icons";
+import {faMicrochip, faCode, faTerminal, faDatabase} from "@fortawesome/free-solid-svg-icons";
 import '../CSS/projects.css';
 import '../CSS/home.css';
 
@@ -38,7 +42,7 @@ class Projects extends Component {
             "Messenger is a simple application that emulates AOL's Instant Messenger. It involved multithreading, networking" +
             " and database management to provide a basic messenging service.",
 
-            "My Rasberry Assembly (RASM) projects are a series of reusable, optimized data structures and algorithms written" +
+            "My Raspberry Assembly (RASM) projects are a series of reusable, optimized data structures and algorithms written" +
             " in ARM Assembly Language."
         ];
 
@@ -46,35 +50,67 @@ class Projects extends Component {
             "HTML, CSS, JavaScript, TypeScript, Reactjs, NPM, FontAwesome",
             "Java, CSS, JavaFX, MySQL",
             "QTCreator, MySQL, CSS, C++",
-            "Java, MySQL, CSS, JavaFX",
-            "Rasberry Pi, Linux, ARM Assembly, C++"
+            "- Java, MySQL, CSS, JavaFX -",
+            "- ARM Assembly, C++, Linux, Raspberry Pi -"
+        ];
+
+        class icon {
+            constructor(name, link) {
+                this.name = name;
+                this.link = link;
+            }
+        }
+
+        this.icons = [
+            ['js', 'html', 'css', 'react'].map(elem => {return new icon(elem, '')}),
+            ['java', 'css', 'sql'].map(elem => {return new icon(elem, '')}),
+            ['cpp', 'css', 'sql'].map(elem => {return new icon(elem, '')}),
+            ['java', 'css', 'sql'].map(elem => {return new icon(elem, '')}),
+            ['assembly', 'cpp', 'linux', 'pi'].map(elem => {return new icon(elem, '')})
         ];
         /*******************************************************************************************************************/
         
-        // Fetch server data
+        library.add(faRaspberryPi, faGithub, faHtml5, faCss3, faJsSquare, faReact, faNpm, faJava, faLinux, faCuttlefish, faMicrochip, faCode, faTerminal, faDatabase);
+        this.iconsJSX = new Map([
+            ['js', <FontAwesomeIcon icon={["fab", "js-square"]}/>],
+            ['html', <FontAwesomeIcon icon={["fab", "html5"]}/>],
+            ['css', <FontAwesomeIcon icon={["fab", "css3"]}/>],
+            ['react', <FontAwesomeIcon icon={["fab", "react"]}/>],
+            ['java', <FontAwesomeIcon icon={["fab", "java"]}/>],
+            ['sql', <FontAwesomeIcon icon="database"/>],
+            ['cpp', <div><FontAwesomeIcon icon={["fab", "cuttlefish"]}/><span>++</span></div>],
+            ['assembly', <div><FontAwesomeIcon icon="microchip"/></div>],
+            ['linux', <FontAwesomeIcon icon={["fab", "linux"]}/>],
+            ['pi', <FontAwesomeIcon icon={["fab", "raspberry-pi"]}/>]
+        ]);
+        
+        // Request/fetch server data
         // ----------------------------------------------------------
-        // this.titles = SomeServerMessage.getProjects().getTitles();
-        // ...
+        // Then:
+        /* 
+         *  let projects = RetrieveAllProjectsMessage.getProjectsList();
+         * 
+         *  this.UIProjectList = [];
+         *  for(let i = 0; i < projects.length; i++) {
+         *      let elementIcons = projects[i].getIcons().map(icon => {return <a href={icon.link} className={icon.name}>{this.iconsJSX.get(icon.name)}</a>});
+         *      this.UIProjectList.push(<ProjectElement count={i} title={projects[i].getTitle()} description={projects[i].getDescription()} languages={projects[i].getLanguages()} icons={elementIcons}/>);
+         *  }
+         *
+         */
 
-        // Then
-        this.projectList = [];
-        for(let i = 0; i < this.titles.length; i++)
-            this.projectList.push(<ProjectElement count={i} title={this.titles[i]} description={this.descriptions[i]} languages={this.languages[i]} />);
-
+        this.UIProjectList = [];
+        for(let i = 0; i < this.titles.length; i++) {
+            let elementIcons = this.icons[i].map(icon => {return <a href={icon.link}  className={icon.name}>{this.iconsJSX.get(icon.name)}</a>});
+            this.UIProjectList.push(<ProjectElement count={i} title={this.titles[i]} description={this.descriptions[i]} languages={this.languages[i]} icons={elementIcons}/>);
+        }
     }
 
     render() {
-        return <div className="projects-list">{this.projectList}</div>;
+        return <div className="projects-list">{this.UIProjectList}</div>;
     }
 }
 
 class ProjectElement extends Component {
-    constructor(props) {
-        super(props);
-
-
-    }
-
     render() {
         return (
             <div className="project-element">
@@ -88,7 +124,7 @@ class ProjectElement extends Component {
                     <div className="description"><p>{this.props.description}</p></div>
                     <div className="languages">{this.props.languages}</div>
                     <div className="links content layout-row">
-                        replace with icon row
+                        {this.props.icons}
                     </div>
                 </div>
             </div>
