@@ -47,8 +47,8 @@
 }
 
 .project-info > div {
-	width: 1098px;
-	text-align: left;
+    width: 1098px;
+    text-align: left;
 }
 
 .project-info h3 {
@@ -59,29 +59,39 @@
 .project-info p {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 17.5px;
-    margin-top: 0;
+    margin: 0;
 }
 
 .description {
-    min-height: 132.5px;
+    min-height: 112.5px;
 }
 
 .languages {
     font-family: 'Courier New', Courier, monospace;
-    padding-top: 11px;
+    padding-bottom: 11px;
 }
 
 .links {
     position: relative;
-    height: 91.5px;
+    height: 100px;
 }
 
 .links > a {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
     font-size: 50px;
     padding: 0 10px 4px 10px;
     filter: drop-shadow(0 0 2px rgb(255, 255, 255));
-    color: rgba(255, 255, 255, 0.658);
+    color: rgb(255, 255, 255);
     text-decoration: none;
+}
+
+.links > a:hover > * {
+    font-size: 70px;
 }
 
 .links > .cpp span {
@@ -93,13 +103,80 @@
 
 .links > .assembly::before {
     content: 'ASM';
+    white-space: pre;
     position: absolute;
-    top: 25px;
-    left: 23px;
-    color: #ffffff;
-    text-shadow: 0 0 2px #000000;
-    font-size: 10px;
-    font-weight: bolder;
+    top: 23px;
+    left: 18px;
+    color: #0e101b;
+    font-size: 20px;
+    font-weight: 300;
+    transform: rotate(90deg);
+}
+
+.links > .cpp::after {
+    content: '++';
+    
+}
+
+@media(prefers-reduced-motion: no-preference) {
+    .links > a > * {
+        transition: font-size 0.2s linear;
+    }
+
+    .links > .js:hover > * {
+        
+    }
+
+    .links > .html {
+        
+    }
+
+    .links > .css {
+        
+    }
+
+    .links > .react > * {
+        transition: transform 1s cubic-bezier(0.65, 0.05, 0.36, 1), font-size 0.2s linear;
+    }
+
+    .links > .react:hover > * {
+        transform: rotate(720deg);
+        /*animation: react-animation 1.5s infinite linear 0.9s;*/
+        color: #00f7ffa8; /*#61dafb98;*/
+    }
+
+    .links > .java {
+        
+    }
+
+    .links > .sql {
+        
+    }
+
+    .links > .cpp {
+        
+    }
+
+    .links > .assembly {
+        
+    }
+
+    .links > .linux {
+        
+    }
+
+    .links > .pi {
+        
+    }
+}
+
+@keyframes react-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @media (max-width: 1700px) {
@@ -134,7 +211,7 @@
     }
 
     .project-info {
-        margin: 0 50px 50px 50px;
+        margin: 0 50px 19px 50px;
         align-items: center;
     }
     

@@ -16,7 +16,7 @@ class Projects extends Component {
          *******************************************************************************************************************/
         this.titles = [
             "RBRADT.GITHUB.IO",
-            "TTT",
+            "Tic-Tac-Toe Online",
             "MLB TRIP PLANNER",
             "MESSENGER",
             "RASM"
@@ -26,9 +26,9 @@ class Projects extends Component {
             "This website. 100% local for now, but I plan on implementing a RESTful api with Spring Boot (ideally with" +
             " Docker and Kubernates to create microservices).",
 
-            "TTT is an application that allows players to connect to online tic-tac-toe games. Users can create personal" +
-            " accounts and may view their match history/statistics, while administrators have access to tools to remove" +
-            " users and end active matches. The creation of this app involved a number of design patterns, specifically the" +
+            "Tic-Tac-Toe Online is an application that allows players to connect to and play tic-tac-toe over the web. Users can" +
+            " create personal accounts and may view their match history/statistics, while administrators have access to tools to" +
+            " remove users and end active matches. The creation of this app involved a number of design patterns, specifically the" +
             " observer, factory method, adapter and singleton patterns. The server-side app features multiple microservices" +
             " that I built from the ground up (using Java threading and socketing) to independently handle database management" +
             " and game logic, while the client-side application utilizes a pruning minimax algorithm for the tic-tac-toe AI.",
@@ -47,10 +47,10 @@ class Projects extends Component {
         ];
 
         this.languages = [
-            "HTML, CSS, JavaScript, TypeScript, Reactjs, NPM, FontAwesome",
-            "Java, CSS, JavaFX, MySQL",
-            "QTCreator, MySQL, CSS, C++",
-            "- Java, MySQL, CSS, JavaFX -",
+            "- JavaScript, HTML, CSS, React, TypeScript, NPM, FontAwesome -",
+            "- Java, JavaFX, CSS, MySQL -",
+            "- C++, QT GUI, CSS, SQL, Excel -",
+            "- Java, JavaFX, CSS, MySQL -",
             "- ARM Assembly, C++, Linux, Raspberry Pi -"
         ];
 
@@ -79,7 +79,7 @@ class Projects extends Component {
             ['java', <FontAwesomeIcon icon={["fab", "java"]}/>],
             ['sql', <FontAwesomeIcon icon="database"/>],
             ['cpp', <div><FontAwesomeIcon icon={["fab", "cuttlefish"]}/><span>++</span></div>],
-            ['assembly', <div><FontAwesomeIcon icon="microchip"/></div>],
+            ['assembly', <FontAwesomeIcon icon="microchip"/>],
             ['linux', <FontAwesomeIcon icon={["fab", "linux"]}/>],
             ['pi', <FontAwesomeIcon icon={["fab", "raspberry-pi"]}/>]
         ]);
@@ -121,8 +121,8 @@ class ProjectElement extends Component {
                 <div className="project-divider"></div>
                 <div className="project-info content layout-column">
                     <div className="title unselectable"><h3>{this.props.title}</h3></div>
-                    <div className="description"><p>{this.props.description}</p></div>
                     <div className="languages">{this.props.languages}</div>
+                    <div className="description"><p>{this.props.description}</p></div>
                     <div className="links content layout-row">
                         {this.props.icons}
                     </div>
