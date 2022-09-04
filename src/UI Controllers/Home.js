@@ -78,6 +78,7 @@ class Home extends Component {
 
     renderAnimation() {
         // set animation property based off of selected scene
+
     }
 
     render() {  
@@ -94,19 +95,21 @@ class Home extends Component {
                     </div>
                 </div>
                 <div id="about" className="section-wrapper about">
-                    <div className="content layout-column">
-                        <img></img>
+                    <h2 className="unselectable">About Me</h2>
+                    <div className="content layout-row">
+                        <div></div>
+                        <div>
+                            <p><span>I'm Riley Bradt</span>, an undergraduate student at the University of California, Riverside pursuing
+                            a B.S. in Mathematics with a minor in Computer Science.
+                            I low level languages, such as C++ and ARM Assembly Language, and am interested
+                            in cybersecurity, DevSecOps, cryptography and networking.</p>
+                        </div>
+                        
                     </div>
-                    <div className="content layout-column">
-                        <h2>Yo,</h2>
-                        <p><span>I'm Riley Bradt</span>, an undergraduate student at the University of California, Riverside pursuing
-                        a B.S. in Mathematics with a minor in Computer Science.
-                        I low level languages, such as C++ and ARM Assembly Language, and am interested
-                        in cybersecurity, DevSecOps, cryptography and networking.</p>
-                    </div>
+                    
                 </div>
                 <div id="projects" className="section-wrapper projects">
-                    <h2>Projects: </h2>
+                    <h2 className="unselectable">My Projects</h2>
                     <Projects/>
                 </div>
             </div>

@@ -1,0 +1,103 @@
+.links {
+    position: relative;
+    height: 100px;
+}
+
+.links > a {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    font-size: 50px;
+    padding: 0 7px 4px 7px;
+    filter: drop-shadow(0 0 2px rgb(255, 255, 255));
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+.links > a:hover > * {
+    font-size: 70px;
+}
+
+.links > .cpp span {
+    position: relative;
+    top: -10px;
+    font-size: 30px;
+    margin: 0;
+}
+
+.links > .assembly::before {
+    content: 'ASM';
+    white-space: pre;
+    position: absolute;
+    top: 23px;
+    left: 18px;
+    color: #0e101b;
+    font-size: 20px;
+    font-weight: 300;
+    transform: rotate(90deg);
+}
+
+.links > .cpp::after {
+    content: '++';
+    position: absolute;
+    color: rgba(255, 255, 255, 0);
+    top: 18px;
+    left: 33px;
+    font-size: 20px;
+    transition: left 0.5s, color 0.4s;
+}
+
+@media(prefers-reduced-motion: no-preference) {
+    .links > a > * {
+        transition: font-size 0.2s linear;
+    }
+
+    .links > .js:hover > * {
+        
+    }
+
+    .links > .html {
+        
+    }
+
+    .links > .css {
+        
+    }
+
+    .links > .react > * {
+        transition: transform 1s cubic-bezier(0.65, 0.05, 0.36, 1), font-size 0.2s linear, color 1s cubic-bezier(0.65, 0.05, 0.36, 1);
+    }
+
+    .links > .react:hover > * {
+        transform: rotate(720deg);
+        color: #00f7ffa8;
+    }
+
+    .links > .java {
+        
+    }
+
+    .links > .sql {
+        
+    }
+
+    .links > .cpp:hover::after {
+        color: white;
+        left: 60px;
+    }
+
+    .links > .assembly {
+        
+    }
+
+    .links > .linux {
+        
+    }
+
+    .links > .pi {
+        
+    }
+}

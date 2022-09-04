@@ -39,33 +39,13 @@ class App extends Component {
 				break;
 			case 'nav_login':
 				break;
-			case 'nav_support':
+			case 'nav_contact':
 				break;
 			case 'nav_about':
 			case 'nav_coming':
 			case 'nav_home':
 				sceneToRender = <Home focus={this.state.goTo} scene={this.state.scene} setScene={scene => this.setScene(scene)} rmFocus={()=>this.setState({goTo: null})} />;
 				break;
-
-			default:
-				/*sceneToRender = (<MovingBanner scene={
-					<div className="App">
-						<header className="App-header">
-							<img src={logo} className="App-logo" alt="logo" />
-							<p>
-								Edit <code>src/App.js</code> and save to reload.
-							</p>
-							<a
-								className="App-link"
-								href="https://reactjs.org"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								Learn React
-							</a>
-						</header>
-					</div>
-				} />);*/
 		}
 
 		return sceneToRender;
@@ -78,13 +58,13 @@ class App extends Component {
 	render() {
 		return (
 			<div className="nav-container">
-				<div id="nav" className="nav-panel">
+				<div id="nav" className="nav-panel unselectable">
 					<button id="nav_home" className="nav-button nav-icon" style={this.setSelected("nav_home")} aria-label="Home" onClick={() => this.scrollToScene('nav_home')}><FontAwesomeIcon icon="home" /></button>
 					<button id="nav_ttt" className="nav-button" style={this.setSelected("nav_ttt")} onClick={() => this.setScene('nav_ttt')}>Tic-Tac-Toe</button>
 					<button id="nav_chess" className="nav-button" style={this.setSelected("nav_chess")} onClick={() => this.setScene('nav_chess')}>Chess</button>
 					<button id="nav_coming" className="nav-button" style={this.setSelected("nav_coming")} onClick={() => this.scrollToScene('nav_coming')}>Projects</button>
 					<button id="nav_login" className="nav-button tr" style={this.setSelected("nav_login")} onClick={() => this.setScene('nav_login')}>Login</button>
-					<button id="nav_support" className="nav-button tr" style={this.setSelected("nav_support")} onClick={() => this.setScene('nav_support')}>Support</button>
+					<button id="nav_contact" className="nav-button tr" style={this.setSelected("nav_contact")} onClick={() => this.setScene('nav_contact')}>Contact</button>
 					<button id="nav_about" className="nav-button tr" style={this.setSelected("nav_about")} onClick={() => this.scrollToScene('nav_about')}>About</button>
 				</div>
 				<div id="scene" className="nav-scene">{this.renderScene(this.state.scene)}</div>

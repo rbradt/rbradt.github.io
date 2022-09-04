@@ -23,8 +23,18 @@ h1 {
 }
 
 h2 {
-	text-align: left;
-	font-size: 60px;
+	text-align: center;
+	color:white;
+	font-size: 70px;
+	font-weight: 100;
+	text-decoration: overline;
+	text-decoration-thickness: 6px;
+	margin: 15px 0 35px 0;
+	text-shadow: 0 0 3px white,
+				0 0 10px white,
+				0 0 20px #d7fffe,
+				0 0 40px #a8f6f8;
+
 }
 
 .section-wrapper {
@@ -82,11 +92,10 @@ h2 {
 
 .projects {
 	flex-direction: column;
-	/*if window < 1700px -> flex-direction: row + flex-wrap: wrap*/
 }
 
 .about {
-	flex-direction: row;
+	flex-direction: column;
 }
 
 .content {

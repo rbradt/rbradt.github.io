@@ -9,6 +9,7 @@
 .project-element {
     position: relative;
     transition: top 2s;
+    left: 100vw;
 	width: 1700px;
 	height: 350px;
     margin-bottom: 50px;
@@ -23,6 +24,7 @@
 }
 
 .project-img {
+    position: relative;
 	margin: 0 50px;
 	min-width: 400px;
 }
@@ -30,7 +32,40 @@
 .project-img > img {
     width: 400px;
     height: 300px;
-    object-fit: cover;
+    object-fit: scale-down;
+}
+
+.project-img > div {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 75px;
+    height: 300px;
+    font-size: 50px;
+    font-weight: bolder;
+    font-family:monospace;
+    color: rgba(0, 0, 0, 0.397);
+    background-color: rgba(0, 0, 0, 0);
+    
+    transition: all 0.4s linear;
+    cursor: pointer;
+}
+
+.project-img > div:hover {
+    color:rgb(255, 255, 255);
+    text-shadow: 0 0 3px white,
+                 0 0 5px white,
+                 0 0 10px rgb(136, 255, 0);
+}
+
+.next-img {
+    left: 325px;
+}
+
+.prev-img {
+    left: 0;
 }
 
 .project-divider {
@@ -52,7 +87,8 @@
 }
 
 .project-info h3 {
-	font-size: 75px;
+    font-size: 75px;
+    color: white;
 	margin: 0;
 }
 
@@ -62,13 +98,40 @@
     margin: 0;
 }
 
+.title a {
+    text-decoration: none;
+}
+
+.title h3 {
+    transition: color 0.5s;
+    text-decoration: none;
+}
+
+.title span {
+    transition: color 0.5s;
+    filter: drop-shadow(0 0 2px #27d2fd);
+    color: #27d2fd;
+}
+
+.title:hover h3 {
+    color: #ff2e2e;   
+}
+
+.title:hover span {
+    color: #ffffff;
+}
+
 .description {
     min-height: 112.5px;
+    font-weight: 300;
+    text-shadow: 1px 1px 0 rgb(0, 0, 0);
 }
 
 .languages {
     font-family: 'Courier New', Courier, monospace;
     padding-bottom: 11px;
+    color: #f98dc9;
+    text-shadow: 1px 1px 0 black;
 }
 
 .links {
@@ -84,7 +147,7 @@
     width: 70px;
     height: 70px;
     font-size: 50px;
-    padding: 0 10px 4px 10px;
+    padding: 0 7px 4px 7px;
     filter: drop-shadow(0 0 2px rgb(255, 255, 255));
     color: rgb(255, 255, 255);
     text-decoration: none;
@@ -115,7 +178,12 @@
 
 .links > .cpp::after {
     content: '++';
-    
+    position: absolute;
+    color: rgba(255, 255, 255, 0);
+    top: 18px;
+    left: 33px;
+    font-size: 20px;
+    transition: left 0.5s, color 0.4s;
 }
 
 @media(prefers-reduced-motion: no-preference) {
@@ -136,12 +204,12 @@
     }
 
     .links > .react > * {
-        transition: transform 1s cubic-bezier(0.65, 0.05, 0.36, 1), font-size 0.2s linear;
+        transition: transform 1s cubic-bezier(0.65, 0.05, 0.36, 1), font-size 0.2s linear, color 1s cubic-bezier(0.65, 0.05, 0.36, 1);
     }
 
     .links > .react:hover > * {
         transform: rotate(720deg);
-        /*animation: react-animation 1.5s infinite linear 0.9s;*/
+        /*animation: react-animation 1.5s infinite linear 0.92s;*/
         color: #00f7ffa8; /*#61dafb98;*/
     }
 
@@ -153,8 +221,9 @@
         
     }
 
-    .links > .cpp {
-        
+    .links > .cpp:hover::after {
+        color: white;
+        left: 60px;
     }
 
     .links > .assembly {
@@ -167,6 +236,24 @@
 
     .links > .pi {
         
+    }
+}
+
+@keyframes element-init-right {
+    0% {
+        left: 100vw;
+    }
+    100% {
+        left: 0vw;
+    }
+}
+
+@keyframes element-init-left {
+    0% {
+        left: -100vw;
+    }
+    100% {
+        left: 0vw;
     }
 }
 
@@ -204,6 +291,7 @@
 
     .project-img > img {
         height: 375px;
+        object-fit: cover;
     }
 
     .project-divider {
@@ -221,6 +309,7 @@
     
     .project-info h3 {
         font-size: 40px;
+        font-weight:lighter;
         text-align: center;
         margin: 0 0 9px 0;
     }
